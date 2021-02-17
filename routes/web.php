@@ -1,0 +1,84 @@
+<?php
+
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\BicyclesController;
+use App\Http\Controllers\CartController;
+
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
+|
+*/
+
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+Route::get('/', [HomeController::class, 'index'])->middleware('logged');
+Route::get('/bicycles', [BicyclesController::class, 'index']);
+Route::post('/bicycles/fetch_data', [BicyclesController::class, 'fetch_bicycles_data']);
+Route::get('/bicycles/show/{id}', [BicyclesController::class, 'show'])->name('viewBicycle');
+Route::get('/cart', [CartController::class, 'index']);
+
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth'])->name('dashboard');
+
+Route::group([
+    'prefix' => 'member',
+    'namespace' => 'App\Http\Controllers\Member',
+    'middleware' => ['auth','member','verified','active']
+], function () {
+    Route::get('/', 'AccountController@index')->name('myAccount');
+    Route::get('editprofile', 'AccountController@edit_profile')->name('editProfile');
+    Route::patch('updateprofile', 'AccountController@update_profile');
+    Route::get('editpassword', 'AccountController@edit_password')->name('editPassword');
+    Route::patch('updatepassword', 'AccountController@update_password');
+    Route::get('editaddress', 'AccountController@edit_address')->name('editAddress');
+    Route::patch('updateaddress', 'AccountController@update_address');
+});
+
+Route::group([
+    'prefix' => 'admin',
+    'namespace' => 'App\Http\Controllers\Admin',
+    'middleware' => ['auth','admin','active']
+], function () {
+    Route::get('/', 'DashboardController@index')->name('adminDashboard');
+    Route::get('memberusers', 'UsersController@membersindex')->name('memberUsers');
+    Route::get('adminusers', 'UsersController@adminsindex')->name('adminUsers');
+    Route::post('users/memberstore', 'UsersController@memberstore');
+    Route::post('users/adminstore', 'UsersController@adminstore');
+    Route::post('users/modify', 'UsersController@modify');
+    Route::get('users/activate/{id}', 'UsersController@activate');
+    Route::get('users/deactivate/{id}', 'UsersController@deactivate');
+    Route::get('users/delete/{id}', 'UsersController@destroy');
+    Route::get('/viewUser', 'UsersController@show')->name('ViewUser');
+    Route::get('/editUser', 'UsersController@edit')->name('EditUser');
+    Route::get('/changePassword', 'UsersController@changepassword');
+    Route::patch('/updateUser', 'UsersController@update');
+    Route::patch('/submitchangepassword', 'UsersController@updatepassword');
+    Route::get('products', 'ProductsController@index')->name('products');
+    Route::post('products/store', 'ProductsController@store');
+    Route::post('products/edit', 'ProductsController@edit');
+    Route::get('products/activate/{id}', 'ProductsController@activate');
+    Route::get('products/deactivate/{id}', 'ProductsController@deactivate');
+    Route::get('products/delete/{id}', 'ProductsController@destroy');
+    Route::get('categories', 'CategoriesController@index')->name('categories');
+    Route::post('categories/store', 'CategoriesController@store');
+    Route::post('categories/edit', 'CategoriesController@edit');
+    Route::get('categories/delete/{id}', 'CategoriesController@destroy');
+    Route::get('subcategories', 'SubCategoriesController@index')->name('subCategories');
+    Route::post('subcategories/store', 'SubCategoriesController@store');
+    Route::post('subcategories/edit', 'SubCategoriesController@edit');
+    Route::get('subcategories/delete/{id}', 'SubCategoriesController@destroy');
+
+});
+
+require __DIR__.'/auth.php';

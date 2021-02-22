@@ -10,7 +10,8 @@ class HomeController extends Controller
 {
     public function index()
     {
-        return view('home.index'); 
+        $products = Product::where('category_id', 1)->where('status','active')->inRandomOrder()->limit(6)->get();
+        return view('home.index', compact('products'));
     }
 
 }

@@ -105,7 +105,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                                     </form>
 						
 						 </li>
-						  <a class="shop" href="cart.html"><img src="{{ asset('images/member/cart.png') }}" alt=""/></a>
+						  <a class="shop" href="{{ route('memberCart') }}"><img src="{{ asset('images/member/cart.png') }}" alt=""/></a>						 
+					      <span class="badge">{{ Session::has('cartTotal') ? Session::get('cartTotal') : '' }}</span>
 						
 					  </ul>
 				 </div>

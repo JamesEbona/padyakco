@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Cart;
 use App\Models\Address;
 use Illuminate\Auth\Events\Registered;
 use Intervention\Image\Facades\Image;
@@ -69,6 +70,10 @@ class UsersController extends Controller
          $address = new Address;
          $address->user_id = $user->id;
          $address->save();
+
+         $cart = new Cart;
+         $cart->user_id = $user->id;
+         $cart->save();
 
          event(new Registered($user));
 

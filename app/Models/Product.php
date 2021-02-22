@@ -16,6 +16,8 @@ class Product extends Model
         'subcategory_id',
         'quantity',
         'price',
+        'delivery_fee',
+        'provincial_delivery_fee',
         'rating',
         'status',
         'description',

@@ -23,6 +23,8 @@ class CreateProductsTable extends Migration
             $table->foreign('subcategory_id')->references('id')->on('sub_categories');
             $table->unsignedInteger('quantity');
             $table->unsignedDecimal('price', $precision = 8, $scale = 2);
+            $table->unsignedDecimal('delivery_fee', $precision = 8, $scale = 2);
+            $table->unsignedDecimal('provincial_delivery_fee', $precision = 8, $scale = 2);
             $table->unsignedInteger('rating');
             $table->string('status');
             $table->string('description')->nullable();

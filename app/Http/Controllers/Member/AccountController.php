@@ -59,15 +59,15 @@ class AccountController extends Controller
         );
 
       
-        if(request('image') != NULL){
-        $imagePath = request('image')->store('avatars','public');       
+        // if(request('image') != NULL){
+        // $imagePath = request('image')->store('avatars','public');       
           
-            $image = Image::make(public_path("storage/{$imagePath}"))->fit(180, 180);
+        //     $image = Image::make(public_path("storage/{$imagePath}"))->fit(180, 180);
          
-            $image->save();
+        //     $image->save();
 
-            $imageArray = ['image' => $imagePath];
-        }
+        //     $imageArray = ['image' => $imagePath];
+        // }
 
         $UserID = auth()->user()->id;
      

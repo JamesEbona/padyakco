@@ -7,6 +7,7 @@ use App\Http\Requests\Auth\LoginRequest;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Cart;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -31,9 +32,15 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
 
         $request->session()->regenerate();
-
+        
+        if(auth()->user()->role =='3'){
+         if ($request->session()->has('cart')) {
+                return redirect()->route('checkoutAddress');
+            }
+            $cartTotal = Cart::where('user_id', Auth::id())->first()->total_quantity;
+            session()->put('cartTotal',$cartTotal);
+        }
         return redirect(RouteServiceProvider::HOME);
-
        
     }
 
@@ -50,6 +57,8 @@ class AuthenticatedSessionController extends Controller
         $request->session()->invalidate();
 
         $request->session()->regenerateToken();
+
+        $request->session()->forget('cartTotal');
 
         return redirect('/');
     }

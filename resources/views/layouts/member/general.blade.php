@@ -43,6 +43,25 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			});
 		</script>
 <!---- start-smoth-scrolling---->
+<style>
+.btn-continue{
+	background:orange;
+	padding:10px 1.5em;
+	border-radius:7px;
+	font-size:1em;
+	color:#fff;
+	text-decoration:none;
+	display: block;
+   font-weight: 600;  
+   text-align: center;
+   width: 72%;
+   margin: 0px auto 3em auto;
+}
+.btn-continue:hover{
+	background:#333;
+	color:#fff;
+}
+</style>
 </head>
 <body>
 <!--banner-->
@@ -109,7 +128,14 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                                     </form>
 						
 						 </li>
-						  <a class="shop" href="cart.html"><img src="{{ asset('images/member/cart.png') }}" alt=""/></a>
+						  @endauth
+						  @guest
+						  <a class="shop" href="{{ route('cart') }}"><img src="{{ asset('images/member/cart.png') }}" alt=""/></a>						 
+					      <span class="badge">{{ Session::has('cart') ? Session::get('cart')->totalQty : '' }}</span>
+						  @endguest
+						  @auth
+						  <a class="shop" href="{{ route('memberCart') }}"><img src="{{ asset('images/member/cart.png') }}" alt=""/></a>						 
+					      <span class="badge">{{ Session::has('cartTotal') ? Session::get('cartTotal') : '' }}</span>
 						  @endauth
 					  </ul>
 				 </div>

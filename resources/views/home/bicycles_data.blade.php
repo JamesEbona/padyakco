@@ -10,7 +10,11 @@ $i = 1;
         <div class="part-info">
             <a href="{{route('viewBicycle', $product->id)}}"><h5>{{$product->title}}<span>₱{{$product->price}}</span></h5></a>
             <a class="add-cart" href="{{route('viewBicycle', $product->id)}}">View Bicycle</a>
+            @if ($product->quantity != 0)
             <a class="qck" href="{{route('viewBicycle', $product->id)}}">BUY NOW</a>
+            @else
+            <a class="qck cartDisabled" >SOLD OUT</a>
+            @endif
         </div>
     </div></a>
 <?php

@@ -57,7 +57,7 @@
                           <td><div class="row justify-content-center">
                           <div class="col-md-4">
                           <button class="btn btn-dark" data-id="{{$product->id}}" data-title="{{$product->title}}" data-brand="{{$product->brand}}" data-category_id="{{$product->category_id}}"  data-subcategory_id="{{$product->subcategory_id}}" 
-                          data-quantity="{{$product->quantity}}" data-price="{{$product->price}}"  data-description="{{$product->description}}" data-image1="{{$product->image1}}" data-image2="{{$product->image2}}" onclick="editProduct(this)"
+                          data-quantity="{{$product->quantity}}" data-price="{{$product->price}}" data-delivery="{{$product->delivery_fee}}" data-provincial="{{$product->provincial_delivery_fee}}"  data-description="{{$product->description}}" data-image1="{{$product->image1}}" data-image2="{{$product->image2}}" onclick="editProduct(this)"
                           data-image3="{{$product->image3}}"><i class="fa fa-edit" aria-hidden="true"></i></button>
                           </div>
                           @if ($product->status == 'active')
@@ -204,6 +204,14 @@
                         <input class="form-control" type="number" id="editPrice" name="price" required="" min="0" step="0.01">
                     </div>
                     <div class="form-group">
+                        <label>Delivery Fee</label>
+                        <input class="form-control" type="number" id="editDelivery" name="delivery_fee" required="" min="0" step="0.01">
+                    </div>
+                    <div class="form-group">
+                        <label>Provincial Delivery Fee</label>
+                        <input class="form-control" type="number" id="editProvincial" name="provincial_delivery_fee" required="" min="0" step="0.01">
+                    </div>
+                    <div class="form-group">
                         <label>Description</label>
                         <textarea class="form-control" rows="5" id="editDescription" name="description"></textarea>
                     </div>
@@ -281,6 +289,14 @@
                     <div class="form-group">
                         <label>Price</label>
                         <input class="form-control" type="number" name="price" required="" min="0" step="0.01">
+                    </div>
+                    <div class="form-group">
+                        <label>Delivery Fee</label>
+                        <input class="form-control" type="number" name="delivery_fee" required="" min="0" step="0.01">
+                    </div>
+                    <div class="form-group">
+                        <label>Provincial Delivery Fee</label>
+                        <input class="form-control" type="number" name="provincial_delivery_fee" required="" min="0" step="0.01">
                     </div>
                     <div class="form-group">
                         <label>Description</label>

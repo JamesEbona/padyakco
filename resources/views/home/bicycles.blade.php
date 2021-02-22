@@ -13,7 +13,14 @@
 		 <h2>BICYCLES</h2>
 		 <div class="bike-parts-sec">
 		      <div class="bike-parts">
+			  <!-- @if(session()->has('message'))
+						  <div class="alert alert-success alert-dismissible" role="alert">
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							<strong>Ordered!</strong> {{ session()->get('message') }}
+							</div>
+                            @endif -->
 				 <div class="top">
+					 
 					 <ul>
 						 <li><a href="/">HOME</a></li>
 						 <li>/</li>
@@ -21,6 +28,7 @@
 					 </ul>				 
 				 </div>
 				 <div class="bike-apparels filter_data">
+			
 				      @include('home.bicycles_data')
 					  <div class="row text-center mt-5 mb-5">
 			 {{ $products->links() }}

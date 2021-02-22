@@ -1,30 +1,41 @@
-@extends('layouts.member.account')
-@section('content')
+@section('title')
+Padyak.Co - Checkout
+@endsection
 
-		 <div class="col-md-9 cart-items my-account-content" style="border-left: 1px solid; padding-left: 16px; ">
-     <form class="form-horizontal mt-5" method="post" action="/member/updateaddress">
-			 <h2>Update Delivery Details:<a href="javascript:$('form').submit();" class="account-links"><i class="fas fa-fw fa-save pull-right"></i></a></h2>
-			 <div class="cart-header">
-				
-				 <div class="cart-sec">
-         @if(session()->has('message'))
-    <div class="alert alert-success">
-        {{ session()->get('message') }}
-    </div>
-@endif
-@if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li class="ml-4">{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
-               
-                 @CSRF
-                @method('PATCH')
-  <div class="form-group @error('address1') has-error @enderror ">
+@extends('layouts.member.general')
+@section('content')
+<div class="cart" >
+	 <div class="container style="min-height:160vh"">
+		 <div class="cart-top">
+			<a href="{{ route('memberCart') }}">CART / </a>
+			<a style="text-decoration: underline;" href="{{ route('checkoutAddress') }}">DELIVERY</a> /
+			<a style="color: grey;">REVIEW & PAY /</a>
+			<a style="color: grey;">ORDER PLACED</a>
+		 </div>	
+			
+		 <div class="col-md-9 cart-items">
+			<h2>Delivery Address</h2>
+
+		    <form class="form-horizontal mt-5" method="post" action="{{ route('saveAddress') }}">
+			@if(session()->has('message'))
+				<div class="alert alert-success">
+					{{ session()->get('message') }}
+				</div>
+			@endif
+			@if ($errors->any())
+   				<div class="alert alert-danger">
+					<ul>
+						@foreach ($errors->all() as $error)
+							<li class="ml-4">{{ $error }}</li>
+						@endforeach
+					</ul>
+    			</div>
+			@endif
+
+            @CSRF
+            @method('PATCH') 
+
+			<div class="form-group @error('address1') has-error @enderror ">
     <label class="col-sm-3 control-label">Address 1</label>
     <div class="col-sm-9">
       <input type="text" class="form-control" name="address1" value="@if($errors->any()){{old('address1')}}@elseif(auth()->user()->address->address1 != NULL){{auth()->user()->address->address1}}@endif" required max="100">
@@ -96,23 +107,22 @@
     <input type="tel" class="form-control" name="phone_number" value="@if($errors->any()){{ old('phone_number')}}@elseif(auth()->user()->address->phone_number != NULL){{auth()->user()->address->phone_number}}@endif" required>
     </div>
   </div>
-  <div class="form-group">
-    <div class="col-sm-offset-3 col-sm-9 mt-2">
-      <button type="submit" class="btn-update">UPDATE ADDRESS</button>
-    </div>
-  </div>
-</form>
-<div  style="margin-top: 65px;"></div>
-				  </div>
-			 </div>
-			
 		 </div>
-	
-		
-		 
-	
+		  
+		 <div class="col-md-3 cart-total" style="border-left: 1px solid; padding-left: 16px; ">
+			 <button class=" btn btn-continue" type="submit" >Review & Pay</button>
+       </form>
+			 <div class="clearfix"></div>
+			 <div class="total-item">
+				 <h3>DELIVERY</h3>
+                 <p>It will take 1-3 business days ship out your order for delivery. Depending on your delivery address, it will take another 5 to 15 business days for our carrier to deliver the parcel to you.</p>
+				 <h3 class="mt-4">ADDRESS</h3>
+				 <p>Address will be saved to your account for faster process next time you checkout.</p>
+			 </div>
+			</div>
+            
 	 </div>
-				</div>
+</div>
 @if ($errors->any()) 
 <script>
 document.getElementById('province').value = '{{old('province')}}';
@@ -126,8 +136,4 @@ document.getElementById('province').value = '{{auth()->user()->address->province
 document.getElementById('province').value = 'Metro Manila'; 
 </script>
 @endif
-
 @endsection
-
-
-

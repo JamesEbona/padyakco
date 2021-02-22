@@ -7,6 +7,7 @@
 			 <div class="content-bar">
 				 <div class="single-page">
 					 <div class="product-head">
+					 
 						<a href="/">Home</a> <span>/</span> <a href="/bicycles">BICYCLES</a> <span>/</span>	<a href="/bicycles/show/{{$bicycle->id}}">{{$bicycle->title}}</a>
 						</div>
 					 <!--Include the Etalage files-->
@@ -53,22 +54,58 @@
 						</ul>
 						</div>
 					 </div>
+					 
 					 <div class="details-left-info">
+					 	 @if(session()->has('message'))
+						  <div class="alert alert-success alert-dismissible" role="alert">
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							<strong>Ordered!</strong> {{ session()->get('message') }}
+							</div>
+                            @endif
 							<h3>{{$bicycle->title}}</h3>
 								<h4>Model No: {{$bicycle->id}}</h4>
 							<h4></h4>
 							<p><label>₱</label> {{$bicycle->price}}</p>
-							<!-- <p class="size">SIZE ::</p>
-							<a class="length" href="#">XS</a>
-							<a class="length" href="#">M</a>
-							<a class="length" href="#">S</a> -->
+							<p class="size">STOCKS LEFT ::</p>
+							<a class="length" >{{$bicycle->quantity}}</a>
 							<div class="btn_form">
-								<a href="cart.html">buy now</a>
-								<a href="cart.html">ADD TO CART</a>
+			                @guest
+							    <?php
+								$productQty = 0;
+								if(Session::has('cart')){
+                                 $cart = (array) Session::get('cart');
+								 $productQty = $cart['items']['3']['qty'];
+								}
+                                if($bicycle->quantity == 0 OR $productQty >= $bicycle->quantity){
+								?>
+								<a class="cartDisabled">SOLD OUT</a>
+								<?php
+								}
+								else{
+								?>
+								<a href="{{route('addCart', ['id' => $bicycle->id])}}">ADD TO CART</a>
+								<?php
+								}
+								?>
+							@endguest
+							@auth   
+							<?php
+                                if($bicycle->quantity == 0 OR $cart_item_qty >= $bicycle->quantity){
+								?>
+								<a class="cartDisabled">SOLD OUT</a>
+								<?php
+								}
+								else{
+								?>
+								<a href="{{route('memberAddCart', ['id' => $bicycle->id])}}">ADD TO CART</a>
+								<?php
+								}
+								?>
+							@endauth
 							</div>
 							<div class="bike-type">
-							<p>TYPE  ::<a href="#">{{$bicycle->subcategory->title}}</a></p>
-							<p>BRAND  ::<a href="#">{{$bicycle->brand}}</a></p>
+							<p>TYPE  ::<a>{{$bicycle->subcategory->title}}</a></p>
+							<p>BRAND  ::<a>{{$bicycle->brand}}</a></p>
 							</div>
 							<h5>Description  ::</h5>
 							<p class="desc">{{$bicycle->description}}</p>

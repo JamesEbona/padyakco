@@ -35,6 +35,8 @@ class ProductsController extends Controller
           'subcategory_id' => 'required|numeric',
           'quantity' => 'required|numeric|min:1',
           'price' => 'required|numeric',
+          'delivery_fee' => 'required|numeric',
+          'provincial_delivery_fee' => 'required|numeric',
           'description' => 'string|max:800|min:2',
           'image1' => 'image',
           'image2' => 'image',
@@ -82,6 +84,8 @@ class ProductsController extends Controller
              $product->subcategory_id = request('subcategory_id');
              $product->quantity = request('quantity');
              $product->price = request('price');
+             $product->delivery_fee = request('delivery_fee');
+             $product->provincial_delivery_fee = request('provincial_delivery_fee');
              $product->rating = 0;
              $product->description = request('description');
              $product->status = 'active';
@@ -102,6 +106,8 @@ class ProductsController extends Controller
             'subcategory_id' => 'required|numeric',
             'quantity' => 'required|numeric|min:1',
             'price' => 'required|numeric',
+            'delivery_fee' => 'required|numeric',
+            'provincial_delivery_fee' => 'required|numeric',
             'description' => 'string|max:800|min:2',
             'image1' => 'image',
             'image2' => 'image',
@@ -139,6 +145,8 @@ class ProductsController extends Controller
                 $product->subcategory_id = request('subcategory_id');
                 $product->quantity = request('quantity');
                 $product->price = request('price');
+                $product->delivery_fee = request('delivery_fee');
+                $product->provincial_delivery_fee = request('provincial_delivery_fee');
                 $product->description = request('description');
                 if(request('image1') != NULL){
                    $product->image1 = $image1Path;

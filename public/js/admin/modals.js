@@ -66,6 +66,9 @@ function editProduct(arg) {
     var subcategory_id = $(arg).attr('data-subcategory_id');
     var quantity = $(arg).attr('data-quantity');
     var price = $(arg).attr('data-price');
+    var delivery_fee = $(arg).attr('data-delivery');
+    var provincial_delivery_fee = $(arg).attr('data-provincial');
+    var price = $(arg).attr('data-price');
     var description = $(arg).attr('data-description');
     var image1 = $(arg).attr('data-image1');
     var image2 = $(arg).attr('data-image2');
@@ -87,6 +90,8 @@ function editProduct(arg) {
     $("#editSubCategoryId").val(subcategory_id);
     $("#editQuantity").val(quantity);
     $("#editPrice").val(price);
+    $("#editDelivery").val(delivery_fee);
+    $("#editProvincial").val(provincial_delivery_fee);
     $("#editDescription").val(description);
     document.getElementById('category_id').value = category_id; 
     document.getElementById('subcategory_id').value = subcategory_id; 

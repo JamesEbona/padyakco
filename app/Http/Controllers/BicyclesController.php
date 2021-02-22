@@ -5,6 +5,10 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\SubCategory;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Cart;
+use App\Models\CartItem;
+
 
 class BicyclesController extends Controller
 {
@@ -39,8 +43,16 @@ class BicyclesController extends Controller
     public function show($id){
         $bicycle = Product::findOrFail($id);
         $related_products = Product::where('category_id', 1)->where('status','active')->inRandomOrder()->limit(3)->get();
+        $cart_item_qty = 0;
 
-        return view('home.bicycle', compact('bicycle','related_products'));
+        if (Auth::user()) {
+            $cartId = Cart::where('user_id', Auth::id())->first()->id;
+            if (CartItem::where('cart_id', '=', $cartId)->where('product_id', '=', $id)->exists()) {
+                $cart_item_qty = CartItem::where('cart_id', '=', $cartId)->where('product_id', '=', $id)->first()->quantity;
+            }
+        }
+
+        return view('home.bicycle', compact('bicycle','related_products','cart_item_qty'));
 
     }
 }

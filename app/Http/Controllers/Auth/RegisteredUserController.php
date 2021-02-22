@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Address;
+use App\Models\Cart;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
@@ -54,6 +55,10 @@ class RegisteredUserController extends Controller
         $address = new Address;
         $address->user_id = $user->id;
         $address->save();
+
+        $cart = new Cart;
+        $cart->user_id = $user->id;
+        $cart->save();
 
         event(new Registered($user));
 

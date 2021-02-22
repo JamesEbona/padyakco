@@ -48,6 +48,8 @@
 						 </li>    
 						     
 						 <li class="dropdown1"><a href="/login">LOGIN</a></li>
+						 <a class="shop" href="{{ route('cart') }}"><img src="{{ asset('images/member/cart.png') }}" alt=""/></a>
+						 <span class="badge">{{ Session::has('cart') ? Session::get('cart')->totalQty : '' }}</span>
 						
 					  </ul>
 				 </div>
@@ -79,7 +81,7 @@
 			 <a href="bicycles.html"><div class="col-md-4 cate-grid" style="background: url({{ asset('images/member/c1.jpg') }}) no-repeat;">
 				 <h4>NEED A BICYCLE?</h4>
 				 <p>Choose from countless bicycle selections</p>
-				 <a class="store" href="bicycles.html">GO TO STORE</a>
+				 <a class="store" href="/bicycles">GO TO STORE</a>
 			 </div></a>
 			 <a href="bicycles.html"><div class="col-md-4 cate-grid" style="background: url({{ asset('images/member/c2.jpg') }}) no-repeat;">
 				 <h4>HAVE A BICYCLE PROBLEM?</h4>
@@ -100,132 +102,21 @@
 		 <h3>POPULAR BICYCLES</h3>
 		 <div class="bikes-grids">			 
 			 <ul id="flexiselDemo1">
+			     @foreach($products as $product)
 				 <li>
-					 <img src="{{ asset('images/member/bik1.jpg') }}" alt=""/>
+					 <img src="/storage/{{$product->image1}}" alt=""/>
 					 <div class="bike-info">
 						 <div class="model">
-							 <h4>FIXED GEAR<span>$249.00</span></h4>							 
+							 <h4>{{$product->brand}} {{$product->title}}<span>₱{{$product->price}}</span></h4>							 
 						 </div>
-						 <div class="model-info">
-						     <select>
-							  <option value="volvo">OPTION</option>
-							  <option value="saab">Option</option>
-							  <option value="opel">Option</option>
-							  <option value="audi">Option</option>
-							 </select>
-							 <a href="bicycles.html">BUY</a>
-						 </div>						 
+										 
 						 <div class="clearfix"></div>
 					 </div>
 					 <div class="viw">
-						<a href="bicycles.html">Quick View</a>
+						<a href="{{route('viewBicycle', $product->id)}}">Quick View</a>
 					 </div>
 				 </li>
-				 <li>
-				 <img src="{{ asset('images/member/bik2.jpg') }}" alt=""/>
-				 <div class="bike-info">
-						 <div class="model">
-							 <h4>BIG BOY ULTRA<span>$249.00</span></h4>							 
-						 </div>
-						 <div class="model-info">
-						     <select>
-							  <option value="volvo">OPTION</option>
-							  <option value="saab">Option</option>
-							  <option value="opel">Option</option>
-							  <option value="audi">Option</option>
-							 </select>
-							 <a href="bicycles.html">BUY</a>
-						 </div>						 
-						 <div class="clearfix"></div>
-					 </div>
-					 <div class="viw">
-						<a href="bicycles.html">Quick View</a>
-					 </div>
-				 </li>
-				 <li>
-					 <img src="{{ asset('images/member/bik3.jpg') }}" alt=""/>
-					 <div class="bike-info">
-						 <div class="model">
-							 <h4>ROCK HOVER<span>$300.00</span></h4>							 
-						 </div>
-						 <div class="model-info">
-						     <select>
-							  <option value="volvo">OPTION</option>
-							  <option value="saab">Option</option>
-							  <option value="opel">Option</option>
-							  <option value="audi">Option</option>
-							 </select>
-							 <a href="bicycles.html">BUY</a>
-						 </div>						 
-						 <div class="clearfix"></div>
-					 </div>
-					 <div class="viw">
-						<a href="bicycles.html">Quick View</a>
-					 </div>
-				 </li>
-				 <li>
-				     <img src="{{ asset('images/member/bik4.jpg') }}" alt=""/>
-					 <div class="bike-info">
-						 <div class="model">
-							 <h4>SANSACHG<span>$249.00</span></h4>							 
-						 </div>
-						 <div class="model-info">
-						     <select>
-							  <option value="volvo">OPTION</option>
-							  <option value="saab">Option</option>
-							  <option value="opel">Option</option>
-							  <option value="audi">Option</option>
-							 </select>
-							 <a href="bicycles.html">BUY</a>
-						 </div>						 
-						 <div class="clearfix"></div>
-					 </div>
-					 <div class="viw">
-						<a href="bicycles.html">Quick View</a>
-					 </div>
-				 </li>
-				 <li>
-					 <img src="{{ asset('images/member/bik5.jpg') }}" alt=""/>
-					 <div class="bike-info">
-						 <div class="model">
-							 <h4>JETT MAC<span>$340.00</span></h4>							 
-						 </div>
-						 <div class="model-info">
-						     <select>
-							  <option value="volvo">OPTION</option>
-							  <option value="saab">Option</option>
-							  <option value="opel">Option</option>
-							  <option value="audi">Option</option>
-							 </select>
-							 <a href="bicycles.html">BUY</a>
-						 </div>						 
-						 <div class="clearfix"></div>
-					 </div>
-					 <div class="viw">
-						<a href="bicycles.html">Quick View</a>
-					 </div>
-				 </li>
-				 <li>
-				      <img src="{{ asset('images/member/bik6.jpg') }}" alt=""/>
-					  <div class="bike-info">
-						 <div class="model">
-							 <h4>SANSACHG<span>$249.00</span></h4>							 
-						 </div>
-						 <div class="model-info">
-						     <select>
-							  <option value="volvo">OPTION</option>
-							  <option value="saab">Option</option>
-							  <option value="opel">Option</option>
-							  <option value="audi">Option</option>
-							 </select>
-							 <a href="bicycles.html">BUY</a>
-						 </div>						 
-						 <div class="clearfix"></div>
-					 </div>
-					 <div class="viw">
-						<a href="bicycles.html">Quick View</a>
-					 </div>
-				 </li>
+				 @endforeach
 		    </ul>
 			<script type="text/javascript">
 			 $(window).load(function() {			

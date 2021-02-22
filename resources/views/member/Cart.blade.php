@@ -11,11 +11,12 @@ Padyak.Co - My Cart
 		 </div>	
 			
 		 <div class="col-md-9 cart-items">
-			 <h2>My Shopping Bag ({{ Session::has('cart') ? Session::get('cart')->totalQty : '0' }})</h2>
-			  @if(Session::has('cart'))
-			  @foreach($products as $product)
+			 <h2>My Shopping Bag ({{ $cart->total_quantity ?? '0' }})</h2>
+			  @if($cart->total_quantity != 0)
+			  @foreach($cartItems as $cartItem)
 			  <?php
                $cartItemNo++;
+			   $cartItemTotal += $cartItem->product->price * $cartItem->quantity;
 			  ?>
 				<script>$(document).ready(function(c) {
 					$('.close{{$cartItemNo}}').on('click', function(c){
@@ -23,10 +24,10 @@ Padyak.Co - My Cart
 							$('.cart-header{{$cartItemNo}}').remove();
 							$.ajax({
 								type: "GET",
-								url: "cart/remove/{{$product['item']['id']}}",
+								url: "cart/remove/{{$cartItem->product->id}}",
 								success: function (result) {
                                  
-									window.location = "{{ url('/cart') }}";
+									window.location = "{{ url('member/cart') }}";
 								   
                                 }
 								
@@ -39,23 +40,23 @@ Padyak.Co - My Cart
 				 <div class="close{{$cartItemNo}} closeCart"> </div>
 				 <div class="cart-sec">
 						<div class="cart-item cyc">
-							 <img src="/storage/{{$product['item']['image1']}}"/>
+							 <img src="/storage/{{$cartItem->product->image1}}"/>
 						</div>
 					   <div class="cart-item-info">
-							 <h3>{{$product['item']['brand']}} {{$product['item']['title']}}<span>Model No: {{$product['item']['id']}}</span></h3>
-							 <h4><span>₱ </span>{{number_format($product['price'], 2, '.', '')}}</h4>
+							 <h3>{{$cartItem->product->brand}} {{$cartItem->product->title}}<span>Model No: {{$cartItem->product->id}}</span></h3>
+							 <h4><span>₱ </span>{{number_format($cartItem->product->price, 2, '.', '')}}</h4>
 						
 							 <p class="qty">Quantity :</p>
-							 @if ($product['qty'] == 1)
+							 @if ($cartItem->quantity == 1)
 							 <button class="btn btn-warning btn-sm disabled" disabled><i class="fa fa-minus" aria-hidden="true"></i></button>
 							 @else
-							 <a class="btn btn-warning btn-sm  " href="{{route('reduceCart', $product['item']['id'])}}"><i class="fa fa-minus" aria-hidden="true"></i></a>
+							 <a class="btn btn-warning btn-sm  " href="{{route('memberReduceCart', $cartItem->product->id)}}"><i class="fa fa-minus" aria-hidden="true"></i></a>
 							 @endif
-						     <strong>{{$product['qty']}}</strong>
-							 @if ($product['qty'] >= $product['item']['quantity'])
+						     <strong>{{$cartItem->quantity}}</strong>
+							 @if ($cartItem->quantity >= $cartItem->product->quantity)
 							 <a class="btn btn-warning btn-sm disabled"><i class="fa fa-plus" aria-hidden="true"></i></a>
 				             @else
-							 <a class="btn btn-warning btn-sm " href="{{route('addOneCart', $product['item']['id'])}}"><i class="fa fa-plus" aria-hidden="true"></i></a>
+							 <a class="btn btn-warning btn-sm " href="{{route('memberAddOneCart', $cartItem->product->id)}}"><i class="fa fa-plus" aria-hidden="true"></i></a>
 							 @endif
 							
 							 <!-- <input min="1" type="number" id="quantity" name="quantity" value="1" class="form-control input-small"> -->
@@ -77,7 +78,7 @@ Padyak.Co - My Cart
 			 <div class="price-details">
 				 <h3>Price Details</h3>
 				 <span>Item Total</span>
-				 <span class="total">₱ {{$totalPrice}}</span>
+				 <span class="total">₱ {{number_format($cartItemTotal, 2, '.', '')}}</span>
 				 <span>Discount</span>
 				 <span class="total">---</span>
 				 <span>Delivery Charges</span>
@@ -85,14 +86,14 @@ Padyak.Co - My Cart
 				 <div class="clearfix"></div>				 
 			 </div>	
 			 <h4 class="last-price">SUBTOTAL</h4>
-			 <span class="total final">₱ {{$totalPrice}}</span>
+			 <span class="total final">₱ {{number_format($cartItemTotal, 2, '.', '')}}</span>
 			 <div class="clearfix"></div>
-			 <a class="order" href="/login">Checkout</a>
+			 <a class="order" href="{{route('checkoutAddress')}}">Checkout</a>
 			 <div class="total-item">
 				 <h3>OPTIONS</h3>
 				 <h4>COUPONS</h4>
 				 <a class="cpns" href="#">Apply Coupons</a>
-				 <p><a href="/login">Log In</a> to checkout your items</p>
+				 <p><a href="{{route('myAccount')}}">My account</a> to check your orders</p>
 			 </div>
 			</div>
 			@else

@@ -22,10 +22,15 @@ use App\Http\Controllers\CartController;
 // });
 
 Route::get('/', [HomeController::class, 'index'])->middleware('logged');
-Route::get('/bicycles', [BicyclesController::class, 'index']);
+Route::get('/bicycles', [BicyclesController::class, 'index'])->name('bicycles');
 Route::post('/bicycles/fetch_data', [BicyclesController::class, 'fetch_bicycles_data']);
 Route::get('/bicycles/show/{id}', [BicyclesController::class, 'show'])->name('viewBicycle');
-Route::get('/cart', [CartController::class, 'index']);
+Route::get('/cart', [CartController::class, 'index'])->name('cart')->middleware('logged');
+Route::get('/cart/add/{id}', [CartController::class, 'store'])->name('addCart');
+Route::get('/cart/addOne/{id}', [CartController::class, 'addByOne'])->name('addOneCart');
+Route::get('/cart/reduce/{id}', [CartController::class, 'reduceByOne'])->name('reduceCart');
+Route::get('/cart/remove/{id}', [CartController::class, 'removeItem'])->name('removeCart');
+
 
 // Route::get('/dashboard', function () {
 //     return view('dashboard');
@@ -43,6 +48,14 @@ Route::group([
     Route::patch('updatepassword', 'AccountController@update_password');
     Route::get('editaddress', 'AccountController@edit_address')->name('editAddress');
     Route::patch('updateaddress', 'AccountController@update_address');
+    Route::get('cart', 'CartController@index')->name('memberCart');
+    Route::get('cart/add/{id}', 'CartController@store')->name('memberAddCart');
+    Route::get('cart/addOne/{id}', 'CartController@addByOne')->name('memberAddOneCart');
+    Route::get('cart/reduce/{id}', 'CartController@reduceByOne')->name('memberReduceCart');
+    Route::get('cart/remove/{id}', 'CartController@removeItem')->name('memberRemoveCart');
+    Route::get('/checkout/address', 'CheckoutController@address')->name('checkoutAddress');
+    Route::patch('/checkout/address/save', 'CheckoutController@saveAddress')->name('saveAddress');
+    Route::get('/checkout/review', 'CheckoutController@review')->name('checkoutReview');
 });
 
 Route::group([

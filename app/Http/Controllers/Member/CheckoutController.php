@@ -9,6 +9,8 @@ use App\Models\Address;
 use App\Models\Product;
 use App\Models\Cart;
 use App\Models\CartItem;
+use App\Models\Order;
+use App\Models\OrderItem;
 use Illuminate\Support\Facades\Auth;
 use Session;
 
@@ -87,8 +89,120 @@ class CheckoutController extends Controller
         $cartItemTotal = 0;
         $cartDeliveryTotal = 0;
 
-        return view('member.CheckoutReview', compact('cart','cartItems','cartItemNo', 'cartItemTotal', 'cartDeliveryTotal'));
+        if($cart->total_quantity == 0){
+            return redirect()->route('memberCart');
+        }
+        else{
+            return view('member.CheckoutReview', compact('cart','cartItems','cartItemNo', 'cartItemTotal', 'cartDeliveryTotal'));
+        }
     }
 
-   
+    public function check(Request $request){
+        $cart = Cart::where('user_id', Auth::id())->firstOrFail();
+        $cartItems =  CartItem::where('cart_id',$cart->id)->get();
+
+        header('Content-type: application/json');
+        $response['success'] = true;
+
+        foreach ($cartItems as $cartItem){
+            //delete cart item
+            //update total quantity of cart
+            $product = Product::where('id',$cartItem->product_id)->firstOrFail();
+            $oldQty = $cartItem->quantity;
+            if($product->quantity == 0){
+                $response['success'] = false;
+                $cartItem->delete();
+                $cart->total_quantity -= $oldQty;
+                $cart->save();
+                session::put('cartTotal',$cart->total_quantity);
+            }
+            elseif($product->quantity < $cartItem->quantity){
+                $response['success'] = false;
+                $cartItem->quantity = $product->quantity;
+                $cartItem->save();
+                $cart->total_quantity -= $oldQty - $product->quantity;
+                $cart->save();
+                session::put('cartTotal',$cart->total_quantity);
+                //minus quantity cart to meet min requirement
+                
+            }
+            // else{
+            //     $product->quantity -= $oldQty;
+            //     $product->save();
+            // }
+        }
+        echo json_encode($response);
+        
+    }
+
+    public function order(Request $request){
+        //get data from ajax
+        //store order
+        
+        $cart = Cart::where('user_id', Auth::id())->firstOrFail();
+       
+        $order = new Order;
+        $order->user_id = auth()->user()->id;
+        $order->quantity_total = $cart->total_quantity; 
+        $order->sub_total =  request('item_total');
+        $order->grand_total =  request('amount');
+        $order->shipping =  request('delivery_total');
+        $order->first_name = auth()->user()->first_name;
+        $order->last_name = auth()->user()->last_name;
+        $order->email = auth()->user()->email;
+        $order->address1 = auth()->user()->address->address1;
+        $order->address2 = auth()->user()->address->address2;
+        $order->city = auth()->user()->address->city;
+        $order->province = auth()->user()->address->province;
+        $order->postal_code = auth()->user()->address->postal_code;
+        $order->phone_number = auth()->user()->address->phone_number;
+        $order->status = 'paid';
+        $order->save();
+
+        //store order items
+       
+        $cartItems =  CartItem::where('cart_id',$cart->id)->get();
+        foreach ($cartItems as $cartItem) {
+                $orderItem = new OrderItem;
+                $orderItem->order_id = $order->id;
+                $orderItem->product_id = $cartItem->product_id;
+                $orderItem->quantity = $cartItem->quantity;
+                $orderItem->price = $cartItem->product->price;
+                $orderItem->shipping_fee = $cartItem->product->delivery_fee;
+                $orderItem->provincial_shipping_fee = $cartItem->product->provincial_delivery_fee;
+                $orderItem->save();
+
+                //minus product quantity
+                $product = Product::where('id',$orderItem->product_id)->firstOrFail();
+                $product->quantity -= $orderItem->quantity;
+                $product->save(); 
+        }
+
+         //delete cart items
+        CartItem::where('cart_id',$cart->id)->delete();
+
+        //delete cart order cart total
+        $cart->total_quantity = 0;
+        $cart->save();
+
+        //forget cart order cart total
+        Session::forget('cartTotal');
+
+        //email receipt
+
+        //redirect to order placed view
+        return redirect()->route('orderPlaced');
+
+        // header('Content-type: application/json');
+        // $response = $order->id; 
+        // echo json_encode($response);
+        // return redirect('member/checkout/orderPlaced/'.$order->id);
+    }
+
+    public function orderPlaced(){
+        $order =  Order::where('user_id', Auth::id())->orderBy('created_at', 'DESC')->firstOrFail();
+        $related_products = Product::where('category_id', 1)->where('status','active')->inRandomOrder()->limit(4)->get();
+        return view('member.orderPlaced', compact('order','related_products'));
+    }
+  
 }

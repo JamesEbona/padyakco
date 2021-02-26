@@ -7,7 +7,7 @@
 
 <!-- Page Heading -->
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-  <h1 class="h3 mb-0 text-gray-800">Members List</h1>
+  <h1 class="h3 mb-0 text-gray-800">Orders List</h1>
 </div>
 
 
@@ -32,57 +32,56 @@
       @endif
          <!-- <div class="alert alert-success" style="display:none"> </div> -->
   
-      <button class="btn btn-primary mb-3" onclick="addRow()"><i class="fa fa-plus" aria-hidden="true"></i> Member</button>
+    
       <div class="table-responsive">
-      <table id="memberstable" class="table text-center">
+      <table id="orderstable" class="table text-center">
 <thead>
 <tr>
-  <th>Image</th>
-  <th>First Name</th>
-  <th>Last Name</th>
+  <th>Order Number</th>
+  <th>Member Name</th>
   <th>Email</th>
-  <th>Contact Number</th>
-  <th>City</th>
-  <th>Date Joined</th>
+  <th>Phone Number</th>
+  <th>Province</th>
+  <th>Item Quantity</th>
+  <th>Total Price</th>
+  <th>Date Purchased</th>
   <th>Status</th>
-  <th>Action</th>
+  <th class="w-25">Action</th>
 </tr>
 </thead>
 <tbody>
 <!-- <tr>
   <td>Row 1 Data 1</td>
 </tr> -->
-@foreach ($users as $user)
+@foreach ($orders as $order)
   <tr>
-      <td class="py-1"><a data-image="{{$user->image}}" onclick="viewUserPicture(this);"><img class="img-profile rounded-circle table-image" src="/storage/{{$user->image}}"></a></td>
-      <td>{{$user->first_name}}</td>
-      <td>{{$user->last_name}}</td>
-      <td>{{$user->email}}</td>
-      <td>{{$user->address->phone_number ?? 'Not Found'}}</td> 
-      <td>{{$user->address->city ?? 'Not Found'}}</td> 
-      <td>{{$user->created_at}}</td>
-      @if($user->status == "active")
-      <td> <span class="badge badge-success justify-content-center ">{{$user->status}}</span></td>
-      @else
-      <td> <span class="badge badge-danger justify-content-center ">{{$user->status}}</span></td>
-      @endif
+      <td>{{$order->id}}</td>
+      <td>{{$order->first_name}} {{$order->last_name}}</td>
+      <td>{{$order->email}}</td>
+      <td>{{$order->phone_number}}</td>
+      <td>{{$order->province}}</td>
+      <td>{{$order->quantity_total}}</td>
+      <td>{{$order->grand_total}}</td>
+      <td>{{$order->created_at}}</td>
+      @if($order->status =="paid")
+        <td><span class="badge badge-primary justify-content-center">{{$order->status}}</span></td>
+        @elseif($order->status =="in-transit")
+        <td><span class="badge badge-info justify-content-center">{{$order->status}}</span></td>
+        @elseif($order->status =="in-delivered")
+        <td><span class="badge badge-success justify-content-center">{{$order->status}}</span></td>
+        @elseif($order->status =="in-cancelled")
+        <td><span class="badge badge-danger justify-content-center">{{$order->status}}</span></td>
+        @endif
       <td><div class="row justify-content-center">
-      <div class="col-md-4">
-      <button class="btn btn-secondary" data-address1="{{$user->address->address1 ?? 'Not Found'}}" data-address2="{{$user->address->address2 ?? 'Not Found'}}" data-city="{{$user->address->city ?? 'Not Found'}}" data-province="{{$user->address->province ?? 'Not Found'}}" data-postalcode="{{$user->address->postal_code ?? 'Not Found'}}"
-       data-phonenumber="{{$user->address->phone_number ?? 'Not Found'}}" onclick="viewAddress(this)"><i class="fa fa-map-marked-alt" aria-hidden="true"></i></button>
-       </div>
-       <div class="col-md-4">
-      <button class="btn btn-dark" data-id="{{$user->id}}" data-firstname="{{$user->first_name}}" data-lastname="{{$user->last_name}}" data-email="{{$user->email}}" data-role="{{$user->role}}"
-       data-image="{{$user->image}}" onclick="editUser(this)"><i class="fa fa-edit" aria-hidden="true"></i></button>
-       </div>
-       <div class="col-md-4">
-      @if ($user->status == 'active')
-      <a class="btn btn-warning " href="/admin/users/deactivate/{{ $user->id }}"><i class="fa fa-ban" aria-hidden="true"></i></a>
-      @else
-      <a class="btn btn-success" href="/admin/users/activate/{{ $user->id }}"><i class="fa fa-check-circle" aria-hidden="true"></i></a>
-      @endif
+      <div class="col-md-4 ">
+      <button class="btn btn-dark" ><i class="fa fa-edit" aria-hidden="true"></i></button>
       </div>
-      </div> </td> 
+      <div class="col-md-4">
+      <a class="btn btn-warning" href=""><i class="fas fa-info-circle" aria-hidden="true"></i></a>
+      </div>
+      <div class="col-md-4 ">
+      <button class="btn btn-info " data-id="{{$order->id}}" onclick="deleteUser(this);"><i class="fas fa-shipping-fast" aria-hidden="true"></i></button>
+      </div></div> </td> 
   </tr>
 @endforeach
 
@@ -103,7 +102,7 @@
 @endsection
 
 @section('modals')
-<!-- <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -112,7 +111,7 @@
             <span aria-hidden="true">×</span>
           </button>
         </div>
-        <div class="modal-body">Deleted users are are cannot be recovered.</div>
+        <div class="modal-body">A deleted user cannot be recovered anymore.</div>
         <div class="modal-footer">
           <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
           <a class="btn btn-danger" id="DeleteUserButton">Delete
@@ -120,16 +119,16 @@
         </div>
       </div>
     </div>
-  </div>  -->
+  </div> 
 
   <div class="modal fade crud" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalTitle" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
-            <form enctype="multipart/form-data"  id="submit_edit_member" action="javascript:void(0)" >
+            <form enctype="multipart/form-data"  id="submit_edit_admin" action="javascript:void(0)" >
             @CSRF
            
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editModalTitle">Edit Member</h5>
+                    <h5 class="modal-title" id="editModalTitle">Edit Admin</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -182,10 +181,10 @@
   <div class="modal fade crud" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalTitle" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
-            <form method = "POST" enctype="multipart/form-data" id="submit_add_member" action="javascript:void(0)">
+            <form method = "POST" enctype="multipart/form-data" id="submit_add_admin" action="javascript:void(0)">
                 @CSRF
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addModalTitle">Add Member</h5>
+                    <h5 class="modal-title" id="addModalTitle">Add Admin</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -263,55 +262,6 @@
     </div>
 </div>
 
-<div class="modal fade" id="addressModal" tabindex="-1" role="dialog" aria-labelledby="addressModalTitle" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="addressModalTitle">View User Address</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                      <div class="card ">
-           
-            <div class="card-body">
-               <div class="form-group">
-                        <label>Address 1</label>
-                        <input class="form-control" id="viewAddress1" type="text" disabled>   
-               </div>
-               <div class="form-group">
-                        <label>Address 2</label>
-                        <input class="form-control" id="viewAddress2" type="text" disabled>   
-               </div>
-               <div class="form-group">
-                        <label>City</label>
-                        <input class="form-control" id="viewCity" type="text" disabled>   
-               </div>
-               <div class="form-group">
-                        <label>Province</label>
-                        <input class="form-control" id="viewProvince" type="text" disabled>   
-               </div>
-               <div class="form-group">
-                        <label>Postal Code</label>
-                        <input class="form-control" id="viewPostalCode" type="text" disabled>   
-               </div>
-               <div class="form-group">
-                        <label>Contact Number</label>
-                        <input class="form-control" id="viewPhoneNumber" type="text" disabled>   
-               </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-                </div>
-          </div>
-        </div>
-        </div>
-
-
-    </div>
-</div>
-
 @endsection
 
 @section('js')
@@ -324,12 +274,12 @@ headers: {
 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 }
 });
-$('#submit_add_member').submit(function(e) {
+$('#submit_add_admin').submit(function(e) {
 e.preventDefault();
 var formData = new FormData(this);
 $.ajax({
 type:'POST',
-url: "{{ url('/admin/users/memberstore') }}",
+url: "{{ url('/admin/users/adminstore') }}",
 data: formData,
 cache:false,
 contentType: false,
@@ -348,7 +298,7 @@ success: function(result){
                 {
                     $('.modal-errors').hide();
                     $('#addModal').modal('hide');
-                    window.location = "{{ url('/admin/memberusers/') }}";
+                    window.location = "{{ url('/admin/adminusers/') }}";
                     // $('.alert-success').html('');
                     // $('.alert-success').show();
                     // $('.alert-success').append('Member added.');
@@ -358,7 +308,7 @@ success: function(result){
 });
 });
 
-$('#submit_edit_member').submit(function(e) {
+$('#submit_edit_admin').submit(function(e) {
 e.preventDefault();
 var formData = new FormData(this);
 $.ajax({
@@ -380,9 +330,9 @@ success: function(result){
                 }
                 else
                 {
-                    $('..modal-errors').hide();
+                    $('.modal-errors').hide();
                     $('#editModal').modal('hide');
-                    window.location = "{{ url('/admin/memberusers/') }}";
+                    window.location = "{{ url('/admin/adminusers/') }}";
                     // $('.alert-success').html('');
                     // $('.alert-success').show();
                     // $('.alert-success').append('Member added.');
@@ -392,9 +342,16 @@ success: function(result){
 });
 });
 
+// $('.modal-close').on('click', function () {
+//     $('.admin-edit-errors').hide();   
+//       });
 
+
+    
 
 });
+
+
 </script>
 @endsection
 

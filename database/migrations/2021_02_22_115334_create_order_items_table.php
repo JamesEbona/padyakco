@@ -22,6 +22,7 @@ class CreateOrderItemsTable extends Migration
             $table->unsignedInteger('quantity');
             $table->unsignedDecimal('price', $precision = 8, $scale = 2);
             $table->unsignedDecimal('shipping_fee', $precision = 8, $scale = 2);
+            $table->unsignedDecimal('provincial_shipping_fee', $precision = 8, $scale = 2);
             $table->timestamps();
             $table->softDeletes();
         });

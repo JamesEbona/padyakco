@@ -134,7 +134,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			<div><a class="account-links {{{ (Route::current()->getName() == "editProfile" ? 'active-link' : '') }}}" href="{{route('editProfile')}}">Update Profile</a></div>
 			<div><a class="account-links {{{ (Route::current()->getName() == "editAddress" ? 'active-link' : '') }}}" href="{{route('editAddress')}}">Update Delivery Details</a></div>
 			<div><a class="account-links {{{ (Route::current()->getName() == "editPassword" ? 'active-link' : '') }}}" href="{{route('editPassword')}}">Change Password</a></div>
-			<div><a class="account-links" href="">My Orders</a></div>
+			<div><a class="account-links" href="">My Repair Bookings</a></div>
+			<div><a class="account-links {{{ (Route::current()->getName() == "orders" ? 'active-link' : '') }}}" href="{{route('orders')}}">My Orders</a></div>
             <div>
             <a class="account-links" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

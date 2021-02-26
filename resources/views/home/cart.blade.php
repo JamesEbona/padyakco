@@ -62,7 +62,7 @@ Padyak.Co - My Cart
 					   </div>
 					   <div class="clearfix"></div>
 						<div class="delivery">
-						     <p>Delivery fee: ₱ 100.00</p>
+						     <p>Stocks available: {{$product['item']['quantity']}}</p>
 							 <span>Delivered in 1-2 weeks</span>
 							 <div class="clearfix"></div>
 				        </div>						

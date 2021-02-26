@@ -37,7 +37,7 @@
                           <th>Rating</th>
                           <th>Created At</th>
                           <th>Status</th>
-                          <th>Actions</th>
+                          <th class="w-25">Actions</th>
                       </tr>
                   </thead>
                   <tbody>
@@ -53,7 +53,11 @@
                           <td>{{$product->price}}</td>
                           <td>{{$product->rating}} <i class="fa fa-star" aria-hidden="true"></i></td>
                           <td>{{$product->created_at ?? 'Not Found'}}</td>
-                          <td>{{$product->status}}</td>
+                          @if($product->status == "active")
+                          <td> <span class="badge badge-success justify-content-center ">{{$product->status}}</span></td>
+                          @else
+                          <td> <span class="badge badge-danger">{{$product->status}}</span></td>
+                          @endif
                           <td><div class="row justify-content-center">
                           <div class="col-md-4">
                           <button class="btn btn-dark" data-id="{{$product->id}}" data-title="{{$product->title}}" data-brand="{{$product->brand}}" data-category_id="{{$product->category_id}}"  data-subcategory_id="{{$product->subcategory_id}}" 

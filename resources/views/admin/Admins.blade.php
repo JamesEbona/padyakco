@@ -57,7 +57,11 @@
       <td>{{$user->last_name}}</td>
       <td>{{$user->email}}</td>
       <td>{{$user->created_at}}</td>
-      <td>{{$user->status}}</td>
+      @if($user->status == "active")
+      <td> <span class="badge badge-success justify-content-center ">{{$user->status}}</span></td>
+      @else
+      <td> <span class="badge badge-danger justify-content-center ">{{$user->status}}</span></td>
+      @endif
       <td><div class="row justify-content-center">
       <button class="btn btn-dark" data-id="{{$user->id}}" data-firstname="{{$user->first_name}}" data-lastname="{{$user->last_name}}" data-email="{{$user->email}}" data-role="{{$user->role}}"
        data-image="{{$user->image}}" onclick="editUser(this)"><i class="fa fa-edit" aria-hidden="true"></i></button>

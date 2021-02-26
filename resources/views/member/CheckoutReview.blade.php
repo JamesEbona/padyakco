@@ -79,11 +79,90 @@ Padyak.Co - Checkout
 				 <h4>COUPONS</h4>
 				 <a class="cpns" href="#">Apply Coupons</a>
 				 <p><a href="{{route('myAccount')}}">My account</a> to check your orders</p>
+				 <p>An online receipt will be sent to your registered e-mail.</p>
 			 </div>
 			</div>
 	 </div>
 </div>
 
-<script src="https://www.paypal.com/sdk/js?client-id=sb&currency=PHP"></script>
-<script>paypal.Buttons().render('#paypalButtons');</script>
+<script src="https://www.paypal.com/sdk/js?client-id=AdxXimYRlwtcfMiPD8Y13isalZqY6IO847zNO43qvfPzSlnBtMNzKahvjaQTtukF-eRCPlRKpcBeXliy&currency=PHP"></script>
+<script>
+    var amount = {{$cartItemTotal + $cartDeliveryTotal}};
+	var item_total = {{$cartItemTotal}};
+	var delivery_total = {{$cartDeliveryTotal}};
+    paypal.Buttons({
+    createOrder: function(data, actions) {
+      // This function sets up the details of the transaction, including the amount and line item details.
+
+	//add double brackets to routes 
+	//   $.ajaxSetup({
+	// 		headers: {
+	// 		'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+	// 		}
+	// 	});
+	// 	$.ajax({  
+	// 		type: 'POST',  
+	// 		url: 'route("check") ', 
+	// 		data: { 
+	// 	            item_total: item_total,
+	// 				item_total: item_total,
+	// 				delivery_total: delivery_total
+	// 		},
+	// 		success: function(response) {
+	// 			if(response['success'] = false){
+	// 				window.location = "route('checkoutReview') ";
+	// 				window.alert('Sorry. Some items in your order are updated due to inventory issues.');
+	// 			}
+
+			
+	// 		}
+	// 	});	
+	    
+	  
+		return actions.order.create({
+						purchase_units: [{
+						amount: {
+						
+							value: amount,
+							breakdown: {
+										item_total: {
+											currency_code:"PHP",
+											value: item_total
+										},
+										shipping: {
+											currency_code:"PHP",
+											value: delivery_total
+										},
+									}
+						},
+						
+						}]
+					});	
+		
+    },
+    onApprove: function(data, actions) {
+      // This function captures the funds from the transaction.
+      return actions.order.capture().then(function(details) {
+		$.ajaxSetup({
+			headers: {
+			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			}
+		});
+		$.ajax({  
+			type: 'POST',  
+			url: '{{ route("order") }}', 
+			data: { amount: amount,
+			        item_total: item_total,
+					delivery_total: delivery_total
+			},
+			success: function(response) {
+				window.location = "{{ route('orderPlaced') }}";
+			}
+		});		   
+      });
+    }
+  }).render('#paypalButtons');
+  //This function displays Smart Payment Buttons on your web page.
+
+</script>
 @endsection

@@ -117,8 +117,8 @@
           <span>Sub Categories</span></a>
       </li>
 
-       <li class="nav-item {{{ (Route::current()->getName() == "OrganizationsIndex" ? 'active' : '') }}}">
-        <a class="nav-link" href="/Organizations">
+       <li class="nav-item {{{ (Route::current()->getName() == "orders" ? 'active' : '') }}}">
+        <a class="nav-link" href="{{route('adminOrders')}}">
           <i class="fas fa-fw fa-receipt"></i>
           <span>Orders</span></a>
       </li>
@@ -154,15 +154,11 @@
 </div>
 
 
-<li class="nav-item {{{ (Route::current()->getName() == "LiveCountIndex" ? 'active' : '') }}}">
-  <a class="nav-link" href="/LiveCount">
-    <i class="fas fa-fw fa-map-marker-alt"></i>
-    <span>Trip Destinations</span></a>
-</li>
+
 <li class="nav-item {{{ (Route::current()->getName() == "OrgRequestsIndex" ? 'active' : '') }}}">
         <a class="nav-link" href="/OrganizationRequests">
           <i class="fas fa-fw fa-map"></i>
-          <span>Trip Guides</span></a>
+          <span>Posts</span></a>
       </li>
 
        <!-- Divider -->
@@ -362,6 +358,12 @@ $('#categorytable').DataTable( {
 $('#subcategorytable').DataTable( {
   columnDefs: [
     {searchable: false, orderable: false, targets: 3 }
+  ]
+} );
+
+$('#orderstable').DataTable( {
+  columnDefs: [
+    {searchable: false, orderable: false, targets: 9 }
   ]
 } );
 </script>

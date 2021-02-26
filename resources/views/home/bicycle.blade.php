@@ -74,7 +74,9 @@
 								$productQty = 0;
 								if(Session::has('cart')){
                                  $cart = (array) Session::get('cart');
-								 $productQty = $cart['items']['3']['qty'];
+								 if(isset($cart['items'][$bicycle->id])){
+								 $productQty = $cart['items'][$bicycle->id]['qty'];
+								 }
 								}
                                 if($bicycle->quantity == 0 OR $productQty >= $bicycle->quantity){
 								?>

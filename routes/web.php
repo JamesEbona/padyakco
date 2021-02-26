@@ -56,6 +56,11 @@ Route::group([
     Route::get('/checkout/address', 'CheckoutController@address')->name('checkoutAddress');
     Route::patch('/checkout/address/save', 'CheckoutController@saveAddress')->name('saveAddress');
     Route::get('/checkout/review', 'CheckoutController@review')->name('checkoutReview');
+    Route::post('/checkout/check', 'CheckoutController@check')->name('check');
+    Route::post('/checkout/order', 'CheckoutController@order')->name('order');
+    Route::get('/checkout/orderPlaced', 'CheckoutController@orderPlaced')->name('orderPlaced');
+    Route::get('orders', 'OrderController@index')->name('orders');
+    Route::get('orders/{id}', 'OrderController@show')->name('orderView');
 });
 
 Route::group([
@@ -91,6 +96,7 @@ Route::group([
     Route::post('subcategories/store', 'SubCategoriesController@store');
     Route::post('subcategories/edit', 'SubCategoriesController@edit');
     Route::get('subcategories/delete/{id}', 'SubCategoriesController@destroy');
+    Route::get('orders', 'OrdersController@index')->name('adminOrders');
 
 });
 

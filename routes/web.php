@@ -5,6 +5,9 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\BicyclesController;
 use App\Http\Controllers\CartController;
 
+use App\Mail\OrderDelivered;
+use App\Models\Order;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -21,7 +24,7 @@ use App\Http\Controllers\CartController;
 //     return view('welcome');
 // });
 
-Route::get('/', [HomeController::class, 'index'])->middleware('logged');
+Route::get('/', [HomeController::class, 'index'])->middleware('logged')->name('home');
 Route::get('/bicycles', [BicyclesController::class, 'index'])->name('bicycles');
 Route::post('/bicycles/fetch_data', [BicyclesController::class, 'fetch_bicycles_data']);
 Route::get('/bicycles/show/{id}', [BicyclesController::class, 'show'])->name('viewBicycle');
@@ -31,6 +34,10 @@ Route::get('/cart/addOne/{id}', [CartController::class, 'addByOne'])->name('addO
 Route::get('/cart/reduce/{id}', [CartController::class, 'reduceByOne'])->name('reduceCart');
 Route::get('/cart/remove/{id}', [CartController::class, 'removeItem'])->name('removeCart');
 
+Route::get('/email', function(){
+    $order = Order::where('id',13)->firstOrFail();
+    return new OrderDelivered($order);
+});
 
 // Route::get('/dashboard', function () {
 //     return view('dashboard');

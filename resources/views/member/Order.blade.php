@@ -57,10 +57,10 @@ My Order
                     <p>Quantity: {{$orderItem->quantity}}</p>
                     </div>
                     <div class="row pt-3">
-                    <div class="col-md-4"><h2>₱{{number_format($orderItem->price)}}</h2></div>
+                    <div class="col-md-4"><h2>₱{{number_format($orderItem->price,2)}}</h2></div>
                     <div class="col-md-4 text-center"><h2>X {{$orderItem->quantity}}</h2></div>
                     <div class="col-md-4 text-right">
-                    <h2>₱{{number_format($orderItem->price * $orderItem->quantity)}}</h2>
+                    <h2>₱{{number_format($orderItem->price * $orderItem->quantity,2)}}</h2>
                     </div>
                     </div>
                     </div>
@@ -125,7 +125,7 @@ My Order
 				    <p>Product Total ({{$order->quantity_total}})</p>
 					</div>
                     <div class="col-md-6 text-right">
-				    <p>₱{{number_format($order->sub_total)}}</p>
+				    <p>₱{{number_format($order->sub_total,2)}}</p>
 					</div>
 					</div>
 					<div class="row" style="border-bottom: 2px solid; padding-bottom: 12px;">
@@ -133,7 +133,7 @@ My Order
                     <p>Delivery Total ({{$order->province}})</p>
 					</div>
                     <div class="col-md-4 text-right">
-				    <p>₱{{number_format($order->shipping)}}</p>
+				    <p>₱{{number_format($order->shipping,2)}}</p>
 					</div>
 					</div>
                     <div class="row" style="padding-top: 12px;">
@@ -141,7 +141,7 @@ My Order
                     <p>Payment Total</p>
 					</div>
                     <div class="col-md-6 text-right">
-				    <p>₱{{number_format($order->grand_total)}}</p>
+				    <p>₱{{number_format($order->grand_total,2)}}</p>
 					</div>
 					</div>
                     

@@ -12,6 +12,10 @@ use App\Models\CartItem;
 use App\Models\Order;
 use App\Models\OrderItem;
 use Illuminate\Support\Facades\Auth;
+use App\Events\NewOrderEvent;
+// use App\Mail\OrderReceipt;
+// use Illuminate\Support\Facades\Mail;
+// use Illuminate\Support\Facades\Notification;
 use Session;
 
 class CheckoutController extends Controller
@@ -189,6 +193,7 @@ class CheckoutController extends Controller
         Session::forget('cartTotal');
 
         //email receipt
+        event(new NewOrderEvent($order));
 
         //redirect to order placed view
         return redirect()->route('orderPlaced');

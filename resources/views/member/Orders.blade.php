@@ -34,14 +34,16 @@ My Orders
 					</div>
 					</div>
 					<div class="row">
-					<div class="col-md-12">
+					
 					@foreach($order->orderitems as $orderItem)
+					<div class="col-md-3">
 					<a href="/bicycles/show/{{$orderItem->product->id}}">
 					<img src="/storage/{{$orderItem->product->image1}}" class="img-responsive mt-3" style=" max-width: 500px;
                      height: 100px;" alt=""/>
 					</a>
-					@endforeach
 					</div>
+					@endforeach
+					
 					</div>
 				  </div>
 			 </div>

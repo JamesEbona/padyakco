@@ -43,7 +43,7 @@ Padyak.Co - My Cart
 						</div>
 					   <div class="cart-item-info">
 							 <h3>{{$product['item']['brand']}} {{$product['item']['title']}}<span>Model No: {{$product['item']['id']}}</span></h3>
-							 <h4><span>₱ </span>{{number_format($product['price'], 2, '.', '')}}</h4>
+							 <h4><span>₱ </span>{{number_format($product['price'],2)}}</h4>
 						
 							 <p class="qty">Quantity :</p>
 							 @if ($product['qty'] == 1)
@@ -77,7 +77,7 @@ Padyak.Co - My Cart
 			 <div class="price-details">
 				 <h3>Price Details</h3>
 				 <span>Item Total</span>
-				 <span class="total">₱ {{$totalPrice}}</span>
+				 <span class="total">₱ {{number_format($totalPrice,2)}}</span>
 				 <span>Discount</span>
 				 <span class="total">---</span>
 				 <span>Delivery Charges</span>
@@ -85,7 +85,7 @@ Padyak.Co - My Cart
 				 <div class="clearfix"></div>				 
 			 </div>	
 			 <h4 class="last-price">SUBTOTAL</h4>
-			 <span class="total final">₱ {{$totalPrice}}</span>
+			 <span class="total final">₱ {{number_format($totalPrice,2)}}</span>
 			 <div class="clearfix"></div>
 			 <a class="order" href="/login">Checkout</a>
 			 <div class="total-item">

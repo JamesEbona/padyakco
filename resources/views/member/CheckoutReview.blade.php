@@ -28,11 +28,11 @@ Padyak.Co - Checkout
 						</div>
 					   <div class="cart-item-info">
 							 <h3>{{$cartItem->product->brand}} {{$cartItem->product->title}}<span>Model No: {{$cartItem->product->id}}</span></h3>
-							 <h4><span>₱ </span>{{number_format($cartItem->product->price, 2, '.', '')}}</h4>
+							 <h4><span>₱ </span>{{number_format($cartItem->product->price,2)}}</h4>
 						     <h4>X</h4>
 							 <p class="qty">Quantity :</p>
 						     <strong>{{$cartItem->quantity}}</strong>
-                             <h4 class= "ml-5"><span>₱ </span>{{number_format($cartItem->product->price * $cartItem->quantity, 2, '.', '')}}</h4>
+                             <h4 class= "ml-5"><span>₱ </span>{{number_format($cartItem->product->price * $cartItem->quantity,2)}}</h4>
 							
 							 <!-- <input min="1" type="number" id="quantity" name="quantity" value="1" class="form-control input-small"> -->
 					   </div>
@@ -42,12 +42,12 @@ Padyak.Co - Checkout
                              <?php
                                $cartDeliveryTotal += $cartItem->product->delivery_fee * $cartItem->quantity;
                              ?>
-						     <p>Delivery fee: ₱ {{number_format($cartItem->product->delivery_fee * $cartItem->quantity, 2, '.', '')}}</p>
+						     <p>Delivery fee: ₱ {{number_format($cartItem->product->delivery_fee * $cartItem->quantity,2)}}</p>
                             @else()
                             <?php
                                $cartDeliveryTotal += $cartItem->product->provincial_delivery_fee * $cartItem->quantity;
                              ?>
-                            <p>Provincial Delivery fee: ₱ {{number_format($cartItem->product->provincial_delivery_fee * $cartItem->quantity, 2, '.', '')}}</p> 
+                            <p>Provincial Delivery fee: ₱ {{number_format($cartItem->product->provincial_delivery_fee * $cartItem->quantity,2)}}</p> 
                             @endif
 							 <span>Delivered in 1-2 weeks</span>
 							 <div class="clearfix"></div>
@@ -63,15 +63,15 @@ Padyak.Co - Checkout
 			 <div class="price-details">
 				 <h3>Price Details</h3>
 				 <span>Item Total</span>
-				 <span class="total">₱ {{number_format($cartItemTotal, 2, '.', '')}}</span>
+				 <span class="total">₱ {{number_format($cartItemTotal,2)}}</span>
 				 <span>Discount</span>
 				 <span class="total">---</span>
 				 <span>Delivery Charges</span>
-				 <span class="total">₱ {{number_format($cartDeliveryTotal, 2, '.', '')}}</span>
+				 <span class="total">₱ {{number_format($cartDeliveryTotal,2)}}</span>
 				 <div class="clearfix"></div>				 
 			 </div>	
 			 <h4 class="last-price">TOTAL</h4>
-			 <span class="total final">₱ {{number_format($cartItemTotal + $cartDeliveryTotal, 2, '.', '')}}</span>
+			 <span class="total final">₱ {{number_format($cartItemTotal + $cartDeliveryTotal,2)}}</span>
 			 <div class="clearfix"></div>
              <div id="paypalButtons" class="mt-5"></div>
 			 <div class="total-item">

@@ -65,7 +65,7 @@
 							<h3>{{$bicycle->title}}</h3>
 								<h4>Model No: {{$bicycle->id}}</h4>
 							<h4></h4>
-							<p><label>₱</label> {{$bicycle->price}}</p>
+							<p><label>₱</label> {{number_format($bicycle->price,2)}}</p>
 							<p class="size">STOCKS LEFT ::</p>
 							<a class="length" >{{$bicycle->quantity}}</a>
 							<div class="btn_form">
@@ -131,7 +131,7 @@
 						 <div class="clearfix"></div>
 					 </div>
 					 <div class="product_price">
-							<span class="price-access">₱{{$related_product->price}}</span>								
+							<span class="price-access">₱{{number_format($related_product->price,2)}}</span>								
 							<a class="button1 ml-2" href="/bicycles/show/{{$related_product->id}}"><span>View</span></a>
 					 </div>
 						<div class="clearfix"></div>

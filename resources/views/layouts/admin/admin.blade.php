@@ -117,7 +117,7 @@
           <span>Sub Categories</span></a>
       </li>
 
-       <li class="nav-item {{{ (Route::current()->getName() == "orders" ? 'active' : '') }}}">
+       <li class="nav-item {{{ (Route::current()->getName() == "adminOrders" ? 'active' : '') }}}">
         <a class="nav-link" href="{{route('adminOrders')}}">
           <i class="fas fa-fw fa-receipt"></i>
           <span>Orders</span></a>
@@ -362,6 +362,7 @@ $('#subcategorytable').DataTable( {
 } );
 
 $('#orderstable').DataTable( {
+  order: [[7, 'desc']],
   columnDefs: [
     {searchable: false, orderable: false, targets: 9 }
   ]

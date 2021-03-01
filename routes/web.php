@@ -104,6 +104,9 @@ Route::group([
     Route::post('subcategories/edit', 'SubCategoriesController@edit');
     Route::get('subcategories/delete/{id}', 'SubCategoriesController@destroy');
     Route::get('orders', 'OrdersController@index')->name('adminOrders');
+    Route::post('orders/modify', 'OrdersController@modify');
+    Route::post('orders/updateStatus', 'OrdersController@updateStatus');
+    Route::get('orders/show/{id}', 'OrdersController@show')->name('adminOrderView');
 
 });
 

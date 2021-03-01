@@ -121,6 +121,35 @@ function editSubCategory(arg) {
     document.getElementById('category_id').value = category; 
 }
 
+function editOrder(arg) {
+    $('#editModal').modal('show');
+    var id = $(arg).attr('data-id');
+    var address1 = $(arg).attr('data-address1');
+    var address2 = $(arg).attr('data-address2');
+    var city = $(arg).attr('data-city');
+    var province = $(arg).attr('data-province');
+    var postal_code = $(arg).attr('data-postalcode');
+    var phone_number = $(arg).attr('data-phonenumber');
+   
+    $("#editId").val(id);
+    $("#editAddress1").val(address1);
+    $("#editAddress2").val(address2);
+    $("#editCity").val(city);
+    document.getElementById('editProvince').value = province; 
+    $("#editPostalCode").val(postal_code);
+    $("#editPhoneNumber").val(phone_number);
+}
+
+function updateStatus(arg) {
+    $('#editStatusModal').modal('show');
+    var id = $(arg).attr('data-id');
+    var status = $(arg).attr('data-status');
+
+    $("#editStatusId").val(id);
+    $("#viewId").val(id);
+    document.getElementById('editStatus').value = status; 
+}
+
 function viewAddress(arg) {
     $('#addressModal').modal('show');
     var address1 = $(arg).attr('data-address1');

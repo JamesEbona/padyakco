@@ -19,9 +19,9 @@ My Orders
 					<h2 class="text-right"><span class="label label-primary">{{$order->status}}</span></h2>
 					@elseif($order->status =="in-transit")
 					<h2 class="text-right"><span class="label label-info">{{$order->status}}</span></h2>
-					@elseif($order->status =="in-delivered")
+					@elseif($order->status =="delivered")
 					<h2 class="text-right"><span class="label label-success">{{$order->status}}</span></h2>
-					@elseif($order->status =="in-cancelled")
+					@elseif($order->status =="cancelled")
 					<h2 class="text-right"><span class="label label-danger">{{$order->status}}</span></h2>
 					@endif
 					</div>

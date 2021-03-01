@@ -67,20 +67,20 @@
         <td><span class="badge badge-primary justify-content-center">{{$order->status}}</span></td>
         @elseif($order->status =="in-transit")
         <td><span class="badge badge-info justify-content-center">{{$order->status}}</span></td>
-        @elseif($order->status =="in-delivered")
+        @elseif($order->status =="delivered")
         <td><span class="badge badge-success justify-content-center">{{$order->status}}</span></td>
-        @elseif($order->status =="in-cancelled")
+        @elseif($order->status =="cancelled")
         <td><span class="badge badge-danger justify-content-center">{{$order->status}}</span></td>
         @endif
       <td><div class="row justify-content-center">
       <div class="col-md-4 ">
-      <button class="btn btn-dark" ><i class="fa fa-edit" aria-hidden="true"></i></button>
+      <button class="btn btn-dark" data-id="{{$order->id}}" data-address1="{{$order->address1}}" data-address2="{{$order->address2}}" data-city="{{$order->city}}" data-province="{{$order->province}}" data-postalcode="{{$order->postal_code}}" data-phonenumber="{{$order->phone_number}}" onclick="editOrder(this);" ><i class="fa fa-edit" aria-hidden="true"></i></button>
       </div>
       <div class="col-md-4">
-      <a class="btn btn-warning" href=""><i class="fas fa-info-circle" aria-hidden="true"></i></a>
+      <a class="btn btn-warning" href="{{route('adminOrderView', ['id' => $order->id])}}"><i class="fas fa-info-circle" aria-hidden="true"></i></a>
       </div>
       <div class="col-md-4 ">
-      <button class="btn btn-info " data-id="{{$order->id}}" onclick="deleteUser(this);"><i class="fas fa-shipping-fast" aria-hidden="true"></i></button>
+      <button class="btn btn-info " data-id="{{$order->id}}" data-status="{{$order->status}}" onclick="updateStatus(this);"><i class="fas fa-shipping-fast" aria-hidden="true"></i></button>
       </div></div> </td> 
   </tr>
 @endforeach
@@ -102,33 +102,14 @@
 @endsection
 
 @section('modals')
-<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="deleteModalLabel">Are you sure you want to delete?</h5>
-          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
-          </button>
-        </div>
-        <div class="modal-body">A deleted user cannot be recovered anymore.</div>
-        <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-danger" id="DeleteUserButton">Delete
-          </a>
-        </div>
-      </div>
-    </div>
-  </div> 
-
   <div class="modal fade crud" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalTitle" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
-            <form enctype="multipart/form-data"  id="submit_edit_admin" action="javascript:void(0)" >
+            <form enctype="multipart/form-data"  id="submit_edit_order" action="javascript:void(0)" >
             @CSRF
            
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editModalTitle">Edit Admin</h5>
+                    <h5 class="modal-title" id="editModalTitle">Edit Order Delivery Details</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -139,31 +120,108 @@
            
             <div class="card-body">
             <div class="alert alert-danger modal-errors" style="display:none"></div>
-               <div class="form-group">
-                <div class="row justify-content-center">
-                  <a id="viewEditImageLink" target="_blank">
-              <img id="viewEditImage" alt="" class="rounded-circle w-100" style="max-width: 200px;">
-            </a>
-            </div>
-            </div>
+      
                     <div class="form-group">
-                        <label>First Name</label>
-                        <input class="form-control" type="text" id="editFirstName" name="first_name" required="" >
+                        <label>Address 1</label>
+                        <input class="form-control" type="text" id="editAddress1" name="address1" required="" >
                     </div>
+                    <div class="form-group">
+                        <label>Address 2</label>
+                        <input class="form-control" type="text" id="editAddress2" name="address2" required="" >
+                    </div>
+                    <div class="form-group">
+                        <label>City</label>
+                        <input class="form-control" type="text" id="editCity" name="city" required="" >
+                    </div>
+                    <div class="form-group">
+                        <label>Province</label>
+                        <select class="form-control" name="province" id="editProvince">
+                        <option value="Abra">Abra</option>
+                        <option value="Albay">Albay</option>
+                        <option value="Apayao">Apayao</option>
+                        <option value="Aurora">Aurora</option>
+                        <option value="Bataan">Bataan</option>
+                        <option value="Batangas">Batangas</option>
+                        <option value="Benguet">Benguet</option>
+                        <option value="Bulacan">Bulacan</option>
+                        <option value="Cagayan">Cagayan</option>
+                        <option value="Camarines Norte">Camarines Norte</option>
+                        <option value="Camarines Sur">Camarines Sur</option>
+                        <option value="Cavite">Cavite</option>
+                        <option value="Ifugao">Ifugao</option>
+                        <option value="Ilocos Norte">Ilocos Norte</option>
+                        <option value="Ilocos Sur">Ilocos Sur</option>
+                        <option value="Isabela">Isabela</option>
+                        <option value="Kalinga">Kalinga</option>
+                        <option value="La Union">La Union</option>
+                        <option value="Laguna">Laguna</option>
+                        <option value="Metro Manila">Metro Manila</option>
+                        <option value="Mountain Province">Mountain</option>
+                        <option value="Nueva Ecija">Nueva Ecija</option>
+                        <option value="Nueva Vizcaya">Nueva Vizcaya</option>
+                        <option value="Pampanga">Pampanga</option>
+                        <option value="Pangasinan">Pangasinan</option>
+                        <option value="Quezon">Quezon</option>
+                        <option value="Quirino">Quirino</option>
+                        <option value="Rizal">Rizal</option>
+                        <option value="Tarlac">Tarlac</option>
+                        <option value="Zambales">Zambales</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Postal Code</label>
+                        <input class="form-control" type="text" id="editPostalCode" name="postal_code" required="" >
+                    </div>
+                    <div class="form-group">
+                        <label>Phone Number</label>
+                        <input class="form-control" type="tel" id="editPhoneNumber" name="phone_number" required="" >
+                    </div>
+                  
+                      <div class="pt-2">
+              </div>  
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Update</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </form>
+          </div>
+        </div>
+        </div>
+         </div>
+        </div>
 
+        <div class="modal fade crud" id="editStatusModal" tabindex="-1" role="dialog" aria-labelledby="editStatusModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <form enctype="multipart/form-data"  id="submit_edit_status" action="javascript:void(0)" >
+            @CSRF
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editModalTitle">Edit Order Status</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <input type="hidden" id="editStatusId" name="editId">
+                <div class="modal-body">
+                      <div class="card ">
+           
+            <div class="card-body">
+            <div class="alert alert-danger modal-errors" style="display:none"></div>
+            <div class="form-group">
+                <label>Order Number</label>
+                <input class="form-control" type="text" id="viewId" disabled >
+                    </div>
+      
                     <div class="form-group">
-                        <label>Last Name</label>
-                        <input class="form-control" type="text" id="editLastName" name="last_name" required="" >
-                    </div>
-
-                    <div class="form-group">
-                        <label>Email</label>
-                        <input class="form-control" type="email" id="editEmail" name="email" required="" >
-                    </div>
-                      <div class="form-group">
-                        <label>Image</label>
-                        <input type="file" class="form-control" id="image" name="image">
-                    </div>
+                        <label>Status</label>
+                        <select class="form-control" name="status" id="editStatus">
+                        <option value="paid">Paid</option>
+                        <option value="in-transit">In-transit</option>
+                        <option value="delivered">Delivered</option>
+                        <option value="cancelled">Cancelled</option>
+                        </select>
+                    </div>             
                       <div class="pt-2">
               </div>  
                 </div>
@@ -230,38 +288,6 @@
          </div>
         </div>      
 
-  <div class="modal fade" id="viewModal" tabindex="-1" role="dialog" aria-labelledby="viewModalTitle" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="viewModalTitle">View User Picture</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                      <div class="card ">
-           
-            <div class="card-body">
-               <div class="form-group">
-                <div class="row justify-content-center">
-                  <a id="viewImageLink" target="_blank">
-              <img id="viewImage" alt="" class="rounded-circle w-100" style="max-width: 200px;">
-            </a>
-            </div>
-            </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-                </div>
-          </div>
-        </div>
-        </div>
-
-
-    </div>
-</div>
-
 @endsection
 
 @section('js')
@@ -274,12 +300,12 @@ headers: {
 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 }
 });
-$('#submit_add_admin').submit(function(e) {
+$('#submit_edit_status').submit(function(e) {
 e.preventDefault();
 var formData = new FormData(this);
 $.ajax({
 type:'POST',
-url: "{{ url('/admin/users/adminstore') }}",
+url: "{{ url('/admin/orders/updateStatus') }}",
 data: formData,
 cache:false,
 contentType: false,
@@ -297,8 +323,8 @@ success: function(result){
                 else
                 {
                     $('.modal-errors').hide();
-                    $('#addModal').modal('hide');
-                    window.location = "{{ url('/admin/adminusers/') }}";
+                    $('editStatusModal').modal('hide');
+                    window.location = "{{ url('/admin/orders/') }}";
                     // $('.alert-success').html('');
                     // $('.alert-success').show();
                     // $('.alert-success').append('Member added.');
@@ -308,12 +334,12 @@ success: function(result){
 });
 });
 
-$('#submit_edit_admin').submit(function(e) {
+$('#submit_edit_order').submit(function(e) {
 e.preventDefault();
 var formData = new FormData(this);
 $.ajax({
 type:'POST',
-url: "{{ url('/admin/users/modify') }}",
+url: "{{ url('/admin/orders/modify') }}",
 data: formData,
 cache:false,
 contentType: false,
@@ -332,7 +358,7 @@ success: function(result){
                 {
                     $('.modal-errors').hide();
                     $('#editModal').modal('hide');
-                    window.location = "{{ url('/admin/adminusers/') }}";
+                    window.location = "{{ url('/admin/orders/') }}";
                     // $('.alert-success').html('');
                     // $('.alert-success').show();
                     // $('.alert-success').append('Member added.');

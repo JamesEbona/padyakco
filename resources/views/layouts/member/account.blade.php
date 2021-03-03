@@ -71,17 +71,17 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 						</label>
 						<input id="mobile_menu" type="checkbox">
 					   <ul class="nav">
-						  <li class="dropdown1"><a href="/bicycles">BICYCLES</a>
+						  <li class="dropdown1"><a href="/bicycles">STORE</a>
 							  <ul class="dropdown2">
 							        <li><a href="/bicycles">MOUNTAIN BIKES</a></li>
 									<li><a href="/bicycles">ROAD BIKES</a></li>
-									<li><a href="/bicycles">PARTS</a></li>											
+									<li><a href="{{ route('orders') }}">MY ORDERS</a></li>										
 							  </ul>
 						  </li>
-						  <li class="dropdown1"><a href="parts.html">REPAIR SERVICE</a>
+						  <li class="dropdown1"><a href="{{ route('book') }}">REPAIR SERVICE</a>
 							 <ul class="dropdown2">
-									<li><a href="parts.html">BOOK AN APPOINTMENT</a></li>
-									<li><a href="parts.html">CALL A MECHANIC</a></li>
+									<li><a href="{{ route('book') }}">BOOK A MECHANIC</a></li>
+									<li><a href="{{ route('bookView') }}">VIEW BOOKINGS</a></li>
 							  </ul>
 						 </li>      
 						 <li class="dropdown1"><a href="accessories.html">TRIP GUIDES</a>

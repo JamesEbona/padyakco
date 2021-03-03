@@ -32,7 +32,7 @@ Padyak.Co Admin - View Order
                     </div>
                     <div class="row border-bottom">
                         <div class="col-md-12">
-                            <p class="mt-3">{{ date('F j, Y', strtotime(auth()->user()->created_at))}} | ₱{{number_format($order->grand_total)}} | {{$order->quantity_total}}
+                            <p class="mt-3">{{ date('F j, Y', strtotime($order->created_at))}} | ₱{{number_format($order->grand_total)}} | {{$order->quantity_total}}
 					           @if($order->quantity_total == 1) item @else items @endif</p>
                         </div>
                     </div>
@@ -47,9 +47,6 @@ Padyak.Co Admin - View Order
                                 </div>
                                 <div class="row">
                                     <p class="m-0 p-0">Brand: {{$orderItem->product->brand}}</p>
-                                </div>
-                                <div class="row">
-                                    <p class="m-0 p-0">Type: {{$orderItem->product->subcategory->title}}</p>
                                 </div>
                                 <div class="row">
                                     <p class="m-0 p-0">Type: {{$orderItem->product->subcategory->title}}</p>

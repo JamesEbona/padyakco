@@ -28,7 +28,7 @@ My Orders
 					</div>
 					<div class="row">
 					<div class="col-md-12">
-				    <p>{{ date('F j, Y', strtotime(auth()->user()->created_at))}} | ₱{{number_format($order->grand_total)}} | {{$order->quantity_total}}
+				    <p>{{ date('F j, Y', strtotime($order->created_at))}} | ₱{{number_format($order->grand_total)}} | {{$order->quantity_total}}
 					@if($order->quantity_total == 1) item @else items @endif
 					</p>
 					</div>

@@ -29,14 +29,13 @@
 					   <ul class="nav">
 						  <li class="dropdown1"><a href="/bicycles">STORE</a>
 							  <ul class="dropdown2">
-									<li><a href="/bicycles">BICYCLES</a></li>
-									<li><a href="bicycles.html">PARTS</a></li>									
+									<li><a href="/bicycles">MOUNTAIN BIKES</a></li>
+									<li><a href="/bicycles">ROAD BIKES</a></li>									
 							  </ul>
 						  </li>
-						  <li class="dropdown1"><a href="parts.html">REPAIR SERVICE</a>
+						  <li class="dropdown1"><a href="{{ route('book') }}">REPAIR SERVICE</a>
 							 <ul class="dropdown2">
-									<li><a href="parts.html">BOOK AN APPOINTMENT</a></li>
-									<li><a href="parts.html">CALL A MECHANIC</a></li>
+									<li><a href="{{ route('book') }}">BOOK A MECHANIC</a></li>
 							  </ul>
 						 </li>      
 						 <li class="dropdown1"><a href="accessories.html">TRIP GUIDES</a>

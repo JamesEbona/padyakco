@@ -68,6 +68,10 @@ Route::group([
     Route::get('/checkout/orderPlaced', 'CheckoutController@orderPlaced')->name('orderPlaced');
     Route::get('orders', 'OrderController@index')->name('orders');
     Route::get('orders/{id}', 'OrderController@show')->name('orderView');
+    Route::get('book', 'BookingController@index')->name('book');
+    Route::post('book/process', 'BookingController@book')->name('bookProcess');
+    Route::get('book/mybookings', 'BookingController@view')->name('bookView');
+    Route::get('book/{id}', 'BookingController@show')->name('bookShow');
 });
 
 Route::group([

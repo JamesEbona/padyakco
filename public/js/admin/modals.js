@@ -57,6 +57,27 @@ function editUser(arg) {
     $("#editEmail").val(email);
 }
 
+function editMechanic(arg) {
+    $('#editModal').modal('show');
+    var id = $(arg).attr('data-id');
+    var first_name = $(arg).attr('data-firstname');
+    var last_name = $(arg).attr('data-lastname');
+    var phone_number = $(arg).attr('data-phonenumber');
+    var email = $(arg).attr('data-email');
+    var image = $(arg).attr('data-image');
+    var image_start = "/storage/";
+    var image_src = image_start + image;
+
+    $("#viewEditImage").attr('src', image_src);
+    $("#viewEditImageLink").attr('href', image_src);
+
+    $("#editId").val(id);
+    $("#editFirstName").val(first_name);
+    $("#editLastName").val(last_name);
+    $("#editPhoneNumber").val(phone_number);
+    $("#editEmail").val(email);
+}
+
 function editProduct(arg) {
     $('#editModal').modal('show');
     var id = $(arg).attr('data-id');
@@ -140,6 +161,28 @@ function editOrder(arg) {
     $("#editPhoneNumber").val(phone_number);
 }
 
+function editBooking(arg) {
+    $('#editModal').modal('show');
+    var id = $(arg).attr('data-id');
+    var first_name = $(arg).attr('data-firstname');
+    var last_name = $(arg).attr('data-lastname');
+    var phone_number = $(arg).attr('data-phonenumber');
+    var repair_type = $(arg).attr('data-repairtype');
+    var booking_time = $(arg).attr('data-bookingtime');
+    var notes = $(arg).attr('data-notes');
+    var additional_fee = $(arg).attr('data-additionalfee');
+   
+    $("#editId").val(id);
+    $("#editFirstName").val(first_name);
+    $("#editLastName").val(last_name);
+    $("#editPhoneNumber").val(phone_number);
+    $("#editAdditionalFee").val(additional_fee);
+    $("#editNotes").val(notes);
+    document.getElementById('editRepairType').value = repair_type; 
+    $("#editBookingTime").val(booking_time);
+}
+
+
 function updateStatus(arg) {
     $('#editStatusModal').modal('show');
     var id = $(arg).attr('data-id');
@@ -148,6 +191,23 @@ function updateStatus(arg) {
     $("#editStatusId").val(id);
     $("#viewId").val(id);
     document.getElementById('editStatus').value = status; 
+}
+
+function updateBookingStatus(arg) {
+    $('#editStatusModal').modal('show');
+    var id = $(arg).attr('data-id');
+    var status = $(arg).attr('data-status');
+    var mechanic = $(arg).attr('data-mechanic');
+    // var additional_fee = $(arg).attr('data-additionalfee');
+
+    $("#viewStatusId").val(id);
+    $("#editStatusId").val(id);
+    $("#editStatus").val(status);
+    // $("#editAdditionalFee").val(additional_fee);
+    // document.getElementById('editStatus').value = status; 
+    if(mechanic){
+    document.getElementById('editMechanic').value = mechanic; 
+    }
 }
 
 function viewAddress(arg) {
@@ -165,6 +225,96 @@ function viewAddress(arg) {
     $("#viewProvince").val(province);
     $("#viewPostalCode").val(postal_code);
     $("#viewPhoneNumber").val(phone_number);
+}
+
+function viewBooking(arg) {
+    $('#viewModal').modal('show');
+    var id = $(arg).attr('data-id');
+    var status = $(arg).attr('data-status');
+    var user_status = $(arg).attr('data-userstatus');
+    var first_name = $(arg).attr('data-firstname');
+    var last_name = $(arg).attr('data-lastname');
+    var phone_number = $(arg).attr('data-phonenumber');
+    var location = $(arg).attr('data-location');
+    var repair_type = $(arg).attr('data-repairtype');
+    var booking_time = $(arg).attr('data-bookingtime');
+    var created_at = $(arg).attr('data-createdat');
+    var notes = $(arg).attr('data-notes');
+    var repair_fee = $(arg).attr('data-repairfee');
+    var transportation_fee = $(arg).attr('data-transportationfee');
+    var additional_fee = $(arg).attr('data-additionalfee');
+    var total_fee = $(arg).attr('data-totalfee');
+    var user_image = $(arg).attr('data-userimage');
+    var mechanic_name = $(arg).attr('data-mechanicname');
+    var mechanic_image = $(arg).attr('data-mechanicimage');
+    var mechanic_number = $(arg).attr('data-mechanicnumber');
+    var mechanic_status = $(arg).attr('data-mechanicstatus');
+    var created_at = $(arg).attr('data-createdat');
+
+
+    if(status == 'pending'){
+    $("#viewBookingStatus").attr("class"," badge badge-pill badge-warning");
+    }
+    else if(status == 'confirmed'){
+    $("#viewBookingStatus").attr("class"," badge badge-pill badge-info");   
+    }
+    else if(status == 'en route'){
+    $("#viewBookingStatus").attr("class"," badge badge-pill badge-default");   
+    }
+    else if(status == 'done'){
+    $("#viewBookingStatus").attr("class"," badge badge-pill badge-success");   
+    }
+    else if(status == 'cancelled'){
+    $("#viewBookingStatus").attr("class"," badge badge-pill badge-danger");   
+    }
+
+    if(user_status == 'active'){
+    $("#viewUserStatus").attr("class"," badge badge-pill badge-success");
+    }
+    else if(status == 'inactive'){
+    $("#viewUserStatus").attr("class"," badge badge-pill badge-danger");   
+    }
+
+    if(mechanic_status == 'active'){
+    $("#viewMechanicStatus").attr("class"," badge badge-pill badge-success");
+    }
+    else if(mechanic_status == 'inactive'){
+    $("#viewMechanicStatus").attr("class"," badge badge-pill badge-danger");   
+    }
+
+    // if(additional_fee == 0.00){
+    //     addtional_fee = '0.00';
+    // }
+    
+    $("#viewBookingStatus").html(status);
+    $("#viewUserStatus").html(user_status);
+    $("#viewLocation").html(location);
+    $("#viewId").html(id);
+    $("#viewCreatedAt").html(created_at);
+    $("#viewFirstName").html(first_name);
+    $("#viewLastName").html(last_name);
+    $("#viewPhoneNumber").html(phone_number);
+    $("#viewLocation").html(location);
+    $("#viewRepairType").html(repair_type);
+    $("#viewBookingTypePayment").html(repair_type);
+    $("#viewBookingTime").html(booking_time);
+    $("#viewNotes").html(notes);
+    $("#viewRepairFee").html(repair_fee);
+    $("#viewTransportationFee").html(transportation_fee);
+    $("#viewAdditionalFee").html(additional_fee);
+    $("#viewTotalFee").html(total_fee);
+    $("#viewMechanicName").html(mechanic_name);
+    $("#viewMechanicNumber").html(mechanic_number);
+    $("#viewMechanicStatus").html(mechanic_status);
+    $("#viewCreatedAt").html(created_at);
+
+    var image_start = "/storage/";
+    var user_image_src = image_start + user_image;
+    var mechanic_image_src = image_start + mechanic_image;
+  
+    $("#viewUserImage").attr('src', user_image_src);
+    $("#viewMechanicImage").attr('src', mechanic_image_src);
+
 }
 
 function viewUserPicture(arg) {

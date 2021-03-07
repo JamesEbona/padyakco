@@ -3,11 +3,19 @@
 namespace App\Providers;
 
 use Illuminate\Auth\Events\Registered;
+use App\Events\BookingConfirmedEvent;
+use App\Events\BookingEnRouteEvent;
+use App\Events\BookingDoneEvent;
+use App\Events\BookingCancelledEvent;
 use App\Events\NewOrderEvent;
 use App\Events\OrderShippedEvent;
 use App\Events\OrderCancelledEvent;
 use App\Events\OrderDeliveredEvent;
 // use App\Listeners\SendNewOrderNotification;
+use App\Listeners\SendBookingConfirmedNotification;
+use App\Listeners\SendBookingDoneNotification;
+use App\Listeners\SendBookingEnRouteNotification;
+use App\Listeners\SendBookingCancelledNotification;
 use App\Listeners\SendMemberInvoice;
 use App\Listeners\SendShippedOrderNotification;
 use App\Listeners\SendCancelledOrderNotification;
@@ -38,6 +46,18 @@ class EventServiceProvider extends ServiceProvider
         ],
         OrderDeliveredEvent::class => [
             SendDeliveredOrderNotification::class,
+        ],
+        BookingConfirmedEvent::class => [
+            SendBookingConfirmedNotification::class,
+        ],
+        BookingEnRouteEvent::class => [
+            SendBookingEnRouteNotification::class,
+        ],
+        BookingCancelledEvent::class => [
+            SendBookingCancelledNotification::class,
+        ],
+        BookingDoneEvent::class => [
+            SendBookingDoneNotification::class,
         ],
     ];
 

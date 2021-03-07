@@ -22,10 +22,91 @@
 
     <!-- Styles -->
     <style>
+    #description {
+  font-family: Roboto;
+  font-size: 15px;
+  font-weight: 300;
+}
+
+#infowindow-content .title {
+  font-weight: bold;
+}
+
+#infowindow-content {
+  display: none;
+}
+
+#map #infowindow-content {
+  display: inline;
+}
+
+.pac-card {
+  margin: 10px 10px 0 0;
+  border-radius: 2px 0 0 2px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  outline: none;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  background-color: #fff;
+  font-family: Roboto;
+}
+
+#pac-container {
+  padding-bottom: 12px;
+  margin-right: 12px;
+}
+
+div.pac-container {
+   z-index: 1050 !important;
+}
+
+.pac-controls {
+  display: inline-block;
+  padding: 5px 11px;
+}
+
+.pac-controls label {
+  font-family: Roboto;
+  font-size: 13px;
+  font-weight: 300;
+}
+
+#searchInput {
+  background-color: #fff;
+  font-family: Roboto;
+  font-size: 15px;
+  font-weight: 300;
+  margin-left: 12px;
+  padding: 0 11px 0 13px;
+  text-overflow: ellipsis;
+  width: 400px;
+}
+
+#searchInput:focus {
+  border-color: #4d90fe;
+}
+
+#title {
+  color: #fff;
+  background-color: #4d90fe;
+  font-size: 25px;
+  font-weight: 500;
+  padding: 6px 12px;
+}
+
+#target {
+  width: 345px;
+}
+
     .table-image {
       height: 3rem; 
       width: 3rem;
     }
+
+    .account-links:hover{
+	color: #f95c11;
+	background-color: transparent;
+}
     </style>
     
     <link href="{{ asset('css/admin/sb-admin-2.min.css') }}" rel="stylesheet">
@@ -88,6 +169,12 @@
           <span>Admins</span></a>
       </li>
 
+      <li class="nav-item {{{ (Route::current()->getName() == "mechanicUsers" ? 'active' : '') }}}">
+        <a class="nav-link" href="{{route('mechanicUsers')}}">
+          <i class="fas fa-fw fa-wrench"></i>
+          <span>Mechanics</span></a>
+      </li>
+
 
       <!-- Divider -->
       <hr class="sidebar-divider">
@@ -132,16 +219,16 @@
         REPAIR SERVICE
       </div>
 
-      <li class="nav-item {{{ (Route::current()->getName() == "LiveCountIndex" ? 'active' : '') }}}">
-        <a class="nav-link" href="/LiveCount">
+      <li class="nav-item {{{ (Route::current()->getName() == "adminBookings" ? 'active' : '') }}}">
+        <a class="nav-link" href="{{route('adminBookings')}}">
           <i class="fas fa-fw fa-calendar"></i>
-          <span>Appointments</span></a>
+          <span>Bookings</span></a>
       </li>
 
       <li class="nav-item {{{ (Route::current()->getName() == "LiveCountIndex" ? 'active' : '') }}}">
         <a class="nav-link" href="/LiveCount">
-          <i class="fas fa-fw fa-tools"></i>
-          <span>Mechanics</span></a>
+          <i class="fas fa-fw fa-calendar-alt"></i>
+          <span>Calendar</span></a>
       </li>
 
 
@@ -342,6 +429,13 @@ $('#adminstable').DataTable( {
   ]
 } );
 
+$('#mechanicstable').DataTable( {
+  order: [[5, 'desc']],
+  columnDefs: [
+    {searchable: false, orderable: false, targets: [0,7] }
+  ]
+} );
+
    $('#producttable').DataTable( {
   columnDefs: [
     {searchable: false, orderable: false, targets: [1,11] }
@@ -367,7 +461,39 @@ $('#orderstable').DataTable( {
     {searchable: false, orderable: false, targets: 9 }
   ]
 } );
+
+$('#bookingstable').DataTable( {
+  
+  dom: 'lBfrtip',
+  order: [[7, 'desc']],
+  columnDefs: [
+    {searchable: false, orderable: false, targets: 9 }
+  ],
+  buttons: [
+            {
+           extend: 'print',
+           exportOptions: {
+           columns: [ 0, 1, 2, 3, 4, 5, 6,7,8 ] //Your Column value those you want
+               }
+             },
+             {
+              extend: 'excel',
+              exportOptions: {
+              columns: [ 0, 1, 2, 3, 4 ,5, 6,7,8 ] //Your Column value those you want
+             }
+           },
+           {
+              extend: 'pdf',
+              exportOptions: {
+              columns: [ 0, 1, 2, 3, 4, 5, 6,7,8 ] //Your Column value those you want
+             }
+           },
+         ],
+
+} );
+
 </script>
    @yield('js')
+   
 </body>
 </html>

@@ -16,7 +16,7 @@ My Booking
 					<div class="col-md-6">
                     @if($booking->status =="pending")
 					<h2 class="text-right"><span class="label label-warning">{{$booking->status}}</span></h2>
-                    @elseif($booking->status =="sheduled")
+                    @elseif($booking->status =="confirmed")
 					<h2 class="text-right"><span class="label label-info">{{$booking->status}}</span></h2>
 					@elseif($booking->status =="en route")
 					<h2 class="text-right"><span class="label label-default">{{$booking->status}}</span></h2>
@@ -54,7 +54,7 @@ My Booking
                     </div>
 					</div>
                     <div class="row">
-                    <div class="col-md-9">
+                    <div class="col-md-12">
 				    <p class="text-center">{{$booking->mechanic->first_name}} {{$booking->mechanic->last_name}} </p>
 					</div>
                     </div>
@@ -98,7 +98,7 @@ My Booking
                     @endif
                     <div class="row" style="padding-top: 12px;">
 					<div class="col-md-6">
-                    <p>Payment Total</p>
+                    <p>Payment Total @if($booking->additional_fee == NULL)Estimate @endif</p>
 					</div>
                     <div class="col-md-6 text-right">
 				    <p>₱{{number_format($booking->total_fee,2)}}</p>
@@ -109,7 +109,18 @@ My Booking
 			 </div>  
              </div>
              </div>
-			 <dic class="row">&nbsp;</div>
+			 @if($booking->notes != NULL)
+			 <div class="row">
+			 <div class="col-md-12">
+			 <div class="cart-header">
+		     <div class="cart-sec">
+			 <h2>Notes to mechanic:</h2>
+			 <p class="mb-5">{{$booking->notes}}</p>
+			 </div>
+			 </div>
+			 </div>
+			 @endif
+			 <div class="row">&nbsp;</div>
 		
 
 		

@@ -5,8 +5,8 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\BicyclesController;
 use App\Http\Controllers\CartController;
 
-use App\Mail\OrderDelivered;
-use App\Models\Order;
+use App\Mail\BookingEnRoute;
+use App\Models\Booking;
 
 
 /*
@@ -35,8 +35,8 @@ Route::get('/cart/reduce/{id}', [CartController::class, 'reduceByOne'])->name('r
 Route::get('/cart/remove/{id}', [CartController::class, 'removeItem'])->name('removeCart');
 
 Route::get('/email', function(){
-    $order = Order::where('id',13)->firstOrFail();
-    return new OrderDelivered($order);
+    $booking = Booking::where('id',6)->firstOrFail();
+    return new BookingEnRoute($booking);
 });
 
 // Route::get('/dashboard', function () {
@@ -82,9 +82,12 @@ Route::group([
     Route::get('/', 'DashboardController@index')->name('adminDashboard');
     Route::get('memberusers', 'UsersController@membersindex')->name('memberUsers');
     Route::get('adminusers', 'UsersController@adminsindex')->name('adminUsers');
+    Route::get('mechanicusers', 'UsersController@mechanicsindex')->name('mechanicUsers');
     Route::post('users/memberstore', 'UsersController@memberstore');
     Route::post('users/adminstore', 'UsersController@adminstore');
+    Route::post('users/mechanicstore', 'UsersController@mechanicstore');
     Route::post('users/modify', 'UsersController@modify');
+    Route::post('users/modifyMechanic', 'UsersController@modifyMechanic');
     Route::get('users/activate/{id}', 'UsersController@activate');
     Route::get('users/deactivate/{id}', 'UsersController@deactivate');
     Route::get('users/delete/{id}', 'UsersController@destroy');
@@ -111,6 +114,11 @@ Route::group([
     Route::post('orders/modify', 'OrdersController@modify');
     Route::post('orders/updateStatus', 'OrdersController@updateStatus');
     Route::get('orders/show/{id}', 'OrdersController@show')->name('adminOrderView');
+    Route::get('bookings', 'BookingsController@index')->name('adminBookings');
+    Route::post('bookings/modify', 'BookingsController@modify');
+    Route::get('bookings/showAddress/{id}', 'BookingsController@showAddress')->name('adminBookingsShowAddress');
+    Route::patch('bookings/updateAddress', 'BookingsController@updateAddress')->name('adminBookingUpdateAddress');
+    Route::post('bookings/updateStatus', 'BookingsController@updateStatus');
 
 });
 

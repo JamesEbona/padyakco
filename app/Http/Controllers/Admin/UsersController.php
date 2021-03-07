@@ -33,6 +33,12 @@ class UsersController extends Controller
       return view('admin.Admins', compact('users'));
     } 
 
+    public function mechanicsindex(Request $request)
+    {
+      $users = User::all()->where('role', '==', '2')->where('id', '!=', auth()->id());
+      return view('admin.Mechanics', compact('users'));
+    } 
+
    public function memberstore(Request $request){
 
     $validator = \Validator::make($request->all(), [
@@ -116,6 +122,45 @@ class UsersController extends Controller
   
            return redirect("/admin/adminusers")->with('message', 'Admin added.');
       } 
+
+      public function mechanicstore(Request $request){
+
+        $validator = \Validator::make($request->all(), [
+          'first_name' => 'required|string|max:30|min:2|alpha',
+          'last_name' => 'required|string|max:30|min:2|alpha',
+          'email' => 'required|string|email|max:50|unique:users',
+          'password' => 'required|string|confirmed|min:8|max:15',
+          'image' => 'image',
+          'phone_number' => array('required','regex:/^(09|\+639)\d{9}$/'),
+              
+       ]);
+    
+        if ($validator->fails()){
+          return response()->json(['errors'=>$validator->errors()->all()]);
+        }
+        
+            if(request('image') != NULL){
+            $imagePath = request('image')->store('avatars','public');       
+            $image = Image::make(public_path("storage/{$imagePath}"))->fit(180, 180);
+            $image->save();
+           }
+           else {
+            $imagePath = 'avatars/avatar_stock_photo.png';
+           }
+            //  $user = $user = new User; 
+             $user = new User;
+             $user->first_name = request('first_name');
+             $user->last_name = request('last_name');
+             $user->email = request('email');
+             $user->phone_number = request('phone_number');
+             $user->image = $imagePath;
+             $user->status = 'active';
+             $user->password = Hash::make(request('password'));
+             $user->role = '2';
+             $user->save();
+    
+             return redirect("/admin/mechanicusers")->with('message', 'Admin added.');
+        } 
 
 	 public function show(){
        
@@ -258,6 +303,64 @@ class UsersController extends Controller
     
     }
 
+    public function modifyMechanic(Request $request)
+    {
+
+      $validator = \Validator::make($request->all(), [
+        'first_name' => 'required|string|max:30|min:2|alpha',
+        'last_name' => 'required|string|max:30|min:2|alpha',
+        'email' => 'required|string|email|max:50|',
+        'image' => 'image',
+        'phone_number' => array('required','regex:/^(09|\+639)\d{9}$/'),
+        // 'email' => 'required|string|email|max:50|unique:users',        
+     ]);
+  
+      if ($validator->fails()){
+        return response()->json(['errors'=>$validator->errors()->all()]);
+      }
+
+  
+     $data = array(
+            'first_name' => request('first_name'),
+            'last_name' => request('last_name'),
+            'email' => request('email'),
+            'phone_number' => request('phone_number'),
+        );
+
+
+    if (request('image')){
+     $imagePath = request('image')->store('avatars','public');       
+        //where the image will be uploaded
+
+        $image = Image::make(public_path("storage/{$imagePath}"))->fit(180, 180);
+        //intervention library that fits image to size
+        $image->save();
+
+        $imageArray = ['image' => $imagePath];
+    }
+    //if the user submits an image in the form
+
+   // auth()->user()->profile->update($data);
+
+    $RequestID = request('editId');
+
+    //CHECK FOR NEW OR EXISTING ORDER
+    if($RequestID > 0) {
+        //THIS FUNCTION SOMEHOW RETURNS THE FUNCTION CALL AND DOESNT CONTINUE PAST
+        //AND THE RECORD IS NOT UPDATED
+       User::where('id', $RequestID)->update(array_merge(
+    $data,
+    $imageArray ?? []
+    //if no image set
+
+
+    ));
+    }
+     
+    return redirect("/admin/mechanicusers");
+    
+    }
+
     public function activate($id)
     {
         $user = User::findOrFail($id);
@@ -266,6 +369,9 @@ class UsersController extends Controller
         if($user->role == '3'){
         return redirect("/admin/memberusers")->with('message', $user_name."'s account is now activated.");
         }
+        else if($user->role == '2'){
+          return redirect("/admin/mechanicusers")->with('message', $user_name."'s account is now activated.");
+          }
         else if($user->role == '1'){
         return redirect("/admin/adminusers")->with('message', $user_name."'s account is now activated.");
         }
@@ -281,6 +387,9 @@ class UsersController extends Controller
          if($user->role == '3'){
          return redirect("/admin/memberusers")->with('message', $user_name."'s account is now deactivated.");
          }
+         else if($user->role == '2'){
+          return redirect("/admin/mechanicusers")->with('message', $user_name."'s account is now deactivated.");  
+         }
          else if($user->role == '1'){
           return redirect("/admin/adminusers")->with('message', $user_name."'s account is now deactivated.");  
          }
@@ -288,7 +397,16 @@ class UsersController extends Controller
 
      public function destroy($id)
     {
+        $user = User::findOrFail($id);
+        if($user->role == '1'){
         User::destroy($id);
          return redirect("/admin/adminusers");
+        }
+        if($user->role == '2'){
+        User::destroy($id);
+        return redirect("/admin/mechanicusers");
+        } 
     }
+
+    
 }

@@ -33,8 +33,8 @@ Padyak.Co - Book Mechanic
                             <input type="hidden" id="location" name="location">
                             <input type="hidden" id="city" name="city">
                             <input type="hidden" id="region" name="region">
-                            <input type="hidden" id="lat" name="longhitude">
-                            <input type="hidden" id="lon" name="latitude">
+                            <input type="hidden" id="lng" name="longhitude">
+                            <input type="hidden" id="lat" name="latitude">
                         </div>
                         <div class="form-group @error('booking_time') has-error @enderror">
                             <label>Date and time</label><br>
@@ -100,18 +100,10 @@ var transportation_fee = 0;
 var total_fee = 0;
 
  function initMap() {
+    var latlng = new google.maps.LatLng(14.6091,121.0223);
     var map = new google.maps.Map(document.getElementById('map'), {
-      center: {lat: 14.6091, lng: 121.0223},
+      center: latlng,
       zoom: 9,
-	//   restriction: {
-    //   latLngBounds: {
-    //     east: 121.13486,
-    //     north: 14.788359,
-    //     south: 14.34900,
-    //     west: 120.93049
-    //   },
-    //   strictBounds: true
-	//   },
       restriction: {
       latLngBounds: {
         east: 122.92314,
@@ -122,10 +114,16 @@ var total_fee = 0;
       strictBounds: true
 	  },
     });
+    var marker = new google.maps.Marker({
+      map: map,
+      position: latlng,
+      draggable: true,
+      anchorPoint: new google.maps.Point(0, -29)
+   });
     var input = document.getElementById('searchInput');
     map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
-
-	var metroBounds = new google.maps.LatLngBounds(
+    var geocoder = new google.maps.Geocoder();
+    var metroBounds = new google.maps.LatLngBounds(
 	new google.maps.LatLng(14.34900, 120.93049),
 	new google.maps.LatLng(14.788359, 121.13486));
 
@@ -134,20 +132,14 @@ var total_fee = 0;
       bounds: metroBounds,
       strictBounds: true,
      });
-    autocomplete.bindTo('bounds', map);
-
-    var infowindow = new google.maps.InfoWindow();
-    var marker = new google.maps.Marker({
-        map: map,
-        anchorPoint: new google.maps.Point(0, -29)
-    });
-
+    // autocomplete.bindTo('bounds', map);
+    var infowindow = new google.maps.InfoWindow();   
     autocomplete.addListener('place_changed', function() {
         infowindow.close();
         marker.setVisible(false);
         var place = autocomplete.getPlace();
         if (!place.geometry) {
-            window.alert("Location not found");
+            window.alert("Location not found!");
             return;
         }
   
@@ -158,32 +150,34 @@ var total_fee = 0;
             map.setCenter(place.geometry.location);
             map.setZoom(1);
         }
-        marker.setIcon(({
-            url: place.icon,
-            size: new google.maps.Size(71, 71),
-            origin: new google.maps.Point(0, 0),
-            anchor: new google.maps.Point(17, 34),
-            scaledSize: new google.maps.Size(35, 35)
-        }));
+       
         marker.setPosition(place.geometry.location);
-        marker.setVisible(true);
+        marker.setVisible(true);          
     
-        var address = '';
-        if (place.address_components) {
-            address = [
-              (place.address_components[0] && place.address_components[0].short_name || ''),
-              (place.address_components[1] && place.address_components[1].short_name || ''),
-              (place.address_components[2] && place.address_components[2].short_name || '')
-            ].join(' ');
-        }
-    
-        infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + address);
+        bindDataToForm(place.address_components,place.formatted_address,place.geometry.location.lat(),place.geometry.location.lng());
+        infowindow.setContent(place.formatted_address);
         infowindow.open(map, marker);
-      
-        // Location details
-        for (var i = 0; i < place.address_components.length; i++) {
-            if(place.address_components[i].types[0] == 'locality'){
-				var city = place.address_components[i].long_name;
+       
+    });
+    // this function will work on marker move event into map 
+    google.maps.event.addListener(marker, 'dragend', function() {
+        geocoder.geocode({'latLng': marker.getPosition()}, function(results, status) {
+        if (status == google.maps.GeocoderStatus.OK) {
+          if (results[0]) {        
+              bindDataToForm(results[0].address_components,results[0].formatted_address,marker.getPosition().lat(),marker.getPosition().lng());
+              infowindow.setContent(results[0].formatted_address);
+              infowindow.open(map, marker);
+          }
+        }
+        });
+    });
+}
+
+function bindDataToForm(address_components,address,lat,lng){
+   
+    for (var i = 0; i < address_components.length; i++) {
+            if(address_components[i].types[0] == 'locality'){
+				var city = address_components[i].long_name;
 				if(city == 'Caloocan'){
 					document.getElementById('transportation_fee').innerHTML = '₱ {{$repair->caloocan_fee}}';
                     transportation_fee = {{$repair->caloocan_fee}};
@@ -196,7 +190,7 @@ var total_fee = 0;
                     total_fee = transportation_fee + repair_fee;
                     document.getElementById('total_fee').innerHTML = '₱ '+total_fee;
 				}
-				else if(city == 'Navotas City'){
+				else if(city == 'Navotas'){
 					document.getElementById('transportation_fee').innerHTML = '₱ {{$repair->navotas_fee}}';
                     transportation_fee = {{$repair->navotas_fee}};
                     total_fee = transportation_fee + repair_fee;
@@ -262,7 +256,7 @@ var total_fee = 0;
                     total_fee = transportation_fee + repair_fee;
                     document.getElementById('total_fee').innerHTML = '₱ '+total_fee;
 				}
-				else if(city == 'Muntinlupa City'){
+				else if(city == 'Muntinlupa'){
 					document.getElementById('transportation_fee').innerHTML = '₱ {{$repair->muntinlupa_fee}}';
                     transportation_fee = {{$repair->muntinlupa_fee}};
                     total_fee = transportation_fee + repair_fee;
@@ -276,16 +270,18 @@ var total_fee = 0;
 				}
 
 
-                document.getElementById('city').value = place.address_components[i].long_name;
+                document.getElementById('city').value = address_components[i].long_name;
             }
-            if(place.address_components[i].types[0] == 'administrative_area_level_1'){
-                document.getElementById('region').value = place.address_components[i].long_name;
+            if(address_components[i].types[0] == 'administrative_area_level_1'){
+                document.getElementById('region').value = address_components[i].long_name;
             }
-        }
-        document.getElementById('location').value = place.formatted_address;
-        document.getElementById('lat').value = place.geometry.location.lat();
-        document.getElementById('lon').value = place.geometry.location.lng();
-    });
+
+
+   document.getElementById('searchInput').value = address;
+   document.getElementById('location').value = address;
+   document.getElementById('lat').value = lat;
+   document.getElementById('lng').value = lng;
+}
 }
 
 

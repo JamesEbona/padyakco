@@ -64,7 +64,7 @@ class BookingController extends Controller
         else if(request('city') == 'Malabon'){
             $transportation_fee = $repair->malabon_fee;
         }
-        else if(request('city') == 'Navotas City'){
+        else if(request('city') == 'Navotas'){
             $transportation_fee = $repair->navotas_fee;
         }
         else if(request('city') == 'Valenzuela'){
@@ -97,7 +97,7 @@ class BookingController extends Controller
         else if(request('city') == 'Las Piñas'){
             $transportation_fee = $repair->laspinas_fee;
         }
-        else if(request('city') == 'Muntinlupa City'){
+        else if(request('city') == 'Muntinlupa'){
             $transportation_fee = $repair->muntinlupa_fee;
         }
         else if(request('city') == 'Manila'){

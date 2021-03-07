@@ -17,7 +17,7 @@ My Bookings
 					<div class="col-md-6">
 					@if($booking->status =="pending")
 					<h2 class="text-right"><span class="label label-warning">{{$booking->status}}</span></h2>
-                    @elseif($booking->status =="sheduled")
+                    @elseif($booking->status =="confirmed")
 					<h2 class="text-right"><span class="label label-info">{{$booking->status}}</span></h2>
 					@elseif($booking->status =="en route")
 					<h2 class="text-right"><span class="label label-default">{{$booking->status}}</span></h2>

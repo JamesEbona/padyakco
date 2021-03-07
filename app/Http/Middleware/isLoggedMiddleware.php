@@ -21,9 +21,12 @@ class isLoggedMiddleware
             if (auth()->user()->role =='1') {
                 return redirect()->route('adminDashboard');
             }
+            if (auth()->user()->role =='2') {
+                return redirect()->route('mechanicDashboard');
+            }
             if (auth()->user()->role =='3') {
                 return redirect()->route('myAccount');
-        }
+            }
         }
         return $next($request);
     }

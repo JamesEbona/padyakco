@@ -115,11 +115,33 @@ Route::group([
     Route::post('orders/updateStatus', 'OrdersController@updateStatus');
     Route::get('orders/show/{id}', 'OrdersController@show')->name('adminOrderView');
     Route::get('bookings', 'BookingsController@index')->name('adminBookings');
+    Route::get('bookings/calendar', 'BookingsController@calendar')->name('adminBookingsCalendar');
+    Route::get('bookings/calendar/{id}', 'BookingsController@mechanicCalendar');
     Route::post('bookings/modify', 'BookingsController@modify');
     Route::get('bookings/showAddress/{id}', 'BookingsController@showAddress')->name('adminBookingsShowAddress');
     Route::patch('bookings/updateAddress', 'BookingsController@updateAddress')->name('adminBookingUpdateAddress');
     Route::post('bookings/updateStatus', 'BookingsController@updateStatus');
+    Route::get('prices', 'PricesController@index')->name('adminPrices');
+    Route::patch('prices/update', 'PricesController@modify')->name('updatePrices');
+   
+});
 
+Route::group([
+    'prefix' => 'mechanic',
+    'namespace' => 'App\Http\Controllers\Mechanic',
+    'middleware' => ['auth','mechanic','active']
+], function () {
+    Route::get('/', 'DashboardController@index')->name('mechanicDashboard');
+    Route::get('/viewUser', 'AccountController@show')->name('mechanicViewUser');
+    Route::get('/editUser', 'AccountController@edit')->name('mechanicEditUser');
+    Route::get('/changePassword', 'AccountController@changepassword');
+    Route::patch('/updateUser', 'AccountController@update');
+    Route::patch('/submitchangepassword', 'AccountController@updatepassword');
+    Route::get('bookings', 'BookingsController@index')->name('mechanicBookings');
+    Route::post('bookings/updateStatus', 'BookingsController@updateStatus');
+    Route::get('bookings/showAddress/{id}', 'BookingsController@showAddress')->name('mechanicBookingsShowAddress');
+    Route::get('bookings/calendar', 'BookingsController@calendar')->name('mechanicBookingsCalendar');
+    
 });
 
 require __DIR__.'/auth.php';

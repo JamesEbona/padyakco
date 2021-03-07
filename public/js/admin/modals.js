@@ -259,7 +259,7 @@ function viewBooking(arg) {
     $("#viewBookingStatus").attr("class"," badge badge-pill badge-info");   
     }
     else if(status == 'en route'){
-    $("#viewBookingStatus").attr("class"," badge badge-pill badge-default");   
+    $("#viewBookingStatus").attr("class"," badge badge-pill badge-primary");   
     }
     else if(status == 'done'){
     $("#viewBookingStatus").attr("class"," badge badge-pill badge-success");   

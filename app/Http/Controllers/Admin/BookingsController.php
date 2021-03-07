@@ -29,6 +29,19 @@ class BookingsController extends Controller
         return view('admin.Bookings', compact('bookings','mechanics'));
     }
 
+    public function calendar()
+    {
+        $bookings = Booking::where('status', '!=' , 'pending')->get();
+        return view('admin.BookingsCalendar', compact('bookings'));
+    }
+
+    public function mechanicCalendar($id)
+    {
+        $bookings = Booking::where('status', '!=' , 'pending')->where('mechanic_id', '=' , $id)->get();
+        $mechanic = User::where('id',$id)->firstOrFail();
+        return view('admin.BookingsCalendar', compact('bookings','mechanic'));
+    }
+
     public function modify(Request $request)
     {
 
@@ -60,6 +73,7 @@ class BookingsController extends Controller
 
         $total_fee = $booking->total_fee;
         $total_fee -= $booking->repair_fee;
+        $total_fee -= $booking->additional_fee;
         $total_fee += $repair_fee;
         $total_fee += request('additional_fee');
 

@@ -1,10 +1,8 @@
+@extends('layouts.mechanic.mechanic')
+
 @section('title')
-Padyak.Co Admin - View Booking Address
+Padyak.Co Mechanic - View Booking Address
 @endsection
-
-@extends('layouts.admin.admin')
-
-
 @section('content')
 <div class="container-fluid">
 
@@ -16,24 +14,6 @@ Padyak.Co Admin - View Booking Address
         <div class="col-xl-12 col-lg-12">
             <div class="card shadow mb-4">
                 <div class="card-body">
-                @if(session()->has('message'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-        {{ session()->get('message') }}
-         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-         <span aria-hidden="true">&times;</span>
-         </button>
-        </div>
-      
-           @endif
-            @if ($errors->any())
-              <div class="alert alert-danger">
-               <ul>
-                  @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                   @endforeach
-              </ul>
-              </div>
-            @endif
                     <div class="row">
                         <div class="col-md-12">
                             <h4 class="d-inline">Booking # {{$booking->id}}</h4>
@@ -47,8 +27,7 @@ Padyak.Co Admin - View Booking Address
                             <h4 class="d-inline ml-2"><span class="badge badge-pill badge-success">{{$booking->status}}</span></h4>
                             @elseif($booking->status =="cancelled")
                                 <h4 class="d-inline ml-2"><span class="badge badge-pill badge-danger">{{$booking->status}}</span></h4>
-                            @endif  
-                            <a href="javascript:$('#updateAddressForm').submit();" class="account-links"><h4 class="d-inline"><i class="fas fa-fw fa-save float-right"></i></h4></a>     
+                            @endif    
                         </div>
                     </div>
                     <div class="row border-bottom mt-3">
@@ -58,20 +37,9 @@ Padyak.Co Admin - View Booking Address
                     </div>
                     <div class="row">
                     <div class="col-md-12">
-                    <form enctype="multipart/form-data" id="updateAddressForm" method="post" action="{{route('adminBookingUpdateAddress')}}">
-                    @method('PATCH')
-                    @CSRF
                     <div class="form-group">
-                        <input id="searchInput" class="controls mt-3 form-control" type="text" placeholder="Enter new booking location">
                         <div id="map" style="height:500px;"></div>
-                        <input type="hidden" name="booking_id" value="{{$booking->id}}">
-                        <input type="hidden" id="location" name="location" value="{{$booking->location}}">
-                        <input type="hidden" id="city" name="city">
-                        <input type="hidden" id="region" name="region">
-                        <input type="hidden" id="lng" name="longhitude">
-                        <input type="hidden" id="lat" name="latitude">
                     </div>
-                    </form>
                     </div>
                     </div>
                 </div>
@@ -149,7 +117,6 @@ function initMap() {
       marker.setPosition(place.geometry.location);
       marker.setVisible(true);          
   
-      bindDataToForm(place.address_components,place.formatted_address,place.geometry.location.lat(),place.geometry.location.lng());
       infowindow.setContent(place.formatted_address);
       infowindow.open(map, marker);
      
@@ -159,7 +126,7 @@ function initMap() {
       geocoder.geocode({'latLng': marker.getPosition()}, function(results, status) {
       if (status == google.maps.GeocoderStatus.OK) {
         if (results[0]) {        
-            bindDataToForm(results[0].address_components,results[0].formatted_address,marker.getPosition().lat(),marker.getPosition().lng());
+
             infowindow.setContent(results[0].formatted_address);
             infowindow.open(map, marker);
         }
@@ -168,24 +135,6 @@ function initMap() {
   });
 }
 
-function bindDataToForm(address_components,address,lat,lng){
- 
-  for (var i = 0; i < address_components.length; i++) {
-          if(address_components[i].types[0] == 'locality'){
-              var city = address_components[i].long_name;
-              document.getElementById('city').value = address_components[i].long_name;
-          }
-          if(address_components[i].types[0] == 'administrative_area_level_1'){
-              document.getElementById('region').value = address_components[i].long_name;
-          }
-
-
- document.getElementById('searchInput').value = address;
- document.getElementById('location').value = address;
- document.getElementById('lat').value = lat;
- document.getElementById('lng').value = lng;
-}
-}
 </script>
 <script
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBRpg8ZlzcJmaK8AYYf3-dPS-DyYnJBiqA&callback=initMap&libraries=places"

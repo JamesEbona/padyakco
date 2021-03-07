@@ -10,7 +10,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="shortcut icon" href="{{ asset('images/member/padyak_logo.png') }}" />
-    <title>Padyak.Co - Admin</title>
+    <title>@yield('title')</title>
    
  <link rel="stylesheet" type="text/css" href="{{ asset('css/admin/datatable.css') }}"/>
  
@@ -140,8 +140,8 @@ div.pac-container {
 
      
      <!-- Nav Item - Dashboard -->
-      <li class="nav-item {{{ (Route::current()->getName() == "adminDashboard" ? 'active' : '') }}}">
-        <a class="nav-link" href="/admin">
+      <li class="nav-item {{{ (Route::current()->getName() == "mechanicDashboard" ? 'active' : '') }}}">
+        <a class="nav-link" href="/mechanic">
           <i class="fa fa-columns"></i>
           <span>Dashboard</span></a>
       </li>
@@ -149,127 +149,27 @@ div.pac-container {
       <!-- Divider -->
       <hr class="sidebar-divider">
       
-
-       @if (auth()->user()->role == 1) 
-      <!-- Heading -->
-      <div class="sidebar-heading">
-        Users
-      </div>
-
-  
-            <li class="nav-item {{{ (Route::current()->getName() == "memberUsers" ? 'active' : '') }}}">
-        <a class="nav-link" href="{{route('memberUsers')}}">
-          <i class="fas fa-fw fa-address-book"></i>
-          <span>Members</span></a>
-      </li>
-
-      <li class="nav-item {{{ (Route::current()->getName() == "adminUsers" ? 'active' : '') }}}">
-        <a class="nav-link" href="{{route('adminUsers')}}">
-          <i class="fas fa-fw fa-user-shield"></i>
-          <span>Admins</span></a>
-      </li>
-
-      <li class="nav-item {{{ (Route::current()->getName() == "mechanicUsers" ? 'active' : '') }}}">
-        <a class="nav-link" href="{{route('mechanicUsers')}}">
-          <i class="fas fa-fw fa-wrench"></i>
-          <span>Mechanics</span></a>
-      </li>
-
-
-      <!-- Divider -->
-      <hr class="sidebar-divider">
-      @endif
-
-      <!-- Heading -->
-      <div class="sidebar-heading">
-        BICYCLE STORE
-      </div>
-
-  
-            <li class="nav-item {{{ (Route::current()->getName() == "products" ? 'active' : '') }}}">
-        <a class="nav-link" href="{{route('products')}}">
-          <i class="fas fa-fw fa-bicycle"></i>
-          <span>Products</span></a>
-      </li>
-
-      <li class="nav-item {{{ (Route::current()->getName() == "categories" ? 'active' : '') }}}">
-        <a class="nav-link" href="{{route('categories')}}">
-          <i class="fas fa-fw fa-folder-open"></i>
-          <span>Categories</span></a>
-      </li>
-
-      <li class="nav-item {{{ (Route::current()->getName() == "subCategories" ? 'active' : '') }}}">
-        <a class="nav-link" href="{{route('subCategories')}}">
-          <i class="fas fa-fw fa-folder"></i>
-          <span>Sub Categories</span></a>
-      </li>
-
-       <li class="nav-item {{{ (Route::current()->getName() == "adminOrders" ? 'active' : '') }}}">
-        <a class="nav-link" href="{{route('adminOrders')}}">
-          <i class="fas fa-fw fa-receipt"></i>
-          <span>Orders</span></a>
-      </li>
-
-
-      <!-- Divider -->
-      <hr class="sidebar-divider">
-
       <!-- Heading -->
       <div class="sidebar-heading">
         REPAIR SERVICE
       </div>
 
-      <li class="nav-item {{{ (Route::current()->getName() == "adminBookings" ? 'active' : '') }}}">
-        <a class="nav-link" href="{{route('adminBookings')}}">
+      <li class="nav-item {{{ (Route::current()->getName() == "mechanicBookings" ? 'active' : '') }}}">
+        <a class="nav-link" href="{{route('mechanicBookings')}}">
           <i class="fas fa-fw fa-calendar"></i>
-          <span>Bookings</span></a>
+          <span>Assigned Bookings</span></a>
       </li>
 
-      <li class="nav-item {{{ (Route::current()->getName() == "adminBookingsCalendar" ? 'active' : '') }}}">
-        <a class="nav-link" href="{{route('adminBookingsCalendar')}}">
+      <li class="nav-item {{{ (Route::current()->getName() == "mechanicBookingsCalendar" ? 'active' : '') }}}">
+        <a class="nav-link" href="{{route('mechanicBookingsCalendar')}}">
           <i class="fas fa-fw fa-calendar-alt"></i>
           <span>Calendar</span></a>
       </li>
 
-      <li class="nav-item {{{ (Route::current()->getName() == "adminPrices" ? 'active' : '') }}}">
-        <a class="nav-link" href="{{route('adminPrices')}}">
-          <i class="fas fa-fw fa-tags"></i>
-          <span>Prices</span></a>
-      </li>
-
-
      <!-- Divider -->
      <hr class="sidebar-divider">
 
-<!-- Heading -->
-<div class="sidebar-heading">
-  CYCLING TRIP GUIDE
-</div>
 
-
-
-<li class="nav-item {{{ (Route::current()->getName() == "OrgRequestsIndex" ? 'active' : '') }}}">
-        <a class="nav-link" href="/OrganizationRequests">
-          <i class="fas fa-fw fa-map"></i>
-          <span>Posts</span></a>
-      </li>
-
-       <!-- Divider -->
-     <hr class="sidebar-divider">
-
-<!-- Heading -->
-<div class="sidebar-heading">
-  INQUIRIES
-</div>
-
-
-<li class="nav-item {{{ (Route::current()->getName() == "LiveCountIndex" ? 'active' : '') }}}">
-  <a class="nav-link" href="/LiveCount">
-    <i class="fas fa-fw fa-envelope"></i>
-    <span>Manage</span></a>
-</li>
-      <!-- Divider -->
-      <hr class="sidebar-divider d-none d-md-block">
 
       <!-- Sidebar Toggler (Sidebar) 
       <div class="text-center d-none d-md-inline">
@@ -319,26 +219,20 @@ div.pac-container {
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">
-                  @if (auth()->user()->is_superadmin == 1)
-                  Super Admin
-                  @else
-                  Admin
-                  @endif
-                  {{ Auth::user()->first_name }}</span>
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Mechanic {{ Auth::user()->first_name }}</span>
                 <img class="img-profile rounded-circle" src="/storage/{{ Auth::user()->image }}">
               </a>
               <!-- Dropdown - User Information -->
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                <a class="dropdown-item" href="/admin/viewUser">
+                <a class="dropdown-item" href="/mechanic/viewUser">
                   <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                   View Profile
                 </a>
-                <a class="dropdown-item" href="/admin/editUser">
+                <a class="dropdown-item" href="/mechanic/editUser">
                   <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
                   Edit Profile
                 </a>
-                <a class="dropdown-item" href="/admin/changePassword">
+                <a class="dropdown-item" href="/mechanic/changePassword">
                   <i class="fas fa-key fa-sm fa-fw mr-2 text-gray-400"></i>
                   Change Password
                 </a>
@@ -421,80 +315,13 @@ div.pac-container {
 
  
 <script>
-$('#memberstable').DataTable( {
-  order: [[6, 'desc']],
-  columnDefs: [
-    {searchable: false, orderable: false, targets: [0,8] }
-  ]
-} );
-
-$('#adminstable').DataTable( {
-  order: [[4, 'desc']],
-  columnDefs: [
-    {searchable: false, orderable: false, targets: [0,6] }
-  ]
-} );
-
-$('#mechanicstable').DataTable( {
-  order: [[5, 'desc']],
-  columnDefs: [
-    {searchable: false, orderable: false, targets: [0,7] }
-  ]
-} );
-
-   $('#producttable').DataTable( {
-  columnDefs: [
-    {searchable: false, orderable: false, targets: [1,11] }
-  ]
-} );
-
-$('#categorytable').DataTable( {
-  columnDefs: [
-    {searchable: false,  orderable: false, targets: 3 }
-  ]
-  
-} );
-
-$('#subcategorytable').DataTable( {
-  columnDefs: [
-    {searchable: false, orderable: false, targets: 3 }
-  ]
-} );
-
-$('#orderstable').DataTable( {
-  order: [[7, 'desc']],
-  columnDefs: [
-    {searchable: false, orderable: false, targets: 9 }
-  ]
-} );
-
 $('#bookingstable').DataTable( {
   
-  dom: 'lBfrtip',
-  order: [[7, 'desc']],
+  order: [[5, 'desc']],
   columnDefs: [
-    {searchable: false, orderable: false, targets: 9 }
+    {searchable: false, orderable: false, targets: 8 }
   ],
-  buttons: [
-            {
-           extend: 'print',
-           exportOptions: {
-           columns: [ 0, 1, 2, 3, 4, 5, 6,7,8 ] //Your Column value those you want
-               }
-             },
-             {
-              extend: 'excel',
-              exportOptions: {
-              columns: [ 0, 1, 2, 3, 4 ,5, 6,7,8 ] //Your Column value those you want
-             }
-           },
-           {
-              extend: 'pdf',
-              exportOptions: {
-              columns: [ 0, 1, 2, 3, 4, 5, 6,7,8 ] //Your Column value those you want
-             }
-           },
-         ],
+  
 
 } );
 

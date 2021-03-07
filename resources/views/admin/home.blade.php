@@ -1,5 +1,8 @@
 @extends('layouts.admin.admin')
 
+@section('css')
+<link rel="stylesheet" type="text/css" href="{{ asset('css/chartjs/Chart.min.css') }}"/>
+@endsection
 @section('content')
 <!-- Begin Page Content -->
         <div class="container-fluid">
@@ -36,7 +39,7 @@
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                       <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Number of Bicycle Sales</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800"></div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $sales_count }}</div>
                     </div>
                     <div class="col-auto">
                       <i class="fas fa-store fa-2x text-gray-300"></i>
@@ -52,10 +55,10 @@
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Pending Repair Booking Assignment</div>
+                      <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Pending Repair Bookings</div>
                       <div class="row no-gutters align-items-center">
                         <div class="col-auto">
-                          <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800"></div>
+                          <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{ $pending_count }}</div>
                         </div>
                       </div>
                     </div>
@@ -90,20 +93,27 @@
           <div class="row">
 
             <!-- Area Chart -->
-            <div class="col-xl-12 col-lg-12">
-              <div class="card shadow mb-4">
+            <div class="col-xl-6 col-lg-6">
+              <div class="card shadow">
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <a href="https://ncovtracker.doh.gov.ph/" target="_blank" style="text-decoration: none;">
-                  <h6 class="m-0 font-weight-bold text-primary">SEARCH</h6>
-              </a>
+                  <h6 class="m-0 font-weight-bold text-primary">SALES BY PRODUCT BRANDS</h6>
                 </div>
                 <!-- Card Body -->
                 <div class="card-body">
-                <script async src="https://cse.google.com/cse.js?cx=846b8fc635012341f"></script>
-<div class="gcse-search"></div>
-                    
-                 
+                       
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-6 col-lg-6">
+              <div class="card shadow">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                  <h6 class="m-0 font-weight-bold text-primary">BOOKINGS BY REPAIR CATEGORY</h6>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+                    <canvas id="bookingCategoryChart"></canvas> 
                 </div>
               </div>
             </div>
@@ -114,4 +124,52 @@
          
         </div>
         <!-- /.container-fluid -->
+@endsection
+
+@section('js')
+<script src="{{ asset('js/chartjs/Chart.min.js') }}" ></script>
+
+<script>
+var ctx = document.getElementById('bookingCategoryChart');
+let labels = ['Basic Repair', 'Expert repair', 'Upgrade'];
+let colorHex = ['#003f5c', '#ffa600', '#bc5090'];
+
+let myChart = new Chart(ctx, {
+  type: 'pie',
+  data: {
+    datasets: [{
+      data: [{{$basic_count}},{{$expert_count}},{{$upgrade_count}}],
+      backgroundColor: colorHex
+    }],
+    labels: labels
+  },
+  options: {
+    responsive: true,
+    legend: {
+      position: 'bottom'
+    },
+    plugins: {
+      datalabels: {
+        color: '#fff',
+        anchor: 'end',
+        align: 'start',
+        offset: -10,
+        borderWidth: 2,
+        borderColor: '#fff',
+        borderRadius: 25,
+        backgroundColor: (context) => {
+          return context.dataset.backgroundColor;
+        },
+        font: {
+          weight: 'bold',
+          size: '10'
+        },
+        formatter: (value) => {
+          return value + ' %';
+        }
+      }
+    }
+  }
+})
+</script>
 @endsection

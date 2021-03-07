@@ -1,13 +1,15 @@
-@extends('layouts.admin.admin')
+@extends('layouts.mechanic.mechanic')
 
+@section('title')
+Padyak.Co Mechanic - My Bookings
+@endsection
 @section('content')
-
 <!-- Begin Page Content -->
 <div class="container-fluid">
 
 <!-- Page Heading -->
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-  <h1 class="h3 mb-0 text-gray-800">Bookings List</h1>
+  <h1 class="h3 mb-0 text-gray-800">My Assigned Bookings List</h1>
 </div>
 
 
@@ -42,11 +44,10 @@
   <th>Phone Number</th>
   <th>Location</th>
   <th>Repair Type</th>
-  <th>Mechanic</th>
   <th>Schedule</th>
   <th>Date Booked</th>
   <th>Status</th>
-  <th style="column-width:1300px;">Action</th>
+  <th style="column-width:310px;">Action</th>
 </tr>
 </thead>
 <tbody>
@@ -60,7 +61,6 @@
       <td>{{$booking->phone_number}}</td>
       <td>{{$booking->location}}</td>
       <td>{{$booking->repair_type}}</td>
-      <td>{{$booking->mechanic->first_name ?? 'Not'}} {{$booking->mechanic->last_name ?? 'Set'}}</td> 
       <td>{{$booking->booking_time}}</td>
       <td>{{$booking->created_at}}</td>
       @if($booking->status =="pending")
@@ -76,9 +76,7 @@
         @endif
       <td><div class="row justify-content-center">
       <div class="col-md-3">
-      <button class="btn btn-dark" data-id="{{$booking->id}}" data-firstname="{{$booking->first_name}}" data-lastname="{{$booking->last_name}}" data-phonenumber="{{$booking->phone_number}}" 
-      data-repairtype="{{$booking->repair_type}}" data-bookingtime="{{ Carbon\Carbon::parse($booking->booking_time)->format('Y-m-d\TH:i')}}" data-notes="{{$booking->notes}}" data-additionalfee="{{$booking->additional_fee}}"
-      onclick="editBooking(this);"><i class="fa fa-edit" aria-hidden="true"></i></button>
+      <button class="btn btn-dark" data-id="{{$booking->id}}" data-additionalfee="{{$booking->additional_fee}}" onclick="editBooking(this);"><i class="fa fa-edit" aria-hidden="true"></i></button>
       </div>
       <div class="col-md-3">
       <button class="btn btn-warning" data-firstname="{{$booking->first_name}}" data-lastname="{{$booking->last_name}}" data-phonenumber="{{$booking->phone_number}}" 
@@ -88,10 +86,10 @@
       data-totalfee="{{$booking->total_fee}}" data-status="{{$booking->status}}" data-mechanicstatus="{{$booking->mechanic->status ?? ''}}" data-mechanicnumber="{{$booking->mechanic->phone_number ?? ''}}" data-userstatus="{{$booking->user->status}}" onclick="viewBooking(this);"><i class="fas fa-info-circle" aria-hidden="true"></i></button>
       </div>
       <div class="col-md-3">
-      <a class="btn btn-secondary" href="{{route('adminBookingsShowAddress', ['id' => $booking->id])}}"><i class="fas fa-map-marked-alt" aria-hidden="true"></i></a>
+      <a class="btn btn-secondary" href="{{route('mechanicBookingsShowAddress', ['id' => $booking->id])}}"><i class="fas fa-map-marked-alt" aria-hidden="true"></i></a>
       </div>
       <div class="col-md-3 ">
-      <button class="btn btn-info " data-id="{{$booking->id}}" data-mechanic="{{$booking->mechanic_id}}" data-additionalfee="{{$booking->additional_fee}}" data-status="{{$booking->status}}" onclick="updateBookingStatus(this);"><i class="fas fa-wrench" aria-hidden="true"></i></button>
+      <button class="btn btn-info " data-id="{{$booking->id}}" data-additionalfee="{{$booking->additional_fee}}" data-status="{{$booking->status}}" onclick="updateBookingStatus(this);"><i class="fas fa-wrench" aria-hidden="true"></i></button>
       </div></div> </td> 
   </tr>
 @endforeach
@@ -120,7 +118,7 @@
             @CSRF
            
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editModalTitle">Edit Booking Details</h5>
+                    <h5 class="modal-title" id="editModalTitle">Edit Additional Fee</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -131,38 +129,9 @@
            
             <div class="card-body">
             <div class="alert alert-danger modal-errors" style="display:none"></div>
-      
-                    <div class="form-group">
-                        <label>First Name</label>
-                        <input class="form-control" type="text" id="editFirstName" name="first_name" required="" >
-                    </div>
-                    <div class="form-group">
-                        <label>Last Name</label>
-                        <input class="form-control" type="text" id="editLastName" name="last_name" required="" >
-                    </div>
-                    <div class="form-group">
-                        <label>Phone Number</label>
-                        <input class="form-control" type="tel" id="editPhoneNumber" name="phone_number" required="" >
-                    </div>
-                    <div class="form-group">
-                        <label>Repair Type</label>
-                        <select class="form-control" name="repair_type" id="editRepairType">
-                        <option value="Basic">Basic</option>
-                        <option value="Expert">Expert</option>
-                        <option value="Upgrade">Upgrade</option>
-                        </select>
-                    </div>
                     <div class="form-group">
                         <label>Additional Fee</label>
                         <input class="form-control" type="number" id="editAdditionalFee" name="additional_fee" required="" min="0" step="0.01">
-                    </div>
-                    <div class="form-group">
-                        <label>Notes</label>
-                        <textarea class="form-control" rows="5" id="editNotes" name="notes"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label>Schedule</label>
-                        <input type="datetime-local"  id="editBookingTime" name="booking_time"  class="form-control" required="">
                     </div>
                       <div class="pt-2">
               </div>  
@@ -203,20 +172,10 @@
                     <div class="form-group">
                         <label>Status</label>
                         <select class="form-control" name="status" id="editStatus">
-                        <option value="pending">Pending</option>
                         <option value="confirmed">Confirmed</option>
                         <option value="en route">En route</option>
                         <option value="done">Done</option>
                         <option value="cancelled">Cancelled</option>
-                        </select>
-                    </div> 
-                    <div class="form-group">
-                        <label>Mechanic Assigned</label>
-                        <select class="form-control" name="mechanic_id" id="editMechanic">
-                        <option value="" selected>Select a mechanic</option>
-                        @foreach($mechanics as $mechanic)  
-                        <option value="{{$mechanic->id}}">{{$mechanic->first_name}} {{$mechanic->last_name}}</option>
-                        @endforeach
                         </select>
                     </div>                    
                       <div class="pt-2">
@@ -388,7 +347,7 @@ e.preventDefault();
 var formData = new FormData(this);
 $.ajax({
 type:'POST',
-url: "{{ url('/admin/bookings/updateStatus') }}",
+url: "{{ url('/mechanic/bookings/updateStatus') }}",
 data: formData,
 cache:false,
 contentType: false,
@@ -407,7 +366,7 @@ success: function(result){
                 {
                     $('.modal-errors').hide();
                     $('editStatusModal').modal('hide');
-                    window.location = "{{ url('/admin/bookings/') }}";
+                    window.location = "{{ url('/mechanic/bookings/') }}";
                     // $('.alert-success').html('');
                     // $('.alert-success').show();
                     // $('.alert-success').append('Member added.');
@@ -422,7 +381,7 @@ e.preventDefault();
 var formData = new FormData(this);
 $.ajax({
 type:'POST',
-url: "{{ url('/admin/bookings/modify') }}",
+url: "{{ url('/mechanic/bookings/modify') }}",
 data: formData,
 cache:false,
 contentType: false,
@@ -441,7 +400,7 @@ success: function(result){
                 {
                     $('.modal-errors').hide();
                     $('#editModal').modal('hide');
-                    window.location = "{{ url('/admin/bookings/') }}";
+                    window.location = "{{ url('/mechanic/bookings/') }}";
                     // $('.alert-success').html('');
                     // $('.alert-success').show();
                     // $('.alert-success').append('Member added.');
@@ -451,11 +410,7 @@ success: function(result){
 });
 });
 
-$('#editStatusModal').on('hidden.bs.modal', function () {
-    $("#editMechanic").val("");
-      });
 });
-
 </script>
 
 @endsection

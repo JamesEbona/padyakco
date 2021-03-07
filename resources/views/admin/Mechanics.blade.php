@@ -67,6 +67,7 @@
       <td><div class="row justify-content-center">
       <button class="btn btn-dark" data-id="{{$user->id}}" data-firstname="{{$user->first_name}}" data-lastname="{{$user->last_name}}" data-email="{{$user->email}}" data-role="{{$user->role}}"
        data-image="{{$user->image}}" data-phonenumber="{{$user->phone_number}}" onclick="editMechanic(this)"><i class="fa fa-edit" aria-hidden="true"></i></button>
+      <a class="btn btn-info ml-2" href="/admin/bookings/calendar/{{ $user->id }}"><i class="fa fa-calendar" aria-hidden="true"></i></a>
       @if ($user->status == 'active')
       <a class="btn btn-warning ml-2" href="/admin/users/deactivate/{{ $user->id }}"><i class="fa fa-ban" aria-hidden="true"></i></a>
       @else

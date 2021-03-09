@@ -248,10 +248,22 @@ div.pac-container {
 
 
 
-<li class="nav-item {{{ (Route::current()->getName() == "OrgRequestsIndex" ? 'active' : '') }}}">
-        <a class="nav-link" href="/OrganizationRequests">
+<li class="nav-item {{{ (Route::current()->getName() == "guide.index" ? 'active' : '') }}}">
+        <a class="nav-link" href="{{route('guide.index')}}">
           <i class="fas fa-fw fa-map"></i>
-          <span>Posts</span></a>
+          <span>Guides</span></a>
+      </li>
+
+      <li class="nav-item {{{ (Route::current()->getName() == "guide.create" ? 'active' : '') }}}">
+        <a class="nav-link" href="{{route('guide.create')}}">
+          <i class="fas fa-fw fa-plus-square"></i>
+          <span>Create Guide</span></a>
+      </li>
+
+      <li class="nav-item {{{ (Route::current()->getName() == "guideCategories" ? 'active' : '') }}}">
+        <a class="nav-link" href="{{route('guideCategories')}}">
+          <i class="fas fa-fw fa-folder-open"></i>
+          <span>Categories</span></a>
       </li>
 
        <!-- Divider -->
@@ -455,6 +467,13 @@ $('#categorytable').DataTable( {
   
 } );
 
+$('#guidecategorytable').DataTable( {
+  columnDefs: [
+    {searchable: false,  orderable: false, targets: 2 }
+  ]
+  
+} );
+
 $('#subcategorytable').DataTable( {
   columnDefs: [
     {searchable: false, orderable: false, targets: 3 }
@@ -462,9 +481,37 @@ $('#subcategorytable').DataTable( {
 } );
 
 $('#orderstable').DataTable( {
+  dom: 'lBfrtip',
   order: [[7, 'desc']],
   columnDefs: [
     {searchable: false, orderable: false, targets: 9 }
+  ],
+  buttons: [
+            {
+           extend: 'print',
+           exportOptions: {
+           columns: [ 0, 1, 2, 3, 4, 5, 6,7,8 ] 
+               }
+             },
+             {
+              extend: 'excel',
+              exportOptions: {
+              columns: [ 0, 1, 2, 3, 4 ,5, 6,7,8 ] 
+             }
+           },
+           {
+              extend: 'pdf',
+              exportOptions: {
+              columns: [ 0, 1, 2, 3, 4, 5, 6,7,8 ] 
+             }
+           },
+         ],
+} );
+
+$('#guidestable').DataTable( {
+  order: [[3, 'desc']],
+  columnDefs: [
+    {searchable: false, orderable: false, targets: 6}
   ]
 } );
 
@@ -479,19 +526,19 @@ $('#bookingstable').DataTable( {
             {
            extend: 'print',
            exportOptions: {
-           columns: [ 0, 1, 2, 3, 4, 5, 6,7,8 ] //Your Column value those you want
+           columns: [ 0, 1, 2, 3, 4, 5, 6,7,8 ] 
                }
              },
              {
               extend: 'excel',
               exportOptions: {
-              columns: [ 0, 1, 2, 3, 4 ,5, 6,7,8 ] //Your Column value those you want
+              columns: [ 0, 1, 2, 3, 4 ,5, 6,7,8 ] 
              }
            },
            {
               extend: 'pdf',
               exportOptions: {
-              columns: [ 0, 1, 2, 3, 4, 5, 6,7,8 ] //Your Column value those you want
+              columns: [ 0, 1, 2, 3, 4, 5, 6,7,8 ] 
              }
            },
          ],

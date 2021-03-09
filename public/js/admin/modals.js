@@ -38,6 +38,24 @@ function deleteProduct(arg) {
      $("#DeleteUserButton").attr('href', href);
 }
 
+function deleteGuide(arg) {
+    $('#deleteModal').modal('show');
+    var id = $(arg).attr('data-id');
+    var href_start = "/admin/guides/delete/";
+    var href = href_start + id;
+
+     $("#DeleteUserButton").attr('href', href);
+}
+
+function deleteGuideCategory(arg) {
+    $('#deleteModal').modal('show');
+    var id = $(arg).attr('data-id');
+    var href_start = "/admin/guideCategories/delete/";
+    var href = href_start + id;
+
+     $("#DeleteCategoryButton").attr('href', href);
+}
+
 function editUser(arg) {
     $('#editModal').modal('show');
     var id = $(arg).attr('data-id');

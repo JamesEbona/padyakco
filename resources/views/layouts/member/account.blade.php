@@ -84,11 +84,10 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 									<li><a href="{{ route('bookView') }}">VIEW BOOKINGS</a></li>
 							  </ul>
 						 </li>      
-						 <li class="dropdown1"><a href="accessories.html">TRIP GUIDES</a>
+						 <li class="dropdown1"><a href="{{route('tripGuides')}}">TRIP GUIDES</a>
 							 <ul class="dropdown2">
-									<li><a href="accessories.html">TRIP DESTINATIONS</a></li>
-										<li><a href="accessories.html">ARTICLES</a></li>
-										<li><a href="accessories.html">CONTRIBUTE</a></li>
+									<li><a href="{{route('tripGuides')}}">TRIP DESTINATIONS</a></li>
+										<li><a href="{{route('tripGuides')}}">TIPS</a></li>
 							  </ul>
 						 </li>    
 						

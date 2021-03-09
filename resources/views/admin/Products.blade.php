@@ -66,11 +66,11 @@
                           </div>
                           @if ($product->status == 'active')
                           <div class="col-md-4">
-                          <a class="btn btn-warning" href="/admin/products/deactivate/{{ $product->id }}"><i class="fa fa-ban" aria-hidden="true"></i></a>
+                          <a class="btn btn-warning" href="/admin/products/deactivate/{{ $product->id }}"><i class="fa fa-eye-slash" aria-hidden="true"></i></a>
                           </div>
                           @else
                           <div class="col-md-4">
-                          <a class="btn btn-success" href="/admin/products/activate/{{ $product->id }}"><i class="fa fa-check-circle" aria-hidden="true"></i></a>
+                          <a class="btn btn-success" href="/admin/products/activate/{{ $product->id }}"><i class="fa fa-eye" aria-hidden="true"></i></a>
                           </div>
                           @endif
                           <div class="col-md-4">

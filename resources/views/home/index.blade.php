@@ -38,11 +38,10 @@
 									<li><a href="{{ route('book') }}">BOOK A MECHANIC</a></li>
 							  </ul>
 						 </li>      
-						 <li class="dropdown1"><a href="accessories.html">TRIP GUIDES</a>
+						 <li class="dropdown1"><a href="{{route('tripGuides')}}">TRIP GUIDES</a>
 							 <ul class="dropdown2">
-									<li><a href="accessories.html">TRIP DESTINATIONS</a></li>
-										<li><a href="accessories.html">ARTICLES</a></li>
-										<li><a href="accessories.html">CONTRIBUTE</a></li>
+									<li><a href="{{route('tripGuides')}}">TRIP DESTINATIONS</a></li>
+										<li><a href="{{route('tripGuides')}}">TIPS</a></li>
 							  </ul>
 						 </li>    
 						     
@@ -85,12 +84,12 @@
 			 <a href="bicycles.html"><div class="col-md-4 cate-grid" style="background: url({{ asset('images/member/c2.jpg') }}) no-repeat;">
 				 <h4>HAVE A BICYCLE PROBLEM?</h4>
 				 <p>Book an appointment with our mechanics</p>
-				 <a class="store" href="bicycles.html">GO TO REPAIR SERVICE</a>
+				 <a class="store" href="{{route('book')}}">GO TO REPAIR SERVICE</a>
 			 </div></a>
 			 <a href="bicycles.html"><div class="col-md-4 cate-grid" style="background: url({{ asset('images/member/c3.jpg') }}) no-repeat;">
 				 <h4>DON'T KNOW WHERE TO GO?</h4>
 				 <p>View cycling trip guides</p>
-				 <a class="store" href="bicycles.html">GO TO TRIP GUIDE</a>
+				 <a class="store" href="/guides">GO TO TRIP GUIDE</a>
 			 </div></a>
 			 <div class="clearfix"></div>
 		 </div>

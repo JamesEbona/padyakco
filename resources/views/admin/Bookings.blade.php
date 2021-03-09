@@ -285,8 +285,8 @@
             </div>     
             <div class="col-xl-10 col-lg-10">
             <p id= viewFirstName class="m-0 p-0 d-inline"></p> <p id= viewLastName class="m-0 p-0 d-inline"></p>
+            <p class="ml-2 d-inline"><span id="viewUserStatus"></span></p>  
             <p id="viewPhoneNumber" class="m-0 p-0"></p>
-            <p><span id="viewUserStatus"></span></p>  
           </div>
                                </div>    
                 </div> 
@@ -301,9 +301,8 @@
                 <img id="viewMechanicImage" alt="" class="rounded-circle w-100" style="max-height:80px; max-width: 100px;">
             </div>     
             <div class="col-xl-10 col-lg-10">
-            <p id= viewMechanicName class="m-0 p-0"></p> 
+            <p id= viewMechanicName class="m-0 p-0 d-inline"></p><p class="d-inline ml-2"><span id="viewMechanicStatus"></span></p>   
             <p id="viewMechanicNumber" class="m-0 p-0"></p>
-            <p><span id="viewMechanicStatus"></span></p>  
           </div>
                                </div>    
                 </div> 

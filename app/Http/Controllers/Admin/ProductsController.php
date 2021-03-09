@@ -167,7 +167,7 @@ class ProductsController extends Controller
         $product = Product::findOrFail($id);
         $product->update(['status' => "active"]);
         $product_name = $product->title;
-        return redirect("/admin/products")->with('message', $product_name." product is now activated.");
+        return redirect("/admin/products")->with('message', $product_name." product is now visible.");
     }
 
     public function deactivate($id)
@@ -175,7 +175,7 @@ class ProductsController extends Controller
         $product = Product::findOrFail($id);
         $product->update(['status' => "inactive"]);
         $product_name = $product->title;
-        return redirect("/admin/products")->with('message', $product_name." product is now deactivated.");  
+        return redirect("/admin/products")->with('message', $product_name." product is now hidden.");  
     }
 
     public function destroy($id)

@@ -14,6 +14,21 @@
 	height: 80px;
 }
 
+.row-guide{
+	outline: none;
+	margin: 15px 15px;
+	padding-bottom: 15px;
+	height: 500px;
+}
+
+.row-popular{
+	outline: none;
+	margin: 15px 0 0px 15px;
+	overflow: auto;
+	padding-bottom: 15px;
+	height: 580px;
+}
+
 
 .sky-form h4{
 	font-size: 1em;

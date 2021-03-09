@@ -3,9 +3,10 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\BicyclesController;
+use App\Http\Controllers\GuidesController;
 use App\Http\Controllers\CartController;
 
-use App\Mail\BookingEnRoute;
+// use App\Mail\BookingEnRoute;
 use App\Models\Booking;
 
 
@@ -33,11 +34,14 @@ Route::get('/cart/add/{id}', [CartController::class, 'store'])->name('addCart');
 Route::get('/cart/addOne/{id}', [CartController::class, 'addByOne'])->name('addOneCart');
 Route::get('/cart/reduce/{id}', [CartController::class, 'reduceByOne'])->name('reduceCart');
 Route::get('/cart/remove/{id}', [CartController::class, 'removeItem'])->name('removeCart');
+Route::get('/guides', [GuidesController::class, 'index'])->name('tripGuides');
+Route::post('/guides/fetch_data', [GuidesController::class, 'fetch_guides_data']);
+Route::get('/guides/show/{id}', [GuidesController::class, 'show'])->name('viewGuide');
 
-Route::get('/email', function(){
-    $booking = Booking::where('id',6)->firstOrFail();
-    return new BookingEnRoute($booking);
-});
+// Route::get('/email', function(){
+//     $booking = Booking::where('id',6)->firstOrFail();
+//     return new BookingEnRoute($booking);
+// });
 
 // Route::get('/dashboard', function () {
 //     return view('dashboard');
@@ -123,6 +127,19 @@ Route::group([
     Route::post('bookings/updateStatus', 'BookingsController@updateStatus');
     Route::get('prices', 'PricesController@index')->name('adminPrices');
     Route::patch('prices/update', 'PricesController@modify')->name('updatePrices');
+    Route::get('guides', 'GuidesController@index')->name('guide.index');
+    Route::get('guides/create', 'GuidesController@create')->name('guide.create');
+    Route::post('guides/upload', 'GuidesController@upload')->name('guide.upload');
+    Route::get('guides/edit/{id}', 'GuidesController@edit')->name('guide.edit');
+    Route::patch('guides/update', 'GuidesController@update')->name('guide.update');
+    Route::post('guides/store', 'GuidesController@store')->name('guide.store');
+    Route::get('guides/activate/{id}', 'GuidesController@activate');
+    Route::get('guides/deactivate/{id}', 'GuidesController@deactivate');
+    Route::get('guides/delete/{id}', 'GuidesController@destroy');
+    Route::get('guideCategories', 'GuideCategoriesController@index')->name('guideCategories');
+    Route::post('guideCategories/store', 'GuideCategoriesController@store');
+    Route::post('guideCategories/edit', 'GuideCategoriesController@edit');
+    Route::get('guideCategories/delete/{id}', 'GuideCategoriesController@destroy');
    
 });
 

@@ -19,6 +19,24 @@ input[type=number] {
   -moz-appearance: textfield;
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 .cartDisabled {
 pointer-events: none;
   cursor: not-allowed;
@@ -2443,6 +2461,12 @@ select{
 	margin: 0% 3.5% 0% 0;
 	width: 18%;
 }
+.guidesidebar {
+	display: block;
+	float: right;
+	margin: 0% 3.5% 0% 0;
+	width: 18%;
+}
 h3.m_2 {
 	font-size: 1em;
 	font-weight: 500;
@@ -2624,6 +2648,11 @@ margin-bottom: 2em;
 	float:right;
 	width:78%;
 }
+.guides-list{
+	float:left;
+	width:100%;
+}
+
 .top{
 	background:#eee;
 	padding:0.5em 1em;
@@ -3139,6 +3168,7 @@ a.continue:hover{
 	background:#333;
 }
 
+
 .price-details{
 	border-bottom:1px solid;
 	padding-bottom:10px;
@@ -3504,6 +3534,9 @@ select {
 .rsidebar {
   width: 25%;
 }
+.guidesidebar {
+	width: 25%;
+}
 .bike-parts {
   width: 71%;
 }
@@ -3839,6 +3872,9 @@ select {
 }
 .rsidebar {
   width: 100%;
+}
+.guidesidebar {
+	width: 100%;
 }
 .bike-parts {
   width: 100%;

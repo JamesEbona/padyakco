@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Category;
+use App\Models\GuideCategory;
 
-class CategoriesController extends Controller
+class GuideCategoriesController extends Controller
 {
 
     public function __construct()
@@ -16,8 +16,8 @@ class CategoriesController extends Controller
 
     public function index()
     {
-        $categories = Category::all();
-        return view('admin.Categories', compact('categories'));
+        $categories = GuideCategory::all();
+        return view('admin.GuideCategories', compact('categories'));
     }
 
     public function store(Request $request)
@@ -31,12 +31,12 @@ class CategoriesController extends Controller
             return response()->json(['errors'=>$validator->errors()->all()]);
         }
           
-        $category = new Category; 
+        $category = new GuideCategory; 
         $category->title = request('title');
         $category->description = request('description');
         $category->save();
 
-        return redirect("/admin/categories")->with('message', 'Category added.');
+        return redirect("/admin/guideCategories")->with('message', 'Category added.');
     }
 
     public function edit(Request $request)
@@ -50,19 +50,19 @@ class CategoriesController extends Controller
             return response()->json(['errors'=>$validator->errors()->all()]);
         }
         
-        $category = Category::findOrFail(request('editId'));
+        $category = GuideCategory::findOrFail(request('editId'));
         $category->title = request('title');
         $category->description = request('description');
         $category->save();
 
-        return redirect("/admin/categories")->with('message', 'Category updated.');
+        return redirect("/admin/guideCategories")->with('message', 'Category updated.');
     }
 
     public function destroy($id)
     {
-        $category = Category::findOrFail($id);
-        Category::destroy($category->id);
-        return redirect("/admin/categories")->with('message', $category->title." category and its subcategories are now deleted.");  
+        $category = GuideCategory::findOrFail($id);
+        GuideCategory::destroy($category->id);
+        return redirect("/admin/guideCategories")->with('message', $category->title." category is now deleted.");  
     }
 }
 

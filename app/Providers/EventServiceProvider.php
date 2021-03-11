@@ -11,6 +11,7 @@ use App\Events\NewOrderEvent;
 use App\Events\OrderShippedEvent;
 use App\Events\OrderCancelledEvent;
 use App\Events\OrderDeliveredEvent;
+use App\Events\InquiryReplyEvent;
 // use App\Listeners\SendNewOrderNotification;
 use App\Listeners\SendBookingConfirmedNotification;
 use App\Listeners\SendBookingDoneNotification;
@@ -19,6 +20,7 @@ use App\Listeners\SendBookingCancelledNotification;
 use App\Listeners\SendMemberInvoice;
 use App\Listeners\SendShippedOrderNotification;
 use App\Listeners\SendCancelledOrderNotification;
+use App\Listeners\SendInquiryReplyNotification;
 use App\Listeners\SendDeliveredOrderNotification;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -58,6 +60,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         BookingDoneEvent::class => [
             SendBookingDoneNotification::class,
+        ],
+        InquiryReplyEvent::class => [
+            SendInquiryReplyNotification::class,
         ],
     ];
 

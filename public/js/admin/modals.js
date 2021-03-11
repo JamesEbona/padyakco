@@ -56,6 +56,15 @@ function deleteGuideCategory(arg) {
      $("#DeleteCategoryButton").attr('href', href);
 }
 
+function deleteInquiry(arg) {
+    $('#deleteModal').modal('show');
+    var id = $(arg).attr('data-id');
+    var href_start = "/admin/inquiries/delete/";
+    var href = href_start + id;
+
+     $("#DeleteUserButton").attr('href', href);
+}
+
 function editUser(arg) {
     $('#editModal').modal('show');
     var id = $(arg).attr('data-id');
@@ -363,3 +372,19 @@ function viewProductPicture(arg) {
 $('.crud').on('hidden.bs.modal', function () {
     $('.modal-errors').hide(); 
 })    
+
+function viewMessage(arg) {
+    $('#messageModal').modal('show');
+    var message = $(arg).attr('data-message');
+   
+    $("#viewMessage").html(message);
+}
+
+function replyInquiry(arg) {
+    $('#replyInquiryModal').modal('show');
+    var id = $(arg).attr('data-id');
+    var subject = $(arg).attr('data-subject');
+   
+    $("#inquiryId").val(id);
+    $("#inquirySubject").val(subject);
+}

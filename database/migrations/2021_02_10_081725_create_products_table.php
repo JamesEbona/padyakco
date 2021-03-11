@@ -28,9 +28,9 @@ class CreateProductsTable extends Migration
             $table->unsignedInteger('rating');
             $table->string('status');
             $table->string('description')->nullable();
-            $table->string('image1')>nullable();
-            $table->string('image2')>nullable();
-            $table->string('image3')>nullable();
+            $table->string('image1')->nullable();
+            $table->string('image2')->nullable();
+            $table->string('image3')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

@@ -275,8 +275,8 @@ div.pac-container {
 </div>
 
 
-<li class="nav-item {{{ (Route::current()->getName() == "LiveCountIndex" ? 'active' : '') }}}">
-  <a class="nav-link" href="/LiveCount">
+<li class="nav-item {{{ (Route::current()->getName() == "inquiries" ? 'active' : '') }}}">
+  <a class="nav-link" href="{{route('inquiries')}}">
     <i class="fas fa-fw fa-envelope"></i>
     <span>Manage</span></a>
 </li>
@@ -512,6 +512,13 @@ $('#guidestable').DataTable( {
   order: [[3, 'desc']],
   columnDefs: [
     {searchable: false, orderable: false, targets: 6}
+  ]
+} );
+
+$('#inquiriestable').DataTable( {
+  order: [[3, 'desc']],
+  columnDefs: [
+    {searchable: false, orderable: false, targets: 5}
   ]
 } );
 

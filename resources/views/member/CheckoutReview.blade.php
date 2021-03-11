@@ -94,29 +94,29 @@ Padyak.Co - Checkout
     createOrder: function(data, actions) {
       // This function sets up the details of the transaction, including the amount and line item details.
 
-	//add double brackets to routes 
-	//   $.ajaxSetup({
-	// 		headers: {
-	// 		'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-	// 		}
-	// 	});
-	// 	$.ajax({  
-	// 		type: 'POST',  
-	// 		url: 'route("check") ', 
-	// 		data: { 
-	// 	            item_total: item_total,
-	// 				item_total: item_total,
-	// 				delivery_total: delivery_total
-	// 		},
-	// 		success: function(response) {
-	// 			if(response['success'] = false){
-	// 				window.location = "route('checkoutReview') ";
-	// 				window.alert('Sorry. Some items in your order are updated due to inventory issues.');
-	// 			}
+	// add double brackets to routes 
+	  $.ajaxSetup({
+			headers: {
+			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			}
+		});
+		$.ajax({  
+			type: 'POST',  
+			url: '{{route("check")}}', 
+			data: { 
+		            item_total: item_total,
+					item_total: item_total,
+					delivery_total: delivery_total
+			},
+			success: function(response) {
+				if(response['success'] = false){
+					window.location = "route('checkoutReview') ";
+					window.alert('Sorry. Some items in your order are updated due to inventory issues.');
+				}
 
 			
-	// 		}
-	// 	});	
+			}
+		});	
 	    
 	  
 		return actions.order.create({

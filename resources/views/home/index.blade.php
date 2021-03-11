@@ -151,10 +151,25 @@
 	<div class="container">
 		<h3>CONTACT US</h3>
 		<p>Please contact us for any inquires.</p>
-		<form>
-			 <input type="text" name="name" placeholder="NAME" required="">
-			 <input type="text"  name="number" placeholder="CONTACT NUMBER" required="">			 
-			 <input class="user"  type="text" placeholder="E-MAIL" required=""><br>
+		<form method="post" action="{{route('storeInquiry')}}">
+		@csrf
+		@if(session()->has('message'))
+        <div class="alert alert-success" style="width:95%;">
+        {{ session()->get('message') }}
+        </div>
+      @endif
+            @if ($errors->any())
+              <div class="alert alert-danger" style="width:95%;">
+               <ul>
+                  @foreach ($errors->all() as $error)
+                   {{ $error }}<br>
+                   @endforeach
+              </ul>
+              </div>
+            @endif
+			<input type="text" name="name" placeholder="NAME" required="">
+			 <input type="text"  name="email" placeholder="E-MAIL" required="">			 
+			 <input class="user"  type="text" name="subject" placeholder="SUBJECT" required=""><br>
 			 <textarea name="message" placeholder="MESSAGE"></textarea>
 			 <input type="submit" value="SEND">
 		</form>

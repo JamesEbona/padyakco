@@ -5,9 +5,10 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\BicyclesController;
 use App\Http\Controllers\GuidesController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\InquiriesController;
 
-// use App\Mail\BookingEnRoute;
-use App\Models\Booking;
+use App\Mail\InquiryReply;
+use App\Models\Inquiry;
 
 
 /*
@@ -37,11 +38,15 @@ Route::get('/cart/remove/{id}', [CartController::class, 'removeItem'])->name('re
 Route::get('/guides', [GuidesController::class, 'index'])->name('tripGuides');
 Route::post('/guides/fetch_data', [GuidesController::class, 'fetch_guides_data']);
 Route::get('/guides/show/{id}', [GuidesController::class, 'show'])->name('viewGuide');
+Route::post('/inquiries/store', [InquiriesController::class, 'store'])->name('storeInquiry');
 
-// Route::get('/email', function(){
-//     $booking = Booking::where('id',6)->firstOrFail();
-//     return new BookingEnRoute($booking);
-// });
+Route::get('/email', function(){
+    $subject = "sample subject";
+    $reply = "sample reply";
+    $inquiry = Inquiry::findOrFail(3);
+
+    return new InquiryReply($inquiry,$subject,$reply);
+});
 
 // Route::get('/dashboard', function () {
 //     return view('dashboard');
@@ -140,6 +145,9 @@ Route::group([
     Route::post('guideCategories/store', 'GuideCategoriesController@store');
     Route::post('guideCategories/edit', 'GuideCategoriesController@edit');
     Route::get('guideCategories/delete/{id}', 'GuideCategoriesController@destroy');
+    Route::get('inquiries', 'InquiriesController@index')->name('inquiries');
+    Route::get('inquiries/delete/{id}', 'InquiriesController@destroy');
+    Route::post('inquiries/reply', 'InquiriesController@reply');
    
 });
 

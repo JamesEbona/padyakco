@@ -277,28 +277,28 @@
            
             <div class="card-body">
                <div class="form-group">
-                        <label>Address 1</label>
-                        <input class="form-control" id="viewAddress1" type="text" disabled>   
+                        <label class="font-weight-bold">Address 1</label>
+                        <p id="viewAddress1"></p>   
                </div>
                <div class="form-group">
-                        <label>Address 2</label>
-                        <input class="form-control" id="viewAddress2" type="text" disabled>   
+                        <label class="font-weight-bold">Address 2</label>
+                        <p id="viewAddress2"></p> 
                </div>
                <div class="form-group">
-                        <label>City</label>
-                        <input class="form-control" id="viewCity" type="text" disabled>   
+                        <label class="font-weight-bold">City</label>
+                        <p id="viewCity"></p>
                </div>
                <div class="form-group">
-                        <label>Province</label>
-                        <input class="form-control" id="viewProvince" type="text" disabled>   
+                        <label class="font-weight-bold">Province</label>
+                        <p id="viewProvince"></p>
                </div>
                <div class="form-group">
-                        <label>Postal Code</label>
-                        <input class="form-control" id="viewPostalCode" type="text" disabled>   
+                        <label class="font-weight-bold">Postal Code</label>
+                        <p id="viewPostalCode"></p> 
                </div>
                <div class="form-group">
-                        <label>Contact Number</label>
-                        <input class="form-control" id="viewPhoneNumber" type="text" disabled>   
+                        <label class="font-weight-bold">Contact Number</label>
+                        <p id="viewPhoneNumber"></p>  
                </div>
                 </div>
                 <div class="modal-footer">

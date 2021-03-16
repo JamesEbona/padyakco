@@ -13,7 +13,8 @@ $i = 1;
             @if ($product->quantity != 0)
             <a class="qck" href="{{route('viewBicycle', $product->id)}}">BUY NOW</a>
             @else
-            <a class="qck cartDisabled" >SOLD OUT</a>
+            <a class="qck" href="{{route('viewBicycle', $product->id)}}">BUY NOW</a>
+            <!-- <a class="qck cartDisabled" >SOLD OUT</a> -->
             @endif
         </div>
     </div></a>

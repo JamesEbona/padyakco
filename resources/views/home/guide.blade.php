@@ -21,11 +21,11 @@ Padyak.Co Guides - {{$guide->title}}
 				 <div class="top mb-4">
 					 
 					 <ul>
-						 <li><a href="/">Home</a></li>
+						 <li><a class="account-links" href="/">Home</a></li>
 						 <li>/</li>
-						 <li><a href="/guides">Trip guides</a></li>
+						 <li><a class="account-links" href="/guides">Trip guides</a></li>
                          <li>/</li>
-                         <li><a href="{{route('viewGuide', $guide->id)}}">{{$guide->title}}</a></li>
+                         <li><a class="account-links" href="{{route('viewGuide', $guide->id)}}">{{$guide->title}}</a></li>
 					 </ul>				 
 				 </div>
 				 <div class="bike-apparels filter_data">
@@ -50,7 +50,7 @@ Padyak.Co Guides - {{$guide->title}}
                            
 							<div class="row row-guide">
                             @foreach($popular_guides as $popular_guide)
-                            <a href="{{route('viewGuide', $popular_guide->id)}}">
+                            <a class="account-links" href="{{route('viewGuide', $popular_guide->id)}}">
                             <div class="row">
                             <img class="img-responsive" src="/storage/{{$popular_guide->thumbnail}}" alt="Article Image">
                             </div>

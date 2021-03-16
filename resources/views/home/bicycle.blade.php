@@ -8,7 +8,7 @@
 				 <div class="single-page">
 					 <div class="product-head">
 					 
-						<a href="/">Home</a> <span>/</span> <a href="/bicycles">BICYCLES</a> <span>/</span>	<a href="/bicycles/show/{{$bicycle->id}}">{{$bicycle->title}}</a>
+						<a class="account-links" href="/">Home</a> <span>/</span> <a class="account-links" href="/bicycles">BICYCLES</a> <span>/</span>	<a class="account-links" href="/bicycles/show/{{$bicycle->id}}">{{$bicycle->title}}</a>
 						</div>
 					 <!--Include the Etalage files-->
 				      	<link rel="stylesheet" href="{{ asset('css/member/etalage.css') }}">
@@ -57,8 +57,7 @@
 					 
 					 <div class="details-left-info">
 					 	 @if(session()->has('message'))
-						  <div class="alert alert-success alert-dismissible" role="alert">
-							<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						  <div class="alert alert-success">
 							<strong>Ordered!</strong> {{ session()->get('message') }}
 							</div>
                             @endif
@@ -67,17 +66,25 @@
 							<h4></h4>
 							<p><label>₱</label> {{number_format($bicycle->price,2)}}</p>
 							<p class="size">STOCKS LEFT ::</p>
-							<a class="length" >{{$bicycle->quantity}}</a>
-							<div class="btn_form">
-			                @guest
-							    <?php
-								$productQty = 0;
+							@guest
+							<?php
+							$productQty = 0;
 								if(Session::has('cart')){
                                  $cart = (array) Session::get('cart');
 								 if(isset($cart['items'][$bicycle->id])){
 								 $productQty = $cart['items'][$bicycle->id]['qty'];
 								 }
 								}
+							?>
+							<a class="length" >{{$bicycle->quantity - $productQty}}</a>
+							@endguest
+							@auth 
+							<a class="length" >{{$bicycle->quantity - $cart_item_qty}}</a>
+							@endauth
+							<div class="btn_form">
+			                @guest
+							    <?php
+							
                                 if($bicycle->quantity == 0 OR $productQty >= $bicycle->quantity){
 								?>
 								<a class="cartDisabled">SOLD OUT</a>

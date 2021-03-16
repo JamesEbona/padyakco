@@ -18,6 +18,11 @@ Padyak.Co - My Cart
                $cartItemNo++;
 			   $cartItemTotal += $cartItem->product->price * $cartItem->quantity;
 			  ?>
+			   @if(session()->has('cart_stock'))
+				<div class="alert alert-danger">
+				{{ session()->get('cart_stock') }}
+				</div>
+				@endif
 				<script>$(document).ready(function(c) {
 					$('.close{{$cartItemNo}}').on('click', function(c){
 						$('.cart-header{{$cartItemNo}}').fadeOut('slow', function(c){
@@ -63,7 +68,7 @@ Padyak.Co - My Cart
 					   </div>
 					   <div class="clearfix"></div>
 						<div class="delivery">
-						     <p>Stocks available: {{$cartItem->product->quantity}}</p>
+						     <p>Stocks available: {{$cartItem->product->quantity - $cartItem->quantity}}</p>
 							 <span>Delivered in 1-2 weeks</span>
 							 <div class="clearfix"></div>
 				        </div>						
@@ -79,8 +84,6 @@ Padyak.Co - My Cart
 				 <h3>Price Details</h3>
 				 <span>Item Total</span>
 				 <span class="total">₱ {{number_format($cartItemTotal,2)}}</span>
-				 <span>Discount</span>
-				 <span class="total">---</span>
 				 <span>Delivery Charges</span>
 				 <span class="total">Calculated on checkout</span>
 				 <div class="clearfix"></div>				 
@@ -90,9 +93,7 @@ Padyak.Co - My Cart
 			 <div class="clearfix"></div>
 			 <a class="order" href="{{route('checkoutAddress')}}">Checkout</a>
 			 <div class="total-item">
-				 <h3>OPTIONS</h3>
-				 <h4>COUPONS</h4>
-				 <a class="cpns" href="#">Apply Coupons</a>
+				 <h3>REMINDERS</h3>
 				 <p><a href="{{route('myAccount')}}">My account</a> to check your orders</p>
 			 </div>
 			</div>

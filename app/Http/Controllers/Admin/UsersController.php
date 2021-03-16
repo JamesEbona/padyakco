@@ -29,13 +29,13 @@ class UsersController extends Controller
     
     public function adminsindex(Request $request)
     {
-      $users = User::all()->where('role', '==', '1')->where('id', '!=', auth()->id());
+      $users = User::all()->where('role', '==', '1');
       return view('admin.Admins', compact('users'));
     } 
 
     public function mechanicsindex(Request $request)
     {
-      $users = User::all()->where('role', '==', '2')->where('id', '!=', auth()->id());
+      $users = User::all()->where('role', '==', '2');
       return view('admin.Mechanics', compact('users'));
     } 
 

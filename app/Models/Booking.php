@@ -28,6 +28,10 @@ class Booking extends Model
         'total_fee'
     ];
 
+    protected $dates = [
+        'booking_time'
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class,'user_id');

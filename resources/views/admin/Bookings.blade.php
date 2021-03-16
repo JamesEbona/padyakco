@@ -154,7 +154,7 @@
                     </div>
                     <div class="form-group">
                         <label>Additional Fee</label>
-                        <input class="form-control" type="number" id="editAdditionalFee" name="additional_fee" required="" min="0" step="0.01">
+                        <input class="form-control" type="number" id="editAdditionalFee" name="additional_fee" min="0" step="0.01">
                     </div>
                     <div class="form-group">
                         <label>Notes</label>

@@ -48,13 +48,13 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <div class="footer">
 	 <div class="container wrap">
 		<div class="logo2">
-			 <a href="index.html"><img src="{{ asset('images/member/logo2.png') }}" alt=""/></a>
+			 <a href="/"><img src="{{ asset('images/member/logo2.png') }}" alt=""/></a>
 		</div>
 		<div class="ftr-menu">
 			 <ul>
 				 <li class=""><a href="">© 2020 Padyak.Co</a></li>
-				 <li><a href=""><i class="fab fa-facebook fa-2x"></i></a></li>
-				 <li><a href=""><i class="fas fa-envelope fa-2x"></i></a></li>
+				 <li><a href="https://www.facebook.com/"><i class="fab fa-facebook fa-2x"></i></a></li>
+				 <li><a href="mailto: padyak.co@gmail.com"><i class="fas fa-envelope fa-2x"></i></a></li>
 			 </ul>
 		</div>
 		<div class="clearfix"></div>

@@ -246,12 +246,12 @@ function viewAddress(arg) {
     var postal_code = $(arg).attr('data-postalcode');
     var phone_number = $(arg).attr('data-phonenumber');
     
-    $("#viewAddress1").val(address1);
-    $("#viewAddress2").val(address2);
-    $("#viewCity").val(city);
-    $("#viewProvince").val(province);
-    $("#viewPostalCode").val(postal_code);
-    $("#viewPhoneNumber").val(phone_number);
+    $("#viewAddress1").html(address1);
+    $("#viewAddress2").html(address2);
+    $("#viewCity").html(city);
+    $("#viewProvince").html(province);
+    $("#viewPostalCode").html(postal_code);
+    $("#viewPhoneNumber").html(phone_number);
 }
 
 function viewBooking(arg) {

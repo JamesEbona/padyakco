@@ -30,18 +30,18 @@ Padyak.Co Mechanic - View Profile
             </a>
             </div>
             </div>
-                 <div class="form-group">
-                        <label>Name</label>
-                        <input class="form-control" type="text" value="{{auth()->user()->first_name}} {{auth()->user()->last_name}}" disabled>
+            <div class="form-group ml-2">
+                        <label class="font-weight-bold">Name</label>
+                        <p>{{auth()->user()->first_name}} {{auth()->user()->last_name}}</p>
                     </div>
 
-                    <div class="form-group">
-                        <label>Email</label>
-                        <input class="form-control" type="text" value="{{auth()->user()->email}}" disabled>
+                    <div class="form-group ml-2">
+                        <label class="font-weight-bold">Email</label>
+                        <p>{{auth()->user()->email}}</p>
                     </div>
-                    <div class="form-group">
-                        <label>Joined at</label>
-                        <input class="form-control" type="text" value="{{ date('F j, Y', strtotime(auth()->user()->created_at))}}"  disabled>
+                    <div class="form-group ml-2">
+                        <label class="font-weight-bold">Joined at</label>
+                        <p>{{ date('F j, Y', strtotime(auth()->user()->created_at))}}</p>
                     </div>
                           
                 </div>

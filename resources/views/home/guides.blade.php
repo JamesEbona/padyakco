@@ -19,9 +19,9 @@ Padyak.Co - Trip Guides
 				 <div class="top mb-4">
 					 
 					 <ul>
-						 <li><a href="/">HOME</a></li>
+						 <li><a class="account-links" href="/">Home</a></li>
 						 <li>/</li>
-						 <li><a href="/guides">TRIP GUIDES</a></li>
+						 <li><a class="account-links" href="/guides">Trip Guides</a></li>
 					 </ul>				 
 				 </div>
 				 <div class="bike-apparels filter_data">

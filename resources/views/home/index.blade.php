@@ -27,6 +27,7 @@
 						</label>
 						<input id="mobile_menu" type="checkbox">
 					   <ul class="nav">
+					      <li class="dropdown1"><a href="/">HOME</a></li>
 						  <li class="dropdown1"><a href="/bicycles">STORE</a>
 							  <ul class="dropdown2">
 									<li><a href="/bicycles">MOUNTAIN BIKES</a></li>
@@ -39,12 +40,9 @@
 							  </ul>
 						 </li>      
 						 <li class="dropdown1"><a href="{{route('tripGuides')}}">TRIP GUIDES</a>
-							 <ul class="dropdown2">
-									<li><a href="{{route('tripGuides')}}">TRIP DESTINATIONS</a></li>
-										<li><a href="{{route('tripGuides')}}">TIPS</a></li>
-							  </ul>
+						
 						 </li>    
-						     
+						 <li class="dropdown1"><a href="/register">REGISTER</a></li>    
 						 <li class="dropdown1"><a href="/login">LOGIN</a></li>
 						 <a class="shop" href="{{ route('cart') }}"><img src="{{ asset('images/member/cart.png') }}" alt=""/></a>
 						 <span class="badge">{{ Session::has('cart') ? Session::get('cart')->totalQty : '' }}</span>

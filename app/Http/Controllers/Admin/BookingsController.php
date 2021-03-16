@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Booking;
 use App\Models\Repair;
 use App\Models\User;
-// use Carbon\Carbon;
+use Carbon\Carbon;
 use App\Events\BookingConfirmedEvent;
 use App\Events\BookingEnRouteEvent;
 use App\Events\BookingDoneEvent;
@@ -51,7 +51,7 @@ class BookingsController extends Controller
         'booking_time' => ['required','date_format:Y-m-d\TH:i'],
         'repair_type' => ['required','string','regex:/^[a-zA-Z ]*$/','max:20'],
         'phone_number' => array('required','regex:/^(09|\+639)\d{9}$/'),
-        'additional_fee' => ['required','numeric'],
+        'additional_fee' => ['nullable','numeric'],
         'notes' => ['nullable','string','max:1000'],    
      ]);
   
@@ -178,29 +178,41 @@ class BookingsController extends Controller
 
       $validator = \Validator::make($request->all(), [
         'status' => 'required|string|max:100',
+        'mechanic_id' => 'required|numeric'
      ]);
   
       if ($validator->fails()){
         return response()->json(['errors'=>$validator->errors()->all()]);
       }
-    
+
       $status = request('status');
       $booking = Booking::findOrFail(request('editStatusId'));
-      $booking->status = $status;
-      $booking->mechanic_id = request('mechanic_id');
-      $booking->save();
-
-      if($status == "confirmed"){
-        event(new BookingConfirmedEvent($booking));  
+      $booking_before = $booking->booking_time->subHours(2);
+      $booking_after = $booking->booking_time->addHours(2);
+      $result = Booking::where('booking_time', '>=', $booking_before)->where('booking_time', '<=', $booking_after)->where('status', '!=', 'cancelled')->where('mechanic_id', '=', request('mechanic_id'))->first();
+      if(!$result){
+        $current_status = $booking->status;
+        $booking->status = $status;
+        $booking->mechanic_id = request('mechanic_id');
+        $booking->save();
       }
-      else if($status == "en route"){
-        event(new BookingEnRouteEvent($booking));  
+      else{
+        return response()->json(['errors'=>['Selected mechanic is unavailable during the booking time.']]);
       }
-      else if($status == "done"){
-        event(new BookingDoneEvent($booking));  
-      }
-      else if($status == "cancelled"){
-        event(new BookingCancelledEvent($booking)); 
+     
+      if($current_status != $status){ 
+        if($status == "confirmed"){
+            event(new BookingConfirmedEvent($booking));  
+        }
+        else if($status == "en route"){
+            event(new BookingEnRouteEvent($booking));  
+        }
+        else if($status == "done"){
+            event(new BookingDoneEvent($booking));  
+        }
+        else if($status == "cancelled"){
+            event(new BookingCancelledEvent($booking)); 
+        }
       }
     
       return redirect("/admin/bookings");

@@ -96,7 +96,32 @@ class CheckoutController extends Controller
         if($cart->total_quantity == 0){
             return redirect()->route('memberCart');
         }
+        else if(url()->previous() != 'http://padyakco.test/member/checkout/address'){
+            return redirect()->route('memberCart');
+        }
         else{
+            foreach ($cartItems as $cartItem){
+           
+                $product = Product::where('id',$cartItem->product_id)->firstOrFail();
+                $oldQty = $cartItem->quantity;
+                if($product->quantity == 0){
+                 
+                    $response = [ 'success' => 'false'];
+                    $cartItem->delete();
+                    $cart->total_quantity -= $oldQty;
+                    $cart->save();
+                    session::put('cartTotal',$cart->total_quantity);
+                    return redirect()->route('memberCart')->with('cart_stock', 'Some items were removed from your cart becuase it is out of stock.');
+                }
+                elseif($product->quantity < $cartItem->quantity){
+                    $cartItem->quantity = $product->quantity;
+                    $cartItem->save();
+                    $cart->total_quantity -= $oldQty - $product->quantity;
+                    $cart->save();
+                    session::put('cartTotal',$cart->total_quantity);
+                    return redirect()->route('memberCart')->with('cart_stock', 'Some items were removed from your cart becuase it is out of stock.');
+                }
+            }
             return view('member.CheckoutReview', compact('cart','cartItems','cartItemNo', 'cartItemTotal', 'cartDeliveryTotal'));
         }
     }
@@ -105,8 +130,7 @@ class CheckoutController extends Controller
         $cart = Cart::where('user_id', Auth::id())->firstOrFail();
         $cartItems =  CartItem::where('cart_id',$cart->id)->get();
 
-        header('Content-type: application/json');
-        $response['success'] = true;
+        // $response['success'] = true;
 
         foreach ($cartItems as $cartItem){
             //delete cart item
@@ -114,20 +138,24 @@ class CheckoutController extends Controller
             $product = Product::where('id',$cartItem->product_id)->firstOrFail();
             $oldQty = $cartItem->quantity;
             if($product->quantity == 0){
-                $response['success'] = false;
+                // $response['success'] = false;
+                $response = [ 'success' => 'false'];
                 $cartItem->delete();
                 $cart->total_quantity -= $oldQty;
                 $cart->save();
                 session::put('cartTotal',$cart->total_quantity);
+                // session::put('message', 'Some items in your cart were removed because it is out of stock.');
             }
             elseif($product->quantity < $cartItem->quantity){
-                $response['success'] = false;
+                // $response['success'] = false;
+                // $response = [ 'success' => 'false'];
                 $cartItem->quantity = $product->quantity;
                 $cartItem->save();
                 $cart->total_quantity -= $oldQty - $product->quantity;
                 $cart->save();
                 session::put('cartTotal',$cart->total_quantity);
                 //minus quantity cart to meet min requirement
+                // session::put('message', 'Some items in your cart were removed because it is out of stock.');
                 
             }
             // else{
@@ -135,7 +163,9 @@ class CheckoutController extends Controller
             //     $product->save();
             // }
         }
-        echo json_encode($response);
+
+        // header('Content-type: application/json');
+        // echo json_encode($response);
         
     }
 

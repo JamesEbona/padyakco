@@ -93,6 +93,7 @@ class GuidesController extends Controller
         $thumbnailPath = request('thumbnail')->store('guides','public'); 
                   
         $thumbnail = Image::make(public_path("storage/{$thumbnailPath}"));
+        $thumbnail->fit(750, 300);
         $thumbnail->save();
 
         $guide = new Guide;
@@ -129,6 +130,7 @@ class GuidesController extends Controller
             $thumbnailPath = request('thumbnail')->store('guides','public'); 
                     
             $thumbnail = Image::make(public_path("storage/{$thumbnailPath}"));
+            $thumbnail->fit(750, 300);
             $thumbnail->save();
         }
 

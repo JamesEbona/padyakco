@@ -62,7 +62,7 @@ Padyak.Co - My Cart
 					   </div>
 					   <div class="clearfix"></div>
 						<div class="delivery">
-						     <p>Stocks available: {{$product['item']['quantity']}}</p>
+						     <p>Stocks available: {{$product['item']['quantity'] - $product['qty']}}</p>
 							 <span>Delivered in 1-2 weeks</span>
 							 <div class="clearfix"></div>
 				        </div>						
@@ -89,9 +89,7 @@ Padyak.Co - My Cart
 			 <div class="clearfix"></div>
 			 <a class="order" href="/login">Checkout</a>
 			 <div class="total-item">
-				 <h3>OPTIONS</h3>
-				 <h4>COUPONS</h4>
-				 <a class="cpns" href="#">Apply Coupons</a>
+				 <h3>REMINDERS</h3>
 				 <p><a href="/login">Log In</a> to checkout your items</p>
 			 </div>
 			</div>
@@ -117,10 +115,9 @@ Padyak.Co - My Cart
 			 <div class="clearfix"></div>
 			 <a class="order cartDisabled" >Checkout</a>
 			 <div class="total-item">
-				 <h3>OPTIONS</h3>
-				 <h4>COUPONS</h4>
-				 <a class="cpns cartDisabled" >Apply Coupons</a>
+				 <h3>REMINDERS</h3>
 				 <p>Add an item to your cart.</p>
+				 <p>Login to checkout your items.</p>
 			 </div>
 			</div>
             

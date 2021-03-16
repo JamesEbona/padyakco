@@ -22,9 +22,9 @@
 				 <div class="top">
 					 
 					 <ul>
-						 <li><a href="/">HOME</a></li>
+						 <li><a class="account-links" href="/">HOME</a></li>
 						 <li>/</li>
-						 <li><a href="/bicycles">BICYCLES</a></li>
+						 <li><a class="account-links" href="/bicycles">BICYCLES</a></li>
 					 </ul>				 
 				 </div>
 				 <div class="bike-apparels filter_data">

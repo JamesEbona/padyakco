@@ -389,6 +389,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 						</label>
 						<input id="mobile_menu" type="checkbox">
 					   <ul class="nav">
+             @guest
+            <li class="dropdown1"><a href="/">HOME</a></li>   
+             @endguest
 						  <li class="dropdown1"><a href="/bicycles">STORE</a>
 							  <ul class="dropdown2">
 									<li><a href="/bicycles">MOUNTAIN BIKES</a></li>
@@ -407,12 +410,13 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 							  </ul>
 						 </li>      
 						 <li class="dropdown1"><a href="{{route('tripGuides')}}">TRIP GUIDES</a>
-							 <ul class="dropdown2">
+							 <!-- <ul class="dropdown2">
 									<li><a href="{{route('tripGuides')}}">TRIP DESTINATIONS</a></li>
 										<li><a href="{{route('tripGuides')}}">TIPS</a></li>
-							  </ul>
+							  </ul> -->
 						 </li>    
-						 @guest           
+						 @guest   
+             <li class="dropdown1"><a href="/register">REGISTER</a></li>        
 						 <li class="dropdown1"><a href="/login">LOGIN</a></li>
 						 @endguest
 
@@ -452,13 +456,13 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <div class="footer">
 	 <div class="container wrap">
 		<div class="logo2">
-			 <a href="index.html"><img src="{{ asset('images/member/logo2.png') }}" alt=""/></a>
+			 <a href="/"><img src="{{ asset('images/member/logo2.png') }}" alt=""/></a>
 		</div>
 		<div class="ftr-menu">
 			 <ul>
 				 <li class=""><a href="">© 2020 Padyak.Co</a></li>
-				 <li><a href=""><i class="fab fa-facebook fa-2x"></i></a></li>
-				 <li><a href=""><i class="fas fa-envelope fa-2x"></i></a></li>
+				 <li><a href="https://www.facebook.com/"><i class="fab fa-facebook fa-2x"></i></a></li>
+				 <li><a href="mailto: padyak.co@gmail.com"><i class="fas fa-envelope fa-2x"></i></a></li>
 			 </ul>
 		</div>
 		<div class="clearfix"></div>

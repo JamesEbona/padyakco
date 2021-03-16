@@ -100,7 +100,7 @@ Padyak.Co - Checkout
 			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 			}
 		});
-		$.ajax({  
+		   $.ajax({  
 			type: 'POST',  
 			url: '{{route("check")}}', 
 			data: { 
@@ -109,10 +109,10 @@ Padyak.Co - Checkout
 					delivery_total: delivery_total
 			},
 			success: function(response) {
-				if(response['success'] = false){
-					window.location = "route('checkoutReview') ";
-					window.alert('Sorry. Some items in your order are updated due to inventory issues.');
-				}
+				// if(response['success'] == 'false'){
+					// window.location = "{{route('checkoutReview')}}";
+					// window.alert('Sorry. Some items in your order are updated due to inventory issues.');
+				// }
 
 			
 			}

@@ -4,7 +4,7 @@ namespace App\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
 
-class verify_datetime_format implements Rule
+class verify_mechanic_availability implements Rule
 {
     /**
      * Create a new rule instance.
@@ -25,7 +25,7 @@ class verify_datetime_format implements Rule
      */
     public function passes($attribute, $value)
     {
-        
+        //
     }
 
     /**
@@ -35,6 +35,6 @@ class verify_datetime_format implements Rule
      */
     public function message()
     {
-        return 'Wrong format for booking time.';
+        return 'The validation error message.';
     }
 }

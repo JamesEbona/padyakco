@@ -12,6 +12,8 @@ use App\Events\OrderShippedEvent;
 use App\Events\OrderCancelledEvent;
 use App\Events\OrderDeliveredEvent;
 use App\Events\InquiryReplyEvent;
+use App\Events\MechanicAssignEvent;
+use App\Events\MechanicUnassignEvent;
 // use App\Listeners\SendNewOrderNotification;
 use App\Listeners\SendBookingConfirmedNotification;
 use App\Listeners\SendBookingDoneNotification;
@@ -22,6 +24,8 @@ use App\Listeners\SendShippedOrderNotification;
 use App\Listeners\SendCancelledOrderNotification;
 use App\Listeners\SendInquiryReplyNotification;
 use App\Listeners\SendDeliveredOrderNotification;
+use App\Listeners\SendMechanicAssignNotification;
+use App\Listeners\SendMechanicUnassignNotification;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Event;
@@ -63,6 +67,12 @@ class EventServiceProvider extends ServiceProvider
         ],
         InquiryReplyEvent::class => [
             SendInquiryReplyNotification::class,
+        ],
+        MechanicAssignEvent::class => [
+            SendMechanicAssignNotification::class,
+        ],
+        MechanicUnassignEvent::class => [
+            SendMechanicUnassignNotification::class,
         ],
     ];
 

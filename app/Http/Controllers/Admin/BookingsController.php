@@ -12,7 +12,11 @@ use App\Events\BookingConfirmedEvent;
 use App\Events\BookingEnRouteEvent;
 use App\Events\BookingDoneEvent;
 use App\Events\BookingCancelledEvent;
+use App\Events\MechanicAssignEvent;
+use App\Events\MechanicUnassignEvent;
 use App\Rules\verify_booking_region;
+// use Illuminate\Support\Facades\Notification;
+// use App\Notifications\MechanicNotification;
 
 class BookingsController extends Controller
 {
@@ -40,55 +44,6 @@ class BookingsController extends Controller
         $bookings = Booking::where('status', '!=' , 'pending')->where('mechanic_id', '=' , $id)->get();
         $mechanic = User::where('id',$id)->firstOrFail();
         return view('admin.BookingsCalendar', compact('bookings','mechanic'));
-    }
-
-    public function modify(Request $request)
-    {
-
-      $validator = \Validator::make($request->all(), [
-        'first_name' => ['required','string','max:30','min:2','alpha'],
-        'last_name' => ['required','string','max:30','min:2','alpha'],
-        'booking_time' => ['required','date_format:Y-m-d\TH:i'],
-        'repair_type' => ['required','string','regex:/^[a-zA-Z ]*$/','max:20'],
-        'phone_number' => array('required','regex:/^(09|\+639)\d{9}$/'),
-        'additional_fee' => ['nullable','numeric'],
-        'notes' => ['nullable','string','max:1000'],    
-     ]);
-  
-      if ($validator->fails()){
-        return response()->json(['errors'=>$validator->errors()->all()]);
-      }
-        $booking = Booking::findOrFail(request('editId'));
-        $repair = Repair::where('id',1)->firstOrFail();
-
-        if(request('repair_type') == "Basic"){
-            $repair_fee = $repair->basic_fee;
-        }
-        else if(request('repair_type') == "Expert"){
-            $repair_fee = $repair->expert_fee;
-        }
-        else if(request('repair_type') == "Upgrade"){
-            $repair_fee = $repair->upgrade_fee;
-        }
-
-        $total_fee = $booking->total_fee;
-        $total_fee -= $booking->repair_fee;
-        $total_fee -= $booking->additional_fee;
-        $total_fee += $repair_fee;
-        $total_fee += request('additional_fee');
-
-        $booking->first_name = request('first_name');
-        $booking->last_name = request('last_name');
-        $booking->phone_number = request('phone_number');
-        $booking->booking_time = request('booking_time');
-        $booking->repair_type = request('repair_type');
-        $booking->additional_fee = request('additional_fee');
-        $booking->repair_fee = $repair_fee;
-        $booking->total_fee = $total_fee;
-        $booking->notes= request('notes');
-        $booking->save();
-    
-        return redirect("/admin/bookings");
     }
 
     public function showAddress($id)
@@ -173,51 +128,122 @@ class BookingsController extends Controller
 
     }
 
-    public function updateStatus(Request $request)
+    public function modify(Request $request)
     {
 
       $validator = \Validator::make($request->all(), [
         'status' => 'required|string|max:100',
-        'mechanic_id' => 'required|numeric'
+        'first_name' => ['required','string','max:30','min:2','alpha'],
+        'last_name' => ['required','string','max:30','min:2','alpha'],
+        'booking_time' => ['required','date_format:Y-m-d\TH:i'],
+        'repair_type' => ['required','string','regex:/^[a-zA-Z ]*$/','max:20'],
+        'phone_number' => array('required','regex:/^(09|\+639)\d{9}$/'),
+        'additional_fee' => ['nullable','numeric'],
+        'notes' => ['nullable','string','max:1000'],    
+     ]);
+  
+      if ($validator->fails()){
+        return response()->json(['errors'=>$validator->errors()->all()]);
+      }
+        $booking = Booking::findOrFail(request('editId'));
+        $current_status = $booking->status;
+        $repair = Repair::where('id',1)->firstOrFail();
+
+        if(request('repair_type') == "Basic"){
+            $repair_fee = $repair->basic_fee;
+        }
+        else if(request('repair_type') == "Expert"){
+            $repair_fee = $repair->expert_fee;
+        }
+        else if(request('repair_type') == "Upgrade"){
+            $repair_fee = $repair->upgrade_fee;
+        }
+
+        $total_fee = $booking->total_fee;
+        $total_fee -= $booking->repair_fee;
+        $total_fee -= $booking->additional_fee;
+        $total_fee += $repair_fee;
+        $total_fee += request('additional_fee');
+
+        $booking->status = request('status');
+        $booking->first_name = request('first_name');
+        $booking->last_name = request('last_name');
+        $booking->phone_number = request('phone_number');
+        $booking->booking_time = request('booking_time');
+        $booking->repair_type = request('repair_type');
+        $booking->additional_fee = request('additional_fee');
+        $booking->repair_fee = $repair_fee;
+        $booking->total_fee = $total_fee;
+        $booking->notes= request('notes');
+        $booking->save();
+
+        $status = request('status');
+
+        if($current_status != $status){ 
+            if($status == "confirmed"){
+                event(new BookingConfirmedEvent($booking));  
+            }
+            else if($status == "en route"){
+                event(new BookingEnRouteEvent($booking));  
+            }
+            else if($status == "done"){
+                event(new BookingDoneEvent($booking));  
+            }
+            else if($status == "cancelled"){
+                event(new BookingCancelledEvent($booking)); 
+                if(isset($booking->mechanic_id)){
+                    event(new MechanicUnassignEvent($booking,$booking->mechanic->phone_number)); 
+                }
+            }
+          }
+    
+        return redirect("/admin/bookings");
+    }
+
+    public function updateMechanic(Request $request)
+    {
+
+      $validator = \Validator::make($request->all(), [
+        'mechanic' => 'required|numeric'
      ]);
   
       if ($validator->fails()){
         return response()->json(['errors'=>$validator->errors()->all()]);
       }
 
-      $status = request('status');
-      $booking = Booking::findOrFail(request('editStatusId'));
+      $booking = Booking::findOrFail(request('editMechanicId'));
       $booking_before = $booking->booking_time->subHours(2);
       $booking_after = $booking->booking_time->addHours(2);
-      $result = Booking::where('booking_time', '>=', $booking_before)->where('booking_time', '<=', $booking_after)->where('status', '!=', 'cancelled')->where('mechanic_id', '=', request('mechanic_id'))->first();
+      $result = Booking::where('booking_time', '>=', $booking_before)->where('booking_time', '<=', $booking_after)->where('status', '!=', 'cancelled')->where('mechanic_id', '=', request('mechanic'))->where('id', '!=', $booking->id)->first();
       if(!$result){
-        $current_status = $booking->status;
-        $booking->status = $status;
-        $booking->mechanic_id = request('mechanic_id');
+        if(isset($booking->mechanic_id)){
+        $current_mechanic = User::findOrFail($booking->mechanic_id); 
+        $current_mechanic_id = $current_mechanic->id;
+        }
+        else{
+        $current_mechanic_id = 0;
+        }
+        $new_mechanic = User::findOrFail(request('mechanic'));
+        $booking->mechanic_id = $new_mechanic->id;
         $booking->save();
       }
       else{
         return response()->json(['errors'=>['Selected mechanic is unavailable during the booking time.']]);
       }
-     
-      if($current_status != $status){ 
-        if($status == "confirmed"){
-            event(new BookingConfirmedEvent($booking));  
+
+      if($current_mechanic_id != $new_mechanic->id){
+        event(new MechanicAssignEvent($booking,$new_mechanic->phone_number)); 
+        if($current_mechanic_id != 0){
+            event(new MechanicUnassignEvent($booking,$current_mechanic->phone_number)); 
         }
-        else if($status == "en route"){
-            event(new BookingEnRouteEvent($booking));  
-        }
-        else if($status == "done"){
-            event(new BookingDoneEvent($booking));  
-        }
-        else if($status == "cancelled"){
-            event(new BookingCancelledEvent($booking)); 
-        }
+        
+        // Notification::send($new_mechanic, new MechanicNotification($booking)); 
       }
     
       return redirect("/admin/bookings");
     
     }
+
 
 }
 

@@ -51,5 +51,10 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasOne(Address::class);
     }
 
+    public function routeNotificationForNexmo($notification)
+    {
+        return $this->phone_number;
+    }
+
    
 }

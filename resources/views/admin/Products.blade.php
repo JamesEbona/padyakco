@@ -37,7 +37,7 @@
                           <th>Rating</th>
                           <th>Created At</th>
                           <th>Status</th>
-                          <th style="column-width:300px;">Actions</th>
+                          <th style="column-width:600px;">Actions</th>
                       </tr>
                   </thead>
                   <tbody>

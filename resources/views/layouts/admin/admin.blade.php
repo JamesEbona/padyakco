@@ -525,27 +525,27 @@ $('#inquiriestable').DataTable( {
 $('#bookingstable').DataTable( {
   
   dom: 'lBfrtip',
-  order: [[7, 'desc']],
+  order: [[6, 'desc']],
   columnDefs: [
-    {searchable: false, orderable: false, targets: 9 }
+    {searchable: false, orderable: false, targets: 8 }
   ],
   buttons: [
             {
            extend: 'print',
            exportOptions: {
-           columns: [ 0, 1, 2, 3, 4, 5, 6,7,8 ] 
+           columns: [ 0, 1, 2, 3, 4, 5, 6,7] 
                }
              },
              {
               extend: 'excel',
               exportOptions: {
-              columns: [ 0, 1, 2, 3, 4 ,5, 6,7,8 ] 
+              columns: [ 0, 1, 2, 3, 4 ,5, 6,7] 
              }
            },
            {
               extend: 'pdf',
               exportOptions: {
-              columns: [ 0, 1, 2, 3, 4, 5, 6,7,8 ] 
+              columns: [ 0, 1, 2, 3, 4, 5, 6,7] 
              }
            },
          ],

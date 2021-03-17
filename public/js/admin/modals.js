@@ -198,6 +198,7 @@ function editBooking(arg) {
     var booking_time = $(arg).attr('data-bookingtime');
     var notes = $(arg).attr('data-notes');
     var additional_fee = $(arg).attr('data-additionalfee');
+    var status = $(arg).attr('data-status');
    
     $("#editId").val(id);
     $("#editFirstName").val(first_name);
@@ -207,6 +208,7 @@ function editBooking(arg) {
     $("#editNotes").val(notes);
     document.getElementById('editRepairType').value = repair_type; 
     $("#editBookingTime").val(booking_time);
+    document.getElementById('editStatus').value = status; 
 }
 
 
@@ -220,16 +222,15 @@ function updateStatus(arg) {
     document.getElementById('editStatus').value = status; 
 }
 
-function updateBookingStatus(arg) {
-    $('#editStatusModal').modal('show');
+function updateMechanic(arg) {
+    $('#editMechanicModal').modal('show');
     var id = $(arg).attr('data-id');
-    var status = $(arg).attr('data-status');
     var mechanic = $(arg).attr('data-mechanic');
     // var additional_fee = $(arg).attr('data-additionalfee');
 
     $("#viewStatusId").val(id);
-    $("#editStatusId").val(id);
-    $("#editStatus").val(status);
+    $("#editMechanicId").val(id);
+
     // $("#editAdditionalFee").val(additional_fee);
     // document.getElementById('editStatus').value = status; 
     if(mechanic){

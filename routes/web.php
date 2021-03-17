@@ -129,7 +129,7 @@ Route::group([
     Route::post('bookings/modify', 'BookingsController@modify');
     Route::get('bookings/showAddress/{id}', 'BookingsController@showAddress')->name('adminBookingsShowAddress');
     Route::patch('bookings/updateAddress', 'BookingsController@updateAddress')->name('adminBookingUpdateAddress');
-    Route::post('bookings/updateStatus', 'BookingsController@updateStatus');
+    Route::post('bookings/updateMechanic', 'BookingsController@updateMechanic');
     Route::get('prices', 'PricesController@index')->name('adminPrices');
     Route::patch('prices/update', 'PricesController@modify')->name('updatePrices');
     Route::get('guides', 'GuidesController@index')->name('guide.index');

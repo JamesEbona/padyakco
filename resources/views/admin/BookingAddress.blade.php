@@ -48,7 +48,9 @@ Padyak.Co Admin - View Booking Address
                             @elseif($booking->status =="cancelled")
                                 <h4 class="d-inline ml-2"><span class="badge badge-pill badge-danger">{{$booking->status}}</span></h4>
                             @endif  
-                            <a href="javascript:$('#updateAddressForm').submit();" class="account-links"><h4 class="d-inline"><i class="fas fa-fw fa-save float-right"></i></h4></a>     
+                            @if($booking->status != "cancelled" && $booking->status != "done")  
+                            <a href="javascript:$('#updateAddressForm').submit();" class="account-links"><h4 class="d-inline"><i class="fas fa-fw fa-save float-right"></i></h4></a>
+                            @endif     
                         </div>
                     </div>
                     <div class="row border-bottom mt-3">
@@ -62,7 +64,9 @@ Padyak.Co Admin - View Booking Address
                     @method('PATCH')
                     @CSRF
                     <div class="form-group">
+                        @if($booking->status != "cancelled" && $booking->status != "done")  
                         <input id="searchInput" class="controls mt-3 form-control" type="text" placeholder="Enter new booking location">
+                        @endif
                         <div id="map" style="height:500px;"></div>
                         <input type="hidden" name="booking_id" value="{{$booking->id}}">
                         <input type="hidden" id="location" name="location" value="{{$booking->location}}">

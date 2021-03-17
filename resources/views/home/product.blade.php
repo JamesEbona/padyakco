@@ -8,7 +8,7 @@
 				 <div class="single-page">
 					 <div class="product-head">
 					 
-						<a class="account-links" href="/">Home</a> <span>/</span> <a class="account-links" href="/bicycles">BICYCLES</a> <span>/</span>	<a class="account-links" href="/bicycles/show/{{$bicycle->id}}">{{$bicycle->title}}</a>
+						<a class="account-links" href="/">Home</a> <span>/</span> <a class="account-links" href="/store">STORE</a> <span>/</span>	<a class="account-links" href="/store/show/{{$product->id}}">{{$product->title}}</a>
 						</div>
 					 <!--Include the Etalage files-->
 				      	<link rel="stylesheet" href="{{ asset('css/member/etalage.css') }}">
@@ -35,21 +35,21 @@
 						  <ul id="etalage">
 							<li>
 								<a href="optionallink.html">
-									<img class="etalage_thumb_image" src="/storage/{{$bicycle->image1}}" class="img-responsive" />
-									<img class="etalage_source_image" src="/storage/{{$bicycle->image1}}" class="img-responsive" title="" />
+									<img class="etalage_thumb_image" src="/storage/{{$product->image1}}" class="img-responsive" />
+									<img class="etalage_source_image" src="/storage/{{$product->image1}}" class="img-responsive" title="" />
 								</a>
 							</li>
 							<li>
-								<img class="etalage_thumb_image" src="/storage/{{$bicycle->image2}}" class="img-responsive" />
-								<img class="etalage_source_image" src="/storage/{{$bicycle->image2}}" class="img-responsive" title="" />
+								<img class="etalage_thumb_image" src="/storage/{{$product->image2}}" class="img-responsive" />
+								<img class="etalage_source_image" src="/storage/{{$product->image2}}" class="img-responsive" title="" />
 							</li>
 							<li>
-								<img class="etalage_thumb_image" src="/storage/{{$bicycle->image3}}" class="img-responsive"  />
-								<img class="etalage_source_image" src="/storage/{{$bicycle->image3}}"class="img-responsive"  />
+								<img class="etalage_thumb_image" src="/storage/{{$product->image3}}" class="img-responsive"  />
+								<img class="etalage_source_image" src="/storage/{{$product->image3}}"class="img-responsive"  />
 							</li>
 						    <li>
-								<img class="etalage_thumb_image" src="/storage/{{$bicycle->image1}}" class="img-responsive"  />
-								<img class="etalage_source_image" src="/storage/{{$bicycle->image1}}"class="img-responsive"  />
+								<img class="etalage_thumb_image" src="/storage/{{$product->image1}}" class="img-responsive"  />
+								<img class="etalage_source_image" src="/storage/{{$product->image1}}"class="img-responsive"  />
 							</li>
 						</ul>
 						</div>
@@ -61,68 +61,69 @@
 							<strong>Ordered!</strong> {{ session()->get('message') }}
 							</div>
                             @endif
-							<h3>{{$bicycle->title}}</h3>
-								<h4>Model No: {{$bicycle->id}}</h4>
+							<h3>{{$product->title}}</h3>
+								<h4>Model No: {{$product->id}}</h4>
 							<h4></h4>
-							<p><label>₱</label> {{number_format($bicycle->price,2)}}</p>
+							<p><label>₱</label> {{number_format($product->price,2)}}</p>
 							<p class="size">STOCKS LEFT ::</p>
 							@guest
 							<?php
 							$productQty = 0;
 								if(Session::has('cart')){
                                  $cart = (array) Session::get('cart');
-								 if(isset($cart['items'][$bicycle->id])){
-								 $productQty = $cart['items'][$bicycle->id]['qty'];
+								 if(isset($cart['items'][$product->id])){
+								 $productQty = $cart['items'][$product->id]['qty'];
 								 }
 								}
 							?>
-							<a class="length" >{{$bicycle->quantity - $productQty}}</a>
+							<a class="length" >{{$product->quantity - $productQty}}</a>
 							@endguest
 							@auth 
-							<a class="length" >{{$bicycle->quantity - $cart_item_qty}}</a>
+							<a class="length" >{{$product->quantity - $cart_item_qty}}</a>
 							@endauth
 							<div class="btn_form">
 			                @guest
 							    <?php
 							
-                                if($bicycle->quantity == 0 OR $productQty >= $bicycle->quantity){
+                                if($product->quantity == 0 OR $productQty >= $product->quantity){
 								?>
 								<a class="cartDisabled">SOLD OUT</a>
 								<?php
 								}
 								else{
 								?>
-								<a href="{{route('addCart', ['id' => $bicycle->id])}}">ADD TO CART</a>
+								<a href="{{route('addCart', ['id' => $product->id])}}">ADD TO CART</a>
 								<?php
 								}
 								?>
 							@endguest
 							@auth   
 							<?php
-                                if($bicycle->quantity == 0 OR $cart_item_qty >= $bicycle->quantity){
+                                if($product->quantity == 0 OR $cart_item_qty >= $product->quantity){
 								?>
 								<a class="cartDisabled">SOLD OUT</a>
 								<?php
 								}
 								else{
 								?>
-								<a href="{{route('memberAddCart', ['id' => $bicycle->id])}}">ADD TO CART</a>
+								<a href="{{route('memberAddCart', ['id' => $product->id])}}">ADD TO CART</a>
 								<?php
 								}
 								?>
 							@endauth
 							</div>
 							<div class="bike-type">
-							<p>TYPE  ::<a>{{$bicycle->subcategory->title}}</a></p>
-							<p>BRAND  ::<a>{{$bicycle->brand}}</a></p>
+							<p>TYPE  ::<a>{{$product->subcategory->title}}</a></p>
+							<p>BRAND  ::<a>{{$product->brand}}</a></p>
 							</div>
 							<h5>Description  ::</h5>
-							<p class="desc">{{$bicycle->description}}</p>
+							<p class="desc">{{$product->description}}</p>
 					 </div>
 					 <div class="clearfix"></div>				 	
 				  </div>
 			  </div>
 		  </div>
+		  @if(count($related_products) != 0)
 		  <div class="single-bottom2">
 			  <h6>Related Products</h6>
 			  @foreach($related_products as $related_product)
@@ -132,21 +133,21 @@
 							 <img src="/storage/{{$related_product->image1}}" class="img-responsive " alt=""/>
 						 </div>
 						 <div class="prod1-desc">
-								<h5><a class="product_link" href="/bicycles/show/{{$related_product->id}}">{{$related_product->brand}} {{$related_product->title}}</a></h5>
+								<h5><a class="product_link" href="/store/show/{{$related_product->id}}">{{$related_product->brand}} {{$related_product->title}}</a></h5>
 								<p class="product_descr">{{$related_product->description}}</p>									
 						 </div>
 						 <div class="clearfix"></div>
 					 </div>
 					 <div class="product_price">
 							<span class="price-access">₱{{number_format($related_product->price,2)}}</span>								
-							<a class="button1 ml-2" href="/bicycles/show/{{$related_product->id}}"><span>View</span></a>
+							<a class="button1 ml-2" href="/store/show/{{$related_product->id}}"><span>View</span></a>
 					 </div>
 						<div class="clearfix"></div>
 			 </div>
 			 @endforeach
-		
-			
 		 </div>	
+		 @endif
+
 	 </div>
 </div>
 <!---->

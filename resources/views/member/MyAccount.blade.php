@@ -24,13 +24,7 @@
 					<p>Phone Number:   {{auth()->user()->address->phone_number}}<p>
 				 </div>
 			</div>
-			<h2>My Payment Details:<a href="" class="account-links"><i class="fas fa-fw fa-edit pull-right"></i></a></h2>
-			<div class="cart-header">
-				<div class="cart-sec">
-					<p>Card Number: <p>  
-					<p>Date of Expiry: <p>
-				 </div>
-			</div>
+			
 			
 
 		

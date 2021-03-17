@@ -37,7 +37,7 @@
                           <th>Rating</th>
                           <th>Created At</th>
                           <th>Status</th>
-                          <th style="column-width:200px;">Actions</th>
+                          <th style="column-width:300px;">Actions</th>
                       </tr>
                   </thead>
                   <tbody>
@@ -59,23 +59,23 @@
                           <td> <span class="badge badge-danger">{{$product->status}}</span></td>
                           @endif
                           <td><div class="row justify-content-center">
-                          <div class="col-md-4">
+                         
                           <button class="btn btn-dark" data-id="{{$product->id}}" data-title="{{$product->title}}" data-brand="{{$product->brand}}" data-category_id="{{$product->category_id}}"  data-subcategory_id="{{$product->subcategory_id}}" 
                           data-quantity="{{$product->quantity}}" data-price="{{$product->price}}" data-delivery="{{$product->delivery_fee}}" data-provincial="{{$product->provincial_delivery_fee}}"  data-description="{{$product->description}}" data-image1="{{$product->image1}}" data-image2="{{$product->image2}}" onclick="editProduct(this)"
                           data-image3="{{$product->image3}}"><i class="fa fa-edit" aria-hidden="true"></i></button>
-                          </div>
+                        
                           @if ($product->status == 'active')
-                          <div class="col-md-4">
-                          <a class="btn btn-warning" href="/admin/products/deactivate/{{ $product->id }}"><i class="fa fa-eye-slash" aria-hidden="true"></i></a>
-                          </div>
+                        
+                          <a class="btn btn-warning ml-2" href="/admin/products/deactivate/{{ $product->id }}"><i class="fa fa-eye-slash" aria-hidden="true"></i></a>
+                       
                           @else
-                          <div class="col-md-4">
-                          <a class="btn btn-success" href="/admin/products/activate/{{ $product->id }}"><i class="fa fa-eye" aria-hidden="true"></i></a>
-                          </div>
+                         
+                          <a class="btn btn-success ml-2" href="/admin/products/activate/{{ $product->id }}"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                        
                           @endif
-                          <div class="col-md-4">
-                          <button class="btn btn-danger" data-id="{{$product->id}}" onclick="deleteProduct(this);"><i class="fa fa-trash" aria-hidden="true"></i></button>
-                          </div>
+                         
+                          <button class="btn btn-danger ml-2" data-id="{{$product->id}}" onclick="deleteProduct(this);"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                         
                             </div> </td>     
                     </tr>
                  @endforeach

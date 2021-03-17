@@ -103,7 +103,7 @@ Padyak.Co - My Cart
 		 </div>
 		  
 		 <div class="col-md-3 cart-total" style="border-left: 1px solid; padding-left: 16px; ">
-			 <a class="continue" href="/bicycles">Browse more items</a>
+			 <a class="continue" href="/store">Browse more items</a>
 			 <div class="price-details">
 				 <h3>Price Details</h3>
 				 <span>Prdouct Total</span>
@@ -119,9 +119,7 @@ Padyak.Co - My Cart
 			 <div class="clearfix"></div>
 			 <a class="order cartDisabled" >Checkout</a>
 			 <div class="total-item">
-				 <h3>OPTIONS</h3>
-				 <h4>COUPONS</h4>
-				 <a class="cpns cartDisabled" >Apply Coupons</a>
+				 <h3>REMINDERS</h3>
 				 <p>Add an item to your cart.</p>
 			 </div>
 			</div>

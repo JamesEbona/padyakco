@@ -99,7 +99,7 @@ Padyak.Co - My Cart
 		 </div>
 		  
 		 <div class="col-md-3 cart-total" style="border-left: 1px solid; padding-left: 16px; ">
-			 <a class="continue" href="/bicycles">Browse more items</a>
+			 <a class="continue" href="/store">Browse more items</a>
 			 <div class="price-details">
 				 <h3>Price Details</h3>
 				 <span>Prdouct Total</span>

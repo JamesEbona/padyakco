@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Mechanic;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Rules\verify_password;
+
 
 class AccountController extends Controller
 {
@@ -38,10 +40,13 @@ class AccountController extends Controller
 
     public function update(Request $request)
     {
+        $UserID = auth()->user()->id;
+
         $request->validate([
             'first_name' => 'required|string|max:30|min:2|alpha',
             'last_name' => 'required|string|max:30|min:2|alpha',
-            'email' => 'required|string|email|max:50|',
+            'email' => 'required|string|email|max:50|unique:users,email,'.$UserID.',id',
+            'phone_number' => array('required','regex:/^(09|\+639)\d{9}$/','unique:users,phone_number,'.$UserID.',id'),
             'image' => 'image'
             // 'email' => 'required|string|email|max:50|unique:users',
         ]);
@@ -50,6 +55,7 @@ class AccountController extends Controller
                 'first_name' => request('first_name'),
                 'last_name' => request('last_name'),
                 'email' => request('email'),
+                'phone_number' => request('phone_number')
         );
 
 
@@ -60,7 +66,6 @@ class AccountController extends Controller
             $imageArray = ['image' => $imagePath];
         }
     
-        $UserID = auth()->user()->id;
         User::where('id', $UserID)->update(array_merge(
         $data,
         $imageArray ?? []

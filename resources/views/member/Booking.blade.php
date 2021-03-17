@@ -58,6 +58,11 @@ My Booking
 				    <p class="text-center">{{$booking->mechanic->first_name}} {{$booking->mechanic->last_name}} </p>
 					</div>
                     </div>
+					<div class="row">
+                    <div class="col-md-12">
+				    <p class="text-center">{{$booking->mechanic->phone_number}}</p>
+					</div>
+                    </div>
 				  </div>
 			 </div>  
              </div>

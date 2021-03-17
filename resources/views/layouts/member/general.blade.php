@@ -392,10 +392,10 @@ License URL: http://creativecommons.org/licenses/by/3.0/
              @guest
             <li class="dropdown1"><a href="/">HOME</a></li>   
              @endguest
-						  <li class="dropdown1"><a href="/bicycles">STORE</a>
+						  <li class="dropdown1"><a href="/store">STORE</a>
 							  <ul class="dropdown2">
-									<li><a href="/bicycles">MOUNTAIN BIKES</a></li>
-									<li><a href="/bicycles">ROAD BIKES</a></li>
+									<li><a href="/store">BICYCLES</a></li>
+									<li><a href="/store">BICYCLE PARTS</a></li>
 				                     @auth
 									<li><a href="{{ route('orders') }}">MY ORDERS</a></li>
 									@endauth												 

@@ -10,7 +10,7 @@
 </style>
 <div class="parts">
 	 <div class="container">
-		 <h2>BICYCLES</h2>
+		 <h2>BICYCLES AND PARTS</h2>
 		 <div class="bike-parts-sec">
 		      <div class="bike-parts">
 			  <!-- @if(session()->has('message'))
@@ -24,12 +24,12 @@
 					 <ul>
 						 <li><a class="account-links" href="/">HOME</a></li>
 						 <li>/</li>
-						 <li><a class="account-links" href="/bicycles">BICYCLES</a></li>
+						 <li><a class="account-links" href="/store">STORE</a></li>
 					 </ul>				 
 				 </div>
 				 <div class="bike-apparels filter_data">
 			
-				      @include('home.bicycles_data')
+				      @include('home.products_data')
 					  <div class="row text-center mt-5 mb-5">
 			 {{ $products->links() }}
 			 <input type="hidden" name="hidden_page" id="hidden_page" value="1" />
@@ -38,13 +38,24 @@
 			 </div>
 			 <div class="rsidebar span_1_of_left">
 			 <section class="sky-form">
-						<h4>Bicycle Type</h4>
+						<h4>Product Type</h4>
+							<div class="row row-type">
+							     @foreach ($categories as $category)
+								 <div class="col col-4">
+								<label><input type="checkbox" class="common_selector product_type" name="checkbox" value="{{$category->id}}" checked>&nbsp;&nbsp;&nbsp;&nbsp;{{$category->title}}</label>
+                                 </div>	
+								
+								 @endforeach
+							</div>
+				   </section>	
+				   <section class="sky-form mb-5">
+						<h4>Product Category</h4>
 							<div class="row row-type">
 							     @foreach ($subcategories as $subcategory)
 								 <div class="col col-4">
-								<label><input type="checkbox" class="common_selector bicycle_type" name="checkbox" value="{{$subcategory->id}}" checked>&nbsp;&nbsp;&nbsp;&nbsp;{{$subcategory->title}}</label>
+								<label><input type="checkbox" class="common_selector product_category" name="checkbox" value="{{$subcategory->id}}" checked>&nbsp;&nbsp;&nbsp;&nbsp;{{$subcategory->title}}</label>
                                  </div>	
-								 <!-- <input type="hidden" name="hidden_{{$subcategory->title}}" id="hidden_{{$subcategory->title}}" value="1" /> -->
+								
 								 @endforeach
 							</div>
 				   </section>	
@@ -135,14 +146,15 @@ function filter_data(page)
 	// var minimum_price = $('#hidden_minimum_price').val();
 	// var maximum_price = $('#hidden_maximum_price').val();
 	var price = get_filter('price');
-	var bicycle_type = get_filter('bicycle_type');
+	var product_type = get_filter('product_type');
+	var product_category = get_filter('product_category');
 	var brand = get_filter('brand');
 	// var ram = get_filter('ram');
 	// var storage = get_filter('storage');
 	$.ajax({
-		url:"bicycles/fetch_data?page="+page,
+		url:"store/fetch_data?page="+page,
 		method:"POST",
-		data:{action:action, subcategory_id:bicycle_type, brand:brand, price:price, page:page},
+		data:{action:action, category_id:product_type, subcategory_id:product_category, brand:brand, price:price, page:page},
 		success:function(data){
 			$('.filter_data').html('');
 			$('.filter_data').html(data);

@@ -22,7 +22,7 @@ Padyak.Co - Mechanic Edit Profile
                
                 <!-- Card Body -->
                 <div class="card-body">
-                  <form  method="post" enctype="multipart/form-data" action="/admin/updateUser" >
+                  <form  method="post" enctype="multipart/form-data" action="/mechanic/updateUser" >
                 @CSRF
                 @method('PATCH')
                   <div class="form-group">
@@ -62,6 +62,10 @@ Padyak.Co - Mechanic Edit Profile
                     <div class="form-group">
                         <label>Email</label>
                         <input class="form-control @error('email') is-invalid @enderror" type="text" name="email" value="@if ($errors->has('email')) {{ old('email') }} @else {{  auth()->user()->email }} @endif" required max="50">
+                    </div>
+                    <div class="form-group">
+                        <label>Phone Number</label>
+                        <input class="form-control @error('phone_number') is-invalid @enderror" type="tel" name="phone_number" value="@if ($errors->has('phone_number')) {{ old('phone_number') }} @else {{  auth()->user()->phone_number }} @endif" required>
                     </div>
                     <div class="form-group">
                         <label>Image</label>

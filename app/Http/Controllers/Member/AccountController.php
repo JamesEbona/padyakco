@@ -39,13 +39,15 @@ class AccountController extends Controller
 
     public function update_address(Request $request){
 
+        $UserID = auth()->user()->id;
+
         $request->validate([
             'address1' => 'required|string|max:100',
             'address2' => 'string|nullable|max:100',
-            'postal_code' => 'required|regex:/\d{4}/',
+            'postal_code' => 'required|numeric|regex:/^\d{3,4}$/',
             'city' => 'required|string|regex:/^[a-zA-Z ]*$/|max:20|',
             'province' => 'required|string|regex:/^[a-zA-Z ]*$/|max:20|',
-            'phone_number' => array('required','regex:/^(09|\+639)\d{9}$/'),
+            'phone_number' => array('required','regex:/^(09|\+639)\d{9}$/','unique:users,phone_number,'.$UserID.',id'),
             
         ]);
 
@@ -69,9 +71,6 @@ class AccountController extends Controller
         //     $imageArray = ['image' => $imagePath];
         // }
 
-        $UserID = auth()->user()->id;
-     
-
           Address::where('user_id', $UserID)->update($data);
          
      
@@ -80,10 +79,12 @@ class AccountController extends Controller
 
     public function update_profile(Request $request){
 
+        $UserID = auth()->user()->id;
+
         $request->validate([
             'first_name' => 'required|string|max:30|min:2|alpha',
             'last_name' => 'required|string|max:30|min:2|alpha',
-            'email' => 'required|string|email|max:50|',
+            'email' => 'required|string|email|max:50|unique:users,email,'.$UserID.',id',
             'image' => 'image'
             // 'email' => 'required|string|email|max:50|unique:users',
         ]);
@@ -104,9 +105,6 @@ class AccountController extends Controller
 
             $imageArray = ['image' => $imagePath];
         }
-
-        $UserID = auth()->user()->id;
-     
 
     // auth()->user()->profile->update($data);
 

@@ -10,20 +10,20 @@ use App\Models\Cart;
 use App\Models\CartItem;
 
 
-class BicyclesController extends Controller
+class PartsController extends Controller
 {
 
     public function index()
     {
-        $products = Product::where('category_id', 1)->where('status','active')->paginate(12);
+        $products = Product::where('category_id', 2)->where('status','active')->paginate(12);
         $categories = Category::all();
-        $subcategories = SubCategory::where('category_id', 1)->get();
+        $subcategories = SubCategory::where('category_id', 2)->get();
         // $brands = Product::select('brand')->where('category_id', 1)->get();
-        $brands = Product::where('category_id', 1)->distinct()->get('brand');
-        return view('home.bicycles', compact('products','categories','subcategories','brands'));
+        $brands = Product::where('category_id', 2)->distinct()->get('brand');
+        return view('home.parts', compact('products','categories','subcategories','brands'));
     }
 
-    public function fetch_bicycles_data(Request $request)
+    public function fetch_parts_data(Request $request)
     {
      if($request->ajax())
      {
@@ -33,16 +33,16 @@ class BicyclesController extends Controller
         $price_filter = $request->get('price');
         
         
-        $products = Product::whereIn('subcategory_id', $subcategory_filter)->whereIn('brand', $brand_filter)->where('price', '<=',  $price_filter)->where('status','active')->paginate(12); 
+        $products = Product::whereIn('subcategory_id', $subcategory_filter)->whereIn('brand', $brand_filter)->where('price', '<=',  $price_filter)->where('status','active')->where('category_id', 2)->paginate(12); 
        
          
-        return view('home.bicycles_data', compact('products'))->render();
+        return view('home.parts_data', compact('products'))->render();
      }
     }
 
     public function show($id){
-        $bicycle = Product::findOrFail($id);
-        $related_products = Product::where('category_id', 1)->where('status','active')->inRandomOrder()->limit(3)->get();
+        $part = Product::findOrFail($id);
+        $related_products = Product::where('category_id', 2)->where('status','active')->inRandomOrder()->limit(3)->get();
         $cart_item_qty = 0;
 
         if (Auth::user()) {
@@ -52,7 +52,7 @@ class BicyclesController extends Controller
             }
         }
 
-        return view('home.bicycle', compact('bicycle','related_products','cart_item_qty'));
+        return view('home.part', compact('part','related_parts','cart_item_qty'));
 
     }
 }

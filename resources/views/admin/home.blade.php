@@ -121,12 +121,32 @@
            
           </div>
 
+        
+          <div class="row mt-4">
+
+            <!-- Area Chart -->
+            <div class="col-xl-12 col-lg-12">
+              <div class="card shadow">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                  <h6 class="m-0 font-weight-bold text-primary">TOTAL SALES</h6>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+                <canvas id="salesChart" ></canvas>  
+                </div>
+              </div>
+            </div>
+        
+            </div>
+
          
         </div>
-        <!-- /.container-fluid -->
+      <!-- /.container-fluid -->
 @endsection
 
 @section('js')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js" integrity="sha512-rmZcZsyhe0/MAjquhTgiUcb4d9knaFc7b5xAfju483gbEXTkeJRUMIPk6s3ySZMYUHEcjKbjLjyddGWMrNEvZg==" crossorigin="anonymous"></script>
 <script src="{{ asset('js/chartjs/Chart.min.js') }}" ></script>
 
 <script>
@@ -171,5 +191,40 @@ let myChart = new Chart(ctx, {
     }
   }
 })
+
+var sales = document.getElementById('salesChart');
+var myTimeChart = new Chart(sales, {
+  type: 'line',
+  data: {
+    datasets: [{
+      label: 'Store Sales',
+      data: [{
+        x: new Date(2020, 1, 1),
+        y: 1
+      }, {
+        t: new Date(2020, 4, 1),
+        y: 3
+      }, {
+        t: new Date(2020, 7, 1),
+        y: 5
+      }, {
+        t: new Date(2020, 10, 1),
+        y: 7
+      }]
+    }],
+  },
+  options: {
+    scales: {
+      xAxes: [{
+        type: 'time',
+        time: {
+          displayFormats: {
+            quarter: 'MMM YYYY'
+          }
+        }
+      }]
+    }
+  }
+});
 </script>
 @endsection

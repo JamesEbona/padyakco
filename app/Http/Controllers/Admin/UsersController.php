@@ -131,7 +131,7 @@ class UsersController extends Controller
           'email' => 'required|string|email|max:50|unique:users',
           'password' => 'required|string|confirmed|min:8|max:15',
           'image' => 'image',
-          'phone_number' => array('required','regex:/^(09|\+639)\d{9}$/'),
+          'phone_number' => array('required','regex:/^(09|\+639)\d{9}$/','unique:users'),
               
        ]);
     
@@ -181,11 +181,12 @@ class UsersController extends Controller
 
       public function update(Request $request)
       {
+        $UserID = auth()->user()->id;
 
         $request->validate([
           'first_name' => 'required|string|max:30|min:2|alpha',
           'last_name' => 'required|string|max:30|min:2|alpha',
-          'email' => 'required|string|email|max:50|',
+          'email' => 'required|string|email|max:50|unique:users,email,'.$UserID.',id',
           'image' => 'image'
           // 'email' => 'required|string|email|max:50|unique:users',
       ]);
@@ -210,10 +211,6 @@ class UsersController extends Controller
      
   
      // auth()->user()->profile->update($data);
-  
-      $UserID = auth()->user()->id;
-
-      
   
          User::where('id', $UserID)->update(array_merge(
       $data,
@@ -249,11 +246,12 @@ class UsersController extends Controller
     
      public function modify(Request $request)
     {
+      $RequestID = request('editId');
 
       $validator = \Validator::make($request->all(), [
         'first_name' => 'required|string|max:30|min:2|alpha',
         'last_name' => 'required|string|max:30|min:2|alpha',
-        'email' => 'required|string|email|max:50|',
+        'email' => 'required|string|email|max:50|unique:users,email,'.$RequestID.',id',
         'image' => 'image'
         // 'email' => 'required|string|email|max:50|unique:users',        
      ]);
@@ -284,8 +282,6 @@ class UsersController extends Controller
 
    // auth()->user()->profile->update($data);
 
-    $RequestID = request('editId');
-
     //CHECK FOR NEW OR EXISTING ORDER
     if($RequestID > 0) {
         //THIS FUNCTION SOMEHOW RETURNS THE FUNCTION CALL AND DOESNT CONTINUE PAST
@@ -309,9 +305,9 @@ class UsersController extends Controller
       $validator = \Validator::make($request->all(), [
         'first_name' => 'required|string|max:30|min:2|alpha',
         'last_name' => 'required|string|max:30|min:2|alpha',
-        'email' => 'required|string|email|max:50|',
+        'email' => 'required|string|email|max:50|unique:users,email,'.request("editId").',id',
         'image' => 'image',
-        'phone_number' => array('required','regex:/^(09|\+639)\d{9}$/'),
+        'phone_number' => array('required','regex:/^(09|\+639)\d{9}$/','unique:users,phone_number,'.request("editId").',id'),
         // 'email' => 'required|string|email|max:50|unique:users',        
      ]);
   

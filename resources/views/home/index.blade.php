@@ -28,10 +28,10 @@
 						<input id="mobile_menu" type="checkbox">
 					   <ul class="nav">
 					      <li class="dropdown1"><a href="/">HOME</a></li>
-						  <li class="dropdown1"><a href="/bicycles">STORE</a>
+						  <li class="dropdown1"><a href="/store">STORE</a>
 							  <ul class="dropdown2">
-									<li><a href="/bicycles">MOUNTAIN BIKES</a></li>
-									<li><a href="/bicycles">ROAD BIKES</a></li>									
+									<li><a href="/store">BICYCLES</a></li>
+									<li><a href="/store">BICYCLE PARTS</a></li>									
 							  </ul>
 						  </li>
 						  <li class="dropdown1"><a href="{{ route('book') }}">REPAIR SERVICE</a>
@@ -77,7 +77,7 @@
 			 <a href="bicycles.html"><div class="col-md-4 cate-grid" style="background: url({{ asset('images/member/c1.jpg') }}) no-repeat;">
 				 <h4>NEED A BICYCLE?</h4>
 				 <p>Choose from countless bicycle selections</p>
-				 <a class="store" href="/bicycles">GO TO STORE</a>
+				 <a class="store" href="/store">GO TO STORE</a>
 			 </div></a>
 			 <a href="bicycles.html"><div class="col-md-4 cate-grid" style="background: url({{ asset('images/member/c2.jpg') }}) no-repeat;">
 				 <h4>HAVE A BICYCLE PROBLEM?</h4>
@@ -109,7 +109,7 @@
 						 <div class="clearfix"></div>
 					 </div>
 					 <div class="viw">
-						<a href="{{route('viewBicycle', $product->id)}}">Quick View</a>
+						<a href="{{route('viewProduct', $product->id)}}">Quick View</a>
 					 </div>
 				 </li>
 				 @endforeach

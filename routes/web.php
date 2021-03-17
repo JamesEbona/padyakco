@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\BicyclesController;
+use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\GuidesController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\InquiriesController;
@@ -27,9 +27,9 @@ use App\Models\Inquiry;
 // });
 
 Route::get('/', [HomeController::class, 'index'])->middleware('logged')->name('home');
-Route::get('/bicycles', [BicyclesController::class, 'index'])->name('bicycles');
-Route::post('/bicycles/fetch_data', [BicyclesController::class, 'fetch_bicycles_data']);
-Route::get('/bicycles/show/{id}', [BicyclesController::class, 'show'])->name('viewBicycle');
+Route::get('/store', [ProductsController::class, 'index'])->name('store');
+Route::post('/store/fetch_data', [ProductsController::class, 'fetch_products_data']);
+Route::get('/store/show/{id}', [ProductsController::class, 'show'])->name('viewProduct');
 Route::get('/cart', [CartController::class, 'index'])->name('cart')->middleware('logged');
 Route::get('/cart/add/{id}', [CartController::class, 'store'])->name('addCart');
 Route::get('/cart/addOne/{id}', [CartController::class, 'addByOne'])->name('addOneCart');

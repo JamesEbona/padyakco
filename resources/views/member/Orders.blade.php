@@ -5,7 +5,7 @@ My Orders
 @endsection
 
 @section('content')
-<div class="col-md-9 cart-items my-account-content" style="border-left: 1px solid; padding-left: 16px; ">
+<div class="col-md-9 cart-items my-account-content" id="ordersContent" style="padding-left: 16px; ">
 			 <h1 class="mb-4">My Orders:</h1>
 			 @foreach($orders as $order)
 			 <div class="cart-header">
@@ -54,6 +54,7 @@ My Orders
 			 <div class="row text-center mt-5 mb-5">
 			 {{ $orders->links() }}
              </div>
+			 <div class="row">&nbsp;</div>
 
 		
 			
@@ -65,6 +66,16 @@ My Orders
 	 </div>
 				</div>
 
+@endsection
 
-
+@section('js')
+@if(count($orders) != 0)
+<script>
+$("#ordersContent").css({"border-left": "1px solid", "padding-left": "16px"});
+</script>
+@else
+<script>
+$("#sideBar").css({"border-right": "1px solid", "padding-right": "16px"});
+</script>
+@endif
 @endsection

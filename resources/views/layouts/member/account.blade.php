@@ -71,10 +71,10 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 						</label>
 						<input id="mobile_menu" type="checkbox">
 					   <ul class="nav">
-						  <li class="dropdown1"><a href="/bicycles">STORE</a>
+						  <li class="dropdown1"><a href="/store">STORE</a>
 							  <ul class="dropdown2">
-							        <li><a href="/bicycles">MOUNTAIN BIKES</a></li>
-									<li><a href="/bicycles">ROAD BIKES</a></li>
+							        <li><a href="/store">BICYCLES</a></li>
+									<li><a href="/store">BICYCLE PARTS</a></li>
 									<li><a href="{{ route('orders') }}">MY ORDERS</a></li>										
 							  </ul>
 						  </li>
@@ -117,7 +117,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <!--/banner-->
 <div class="cart">
 <div class="container">
-<div class="col-md-3 cart-total">
+<div id="sideBar" class="col-md-3 cart-total">
 		
 		
 		<img src="/storage/{{auth()->user()->image}}" alt="" class="img-circle w-100 center-block mb-2 avatar-myaccount" >

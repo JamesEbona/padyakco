@@ -10,6 +10,8 @@ use App\Events\BookingConfirmedEvent;
 use App\Events\BookingEnRouteEvent;
 use App\Events\BookingDoneEvent;
 use App\Events\BookingCancelledEvent;
+use App\Models\BookingMonthSales;
+use App\Models\BookingYearSales;
 
 class BookingsController extends Controller
 {
@@ -82,6 +84,21 @@ class BookingsController extends Controller
       }
       else if($status == "done"){
         event(new BookingDoneEvent($booking));  
+
+        $nowDate = \Carbon\Carbon::now();
+        $bookingMonth = $nowDate->format('F');
+        $bookingYear = $nowDate->format('Y');
+        if($bookingMonth == "January"){
+            BookingMonthSales::query()->update(['after' => 1]);
+        }
+        $bookingMonthSales = BookingMonthSales::firstOrNew(['month' =>  $bookingMonth]);
+        $bookingMonthSales->profit += $booking->total_fee;
+        $bookingMonthSales->after = 0;
+        $bookingMonthSales->save(); 
+
+        $bookingYearSales = BookingYearSales::firstOrNew(['year' =>  $bookingYear]);
+        $bookingYearSales->profit += $booking->total_fee;
+        $bookingYearSales->save(); 
       }
       else if($status == "cancelled"){
         event(new BookingCancelledEvent($booking)); 

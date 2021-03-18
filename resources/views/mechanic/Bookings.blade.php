@@ -47,7 +47,7 @@ Padyak.Co Mechanic - My Bookings
   <th>Schedule</th>
   <th>Date Booked</th>
   <th>Status</th>
-  <th style="column-width:310px;">Action</th>
+  <th style="column-width:500px;">Action</th>
 </tr>
 </thead>
 <tbody>
@@ -76,7 +76,7 @@ Padyak.Co Mechanic - My Bookings
         @endif
       <td><div class="row justify-content-center">
       <div class="col-md-3">
-      <button class="btn btn-dark" data-id="{{$booking->id}}" data-additionalfee="{{$booking->additional_fee}}" onclick="editBooking(this);"><i class="fa fa-edit" aria-hidden="true"></i></button>
+      <button class="btn btn-dark" @if($booking->status == "cancelled" || $booking->status == "done") disabled @endif data-id="{{$booking->id}}" data-additionalfee="{{$booking->additional_fee}}" onclick="editBooking(this);"><i class="fa fa-edit" aria-hidden="true"></i></button>
       </div>
       <div class="col-md-3">
       <button class="btn btn-warning" data-firstname="{{$booking->first_name}}" data-lastname="{{$booking->last_name}}" data-phonenumber="{{$booking->phone_number}}" 
@@ -89,7 +89,7 @@ Padyak.Co Mechanic - My Bookings
       <a class="btn btn-secondary" href="{{route('mechanicBookingsShowAddress', ['id' => $booking->id])}}"><i class="fas fa-map-marked-alt" aria-hidden="true"></i></a>
       </div>
       <div class="col-md-3 ">
-      <button class="btn btn-info " data-id="{{$booking->id}}" data-additionalfee="{{$booking->additional_fee}}" data-status="{{$booking->status}}" onclick="updateBookingStatus(this);"><i class="fas fa-wrench" aria-hidden="true"></i></button>
+      <button class="btn btn-info" @if($booking->status == "cancelled" || $booking->status == "done") disabled @endif data-id="{{$booking->id}}" data-additionalfee="{{$booking->additional_fee}}" data-status="{{$booking->status}}" onclick="updateBookingStatus(this);"><i class="fas fa-wrench" aria-hidden="true"></i></button>
       </div></div> </td> 
   </tr>
 @endforeach

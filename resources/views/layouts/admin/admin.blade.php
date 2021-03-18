@@ -456,7 +456,7 @@ $('#mechanicstable').DataTable( {
 
    $('#producttable').DataTable( {
   columnDefs: [
-    {searchable: false, orderable: false, targets: [1,11] }
+    {searchable: false, orderable: false, targets: [1,10] }
   ]
 } );
 

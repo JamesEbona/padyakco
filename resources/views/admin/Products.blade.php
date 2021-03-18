@@ -34,7 +34,7 @@
                           <th>Sub Category</th>
                           <th>Quantity</th>
                           <th>Price</th>
-                          <th>Rating</th>
+                          <!-- <th>Rating</th> -->
                           <th>Created At</th>
                           <th>Status</th>
                           <th style="column-width:600px;">Actions</th>
@@ -51,7 +51,7 @@
                           <td>{{$product->subcategory->title}}</td>
                           <td>{{$product->quantity}}</td>
                           <td>{{$product->price}}</td>
-                          <td>{{$product->rating}} <i class="fa fa-star" aria-hidden="true"></i></td>
+                          <!-- <td> <i class="fa fa-star" aria-hidden="true"></i></td> -->
                           <td>{{$product->created_at ?? 'Not Found'}}</td>
                           @if($product->status == "active")
                           <td> <span class="badge badge-success justify-content-center ">{{$product->status}}</span></td>

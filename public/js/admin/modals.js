@@ -238,6 +238,17 @@ function updateMechanic(arg) {
     }
 }
 
+function updateBookingStatus(arg) {
+    $('#editStatusModal').modal('show');
+    var id = $(arg).attr('data-id');
+    var status = $(arg).attr('data-status');
+   
+    $("#viewStatusId").val(id);
+    $("#editStatusId").val(id);
+    $("#editStatus").val(status);
+    
+}
+
 function viewAddress(arg) {
     $('#addressModal').modal('show');
     var address1 = $(arg).attr('data-address1');

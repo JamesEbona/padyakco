@@ -11,6 +11,9 @@ use App\Models\Cart;
 use App\Models\CartItem;
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\ProductCategoryReport;
+use App\Models\StoreMonthSales;
+use App\Models\StoreYearSales;
 use Illuminate\Support\Facades\Auth;
 use App\Events\NewOrderEvent;
 // use App\Mail\OrderReceipt;
@@ -193,6 +196,20 @@ class CheckoutController extends Controller
         $order->status = 'paid';
         $order->save();
 
+        $orderMonth = date_format($order->created_at, 'F');
+        if($orderMonth == "January"){
+            StoreMonthSales::query()->update(['after' => 1]);
+        }
+        $storeMonthSales = StoreMonthSales::firstOrNew(['month' =>  $orderMonth]);
+        $storeMonthSales->profit += $order->grand_total;
+        $storeMonthSales->after = 0;
+        $storeMonthSales->save();
+
+        $orderYear = date_format($order->created_at, 'Y');
+        $storeYearSales = StoreYearSales::firstOrNew(['year' =>  $orderYear]);
+        $storeYearSales->profit += $order->grand_total;
+        $storeYearSales->save();
+
         //store order items
        
         $cartItems =  CartItem::where('cart_id',$cart->id)->get();
@@ -209,6 +226,9 @@ class CheckoutController extends Controller
                 //minus product quantity
                 $product = Product::where('id',$orderItem->product_id)->firstOrFail();
                 $product->quantity -= $orderItem->quantity;
+                $productCategoryReport = ProductCategoryReport::firstOrNew(['title' => $product->category->title]);
+                $productCategoryReport->number += $orderItem->quantity;
+                $productCategoryReport->save();
                 $product->save(); 
         }
 
@@ -236,7 +256,7 @@ class CheckoutController extends Controller
 
     public function orderPlaced(){
         $order =  Order::where('user_id', Auth::id())->orderBy('created_at', 'DESC')->firstOrFail();
-        $related_products = Product::where('category_id', 1)->where('status','active')->inRandomOrder()->limit(4)->get();
+        $related_products = Product::where('status','active')->inRandomOrder()->limit(4)->get();
         return view('member.orderPlaced', compact('order','related_products'));
     }
   

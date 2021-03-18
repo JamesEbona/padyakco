@@ -81,6 +81,7 @@ Route::group([
     Route::post('book/process', 'BookingController@book')->name('bookProcess');
     Route::get('book/mybookings', 'BookingController@view')->name('bookView');
     Route::get('book/{id}', 'BookingController@show')->name('bookShow');
+    Route::get('book/cancel/{id}', 'BookingController@cancel');
 });
 
 Route::group([

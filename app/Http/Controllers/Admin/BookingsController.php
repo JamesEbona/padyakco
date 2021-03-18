@@ -15,6 +15,8 @@ use App\Events\BookingCancelledEvent;
 use App\Events\MechanicAssignEvent;
 use App\Events\MechanicUnassignEvent;
 use App\Rules\verify_booking_region;
+use App\Models\BookingMonthSales;
+use App\Models\BookingYearSales;
 // use Illuminate\Support\Facades\Notification;
 // use App\Notifications\MechanicNotification;
 
@@ -187,7 +189,21 @@ class BookingsController extends Controller
                 event(new BookingEnRouteEvent($booking));  
             }
             else if($status == "done"){
-                event(new BookingDoneEvent($booking));  
+                event(new BookingDoneEvent($booking)); 
+                $nowDate = \Carbon\Carbon::now();
+                $bookingMonth = $nowDate->format('F');
+                $bookingYear = $nowDate->format('Y');
+                if($bookingMonth == "January"){
+                    BookingMonthSales::query()->update(['after' => 1]);
+                }
+                $bookingMonthSales = BookingMonthSales::firstOrNew(['month' =>  $bookingMonth]);
+                $bookingMonthSales->profit += $booking->total_fee;
+                $bookingMonthSales->after = 0;
+                $bookingMonthSales->save(); 
+
+                $bookingYearSales = BookingYearSales::firstOrNew(['year' =>  $bookingYear]);
+                $bookingYearSales->profit += $booking->total_fee;
+                $bookingYearSales->save(); 
             }
             else if($status == "cancelled"){
                 event(new BookingCancelledEvent($booking)); 

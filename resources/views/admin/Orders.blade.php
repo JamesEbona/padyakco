@@ -62,7 +62,7 @@
       <td>{{$order->province}}</td>
       <td>{{$order->quantity_total}}</td>
       <td>{{$order->grand_total}}</td>
-      <td>{{date_format($order->created_at,"d M, Y H:i")}}</td>
+      <td>{{$order->created_at}}</td>
       @if($order->status =="paid")
         <td><span class="badge badge-primary justify-content-center">{{$order->status}}</span></td>
         @elseif($order->status =="in-transit")

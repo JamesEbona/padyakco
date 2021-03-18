@@ -8,6 +8,7 @@ use App\Models\Repair;
 use App\Models\Booking;
 use App\Rules\verify_booking_region;
 use Carbon\Carbon;
+use App\Events\BookingCancelledEvent;
 
 
 class BookingController extends Controller
@@ -136,6 +137,17 @@ class BookingController extends Controller
     {
         $booking = Booking::where('user_id',auth()->id())->where('id',$id)->firstOrFail();
         return view('member.Booking', compact('booking'));
+    }
+
+    public function cancel($id)
+    {
+        $booking = Booking::where('user_id',auth()->id())->where('id',$id)->where('status', '=', 'pending')->firstOrFail();
+        $booking->status = "cancelled";
+        $booking->save();
+        event(new BookingCancelledEvent($booking));  
+
+        return redirect("/member/book/mybookings")->with('message', 'Your booking has been cancelled.');
+        
     }
 
 }

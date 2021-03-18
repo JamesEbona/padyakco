@@ -30,14 +30,14 @@ Padyak.Co - Order placed
 							 <img src="/storage/{{$related_product->image1}}" class="img-responsive " alt=""/>
 						 </div>
 						 <div class="prod1-desc">
-								<h2><a class="product_link" href="/bicycles/show/{{$related_product->id}}">{{$related_product->brand}} {{$related_product->title}}</a></h2>
+								<h2><a class="account-links" href="/store/show/{{$related_product->id}}">{{$related_product->brand}} {{$related_product->title}}</a></h2>
 																	
 						 </div>
 						 <div class="clearfix"></div>
 					 </div>
 					 <div class="product_price">
 														
-							<a class="button1 ml-2" href="/bicycles/show/{{$related_product->id}}"><span>View</span></a>
+							<a class="button1 ml-2" href="/store/show/{{$related_product->id}}"><span>View</span></a>
 					 </div>
 						<div class="clearfix"></div>
 			 </div>

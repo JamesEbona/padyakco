@@ -61,7 +61,7 @@
       <td>{{$booking->location}}</td>
       <td>{{$booking->repair_type}}</td>
       <td>{{$booking->mechanic->first_name ?? 'Not'}} {{$booking->mechanic->last_name ?? 'Set'}}</td> 
-      <td>{{date_format($booking->booking_time,"d M, Y H:i")}}</td>
+      <td>{{$booking->booking_time}}</td>
       <!-- <td>{{date_format($booking->created_at,"d M, Y H:i")}}</td> -->
       @if($booking->status =="pending")
         <td><span class="badge badge-warning justify-content-center">{{$booking->status}}</span></td>

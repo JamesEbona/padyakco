@@ -5,10 +5,14 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Order;
+use App\Models\Product;
+use App\Models\OrderItem;
 use App\Events\OrderShippedEvent;
 use App\Events\OrderDeliveredEvent;
 use App\Events\OrderCancelledEvent;
-
+use App\Models\ProductCategoryReport;
+use App\Models\StoreMonthSales;
+use App\Models\StoreYearSales;
 class OrdersController extends Controller
 {
 
@@ -80,6 +84,20 @@ class OrdersController extends Controller
       }
       else if($status == "cancelled"){
         event(new OrderCancelledEvent($order)); 
+        $orderItems =  OrderItem::where('order_id',$order->id)->get();
+        foreach ($orderItems as $orderItem) {
+                $product = Product::where('id',$orderItem->product_id)->first();
+                $productCategoryReport = ProductCategoryReport::where('title', '=', $product->category->title)->first();
+                $productCategoryReport->number -= $orderItem->quantity;
+                $productCategoryReport->save();
+        }
+        $storeMonthSale = StoreMonthSales::where('month',date_format($order->created_at, 'F'))->first();
+        $storeMonthSale->profit -= $order->grand_total;
+        $storeMonthSale->save();
+
+        $storeYearSale = StoreYearSales::where('year',date_format($order->created_at, 'Y'))->first();
+        $storeYearSale->profit -= $order->grand_total;
+        $storeYearSale->save();
       }
     
       return redirect("/admin/orders");

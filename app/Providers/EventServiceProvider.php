@@ -7,6 +7,7 @@ use App\Events\BookingConfirmedEvent;
 use App\Events\BookingEnRouteEvent;
 use App\Events\BookingDoneEvent;
 use App\Events\BookingCancelledEvent;
+use App\Events\NewBookingEvent;
 use App\Events\NewOrderEvent;
 use App\Events\OrderShippedEvent;
 use App\Events\OrderCancelledEvent;
@@ -19,6 +20,7 @@ use App\Listeners\SendBookingConfirmedNotification;
 use App\Listeners\SendBookingDoneNotification;
 use App\Listeners\SendBookingEnRouteNotification;
 use App\Listeners\SendBookingCancelledNotification;
+use App\Listeners\SendNewBookingAdminNotification;
 use App\Listeners\SendMemberInvoice;
 use App\Listeners\SendShippedOrderNotification;
 use App\Listeners\SendCancelledOrderNotification;
@@ -73,6 +75,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         MechanicUnassignEvent::class => [
             SendMechanicUnassignNotification::class,
+        ],
+        NewBookingEvent::class => [
+            SendNewBookingAdminNotification::class,
         ],
     ];
 

@@ -12,6 +12,7 @@ use App\Models\CartItem;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\ProductCategoryReport;
+use App\Models\StoreDaySales;
 use App\Models\StoreMonthSales;
 use App\Models\StoreYearSales;
 use Illuminate\Support\Facades\Auth;
@@ -195,6 +196,15 @@ class CheckoutController extends Controller
         $order->phone_number = auth()->user()->address->phone_number;
         $order->status = 'paid';
         $order->save();
+
+        $orderDay = date_format($order->created_at, 'd');
+        if($orderDay == 01){
+            StoreDaySales::query()->update(['after' => 1]);
+        }
+        $storeDaySales = StoreDaySales::firstOrNew(['day' =>  $orderDay]);
+        $storeDaySales->profit += $order->grand_total;
+        $storeDaySales->after = 0;
+        $storeDaySales->save();
 
         $orderMonth = date_format($order->created_at, 'F');
         if($orderMonth == "January"){

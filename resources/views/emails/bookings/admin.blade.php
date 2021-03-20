@@ -369,8 +369,8 @@
     <!--[if !mso 9]>
 
       <!-->
-    <div style="display: none; overflow: hidden; line-height: 1px; max-height: 0px; max-width: 0px; opacity: 0; mso-hide: all;">Thank you for your purchase, this email confirms your order. We will send you
-      another email as soon as it ships.</div>
+    <div style="display: none; overflow: hidden; line-height: 1px; max-height: 0px; max-width: 0px; opacity: 0; mso-hide: all;">Thank you for trusting us with your bicycle repair, this email confirms your booking. We will send you
+      another email as soon as our mechanic is on the way to you.</div>
 
     <!--<![endif]-->
 
@@ -420,7 +420,7 @@
                                   <table cellspacing="0" cellpadding="0" border="0" width="100%" role="presentation">
                                     <tr>
                                       <th style="mso-line-height-rule: exactly;" bgcolor="#ffffff" valign="top">
-                                        <h1 data-key="3499733_heading" style="font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 24px; line-height: 36px; font-weight: 400; color: #1a1a1a; text-transform: none; margin: 0;">ORDER CONFIRMATION</h1>
+                                        <h1 data-key="3499733_heading" style="font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 24px; line-height: 36px; font-weight: 400; color: #1a1a1a; text-transform: none; margin: 0;">REPAIR BOOKING CONFIRMED</h1>
                                       </th>
                                     </tr>
                                   </table>
@@ -446,9 +446,9 @@
                               <tr id="section-3499739" class="section order_number_and_date">
                                 <th style="mso-line-height-rule: exactly; padding: 11px 44px;" bgcolor="#ffffff">
                                   <h2 style="font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; color: #1a1a1a; font-size: 16px; line-height: 22px; font-weight: 400; text-transform: none; margin: 0;" align="left">
-                                    <span data-key="3499739_order_number">ORDER</span> #{{$order->id}}
+                                    <span data-key="3499739_order_number">BOOKING</span> #{{$booking->id}}
                                   </h2>
-                                  <p class="muted" style="mso-line-height-rule: exactly; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 13px; line-height: 22px; font-weight: normal; text-transform: none; color: #ef5a30; margin: 0;" align="left">{{date_format($order->created_at,"d M, Y")}}</p>
+                                  <p class="muted" style="mso-line-height-rule: exactly; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 13px; line-height: 22px; font-weight: normal; text-transform: none; color: #ef5a30; margin: 0;" align="left">{{date_format($booking->created_at,"d M, Y")}}</p>
                                 </th>
                               </tr>
 
@@ -460,10 +460,10 @@
                                   <p style="mso-line-height-rule: exactly; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 15px; line-height: 22px; font-weight: 400; text-transform: none; color: #000000; margin: 0 0 11px;" align="left"> <span data-key="3499735_greeting_text" style="text-align: left; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 15px; line-height: 22px; font-weight: 400; text-transform: none; color: #000000;">
                                             Hi
                                           </span>
-                                    {{$order->first_name}} {{$order->last_name}},</p> <span data-key="3499735_introduction_text"
+                                    Admin,</p> <span data-key="3499735_introduction_text"
                                   class="text" style="text-align: left; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 15px; line-height: 22px; font-weight: 400; text-transform: none; color: #000000;">
                                         <p style="mso-line-height-rule: exactly; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 15px; line-height: 22px; font-weight: 400; text-transform: none; color: #000000; margin: 11px 0 0;" align="left"></p>
-                                        <p style="mso-line-height-rule: exactly; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 15px; line-height: 22px; font-weight: 400; text-transform: none; color: #000000; margin: 11px 0 0;" align="left">Thank you for your purchase, this email confirms your order. We will send you another email as soon as it ships.</p>
+                                        <p style="mso-line-height-rule: exactly; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 15px; line-height: 22px; font-weight: 400; text-transform: none; color: #000000; margin: 11px 0 0;" align="left">There is a new pending repair service booking. Assign a mechanic or update its status.</p>
                                       </span>
                                 </th>
                               </tr>
@@ -483,46 +483,19 @@
                                         <table cellspacing="0" cellpadding="0" border="0" width="100%" style="min-width: 100%;" role="presentation">
                                           <tr>
                                             <th colspan="2" class="product-table-h3-wrapper" style="mso-line-height-rule: exactly;" bgcolor="#ffffff" valign="top">
-                                              <h3 data-key="3499741_item" style="font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; color: #1a1a1a; font-size: 14px; line-height: 22px; font-weight: 400; text-transform: none; border-bottom-width: 1px; border-bottom-color: #eeeeee; border-bottom-style: solid; margin: 0;" align="left">ITEMS ORDERED</h3>
+                                              <h3 data-key="3499741_item" style="font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; color: #1a1a1a; font-size: 14px; line-height: 22px; font-weight: 400; text-transform: none; border-bottom-width: 1px; border-bottom-color: #eeeeee; border-bottom-style: solid; margin: 0;" align="left">PAYMENT ESTIMATE</h3>
                                             </th>
                                           </tr>
 
                                           <!-- Bold 2 -->
 
                                           <!-- end Bold 2 -->
-                                          @foreach($order->orderitems as $orderItem)
-                                          <tr class="row-border-bottom">
-                                            <th class="table-stack product-image-wrapper stack-column-center" width="1" style="mso-line-height-rule: exactly; border-bottom-width: 1px; border-bottom-color: #eeeeee; border-bottom-style: solid; padding: 11px 11px 11px 0;" bgcolor="#ffffff" valign="middle">
-                                              <a href="{{route('viewProduct',$orderItem->product_id)}}" class="product_link" target="_blank" style="color: #0c0c09; text-decoration: none !important; text-underline: none; word-wrap: break-word;">
-                                                <img width="120" class="product-image" src="{{asset('/storage/'.$orderItem->product->image1.'')}}" alt='Product Image' style="vertical-align: middle; text-align: center; width: 120px; max-width: 120px; height: auto !important; border-radius: 0px; padding: 0px;">
-                                              </a>
-                                            </th>
-                                            <th class="product-details-wrapper table-stack stack-column" style="mso-line-height-rule: exactly; padding-top: 11px; padding-bottom: 11px; border-bottom-width: 1px; border-bottom-color: #eeeeee; border-bottom-style: solid;" bgcolor="#ffffff" valign="middle">
-                                              <table cellspacing="0" cellpadding="0" border="0" width="100%" style="min-width: 100%;" role="presentation">
-                                                <tr>
-                                                  <th class="line-item-description" style="mso-line-height-rule: exactly; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 15px; line-height: 22px; font-weight: 400; text-transform: none; color: #000000; padding: 11px 5px 11px 0;" align="left" bgcolor="#ffffff" valign="top">
-                                                    <p style="mso-line-height-rule: exactly; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 15px; line-height: 22px; font-weight: 400; text-transform: none; color: #000000; margin: 0;" align="left">
-                                                      <a href="{{route('viewProduct',$orderItem->product_id)}}" class="product_link" target="_blank" style="color: #000000; text-decoration: none !important; text-underline: none; word-wrap: break-word; text-align: left !important; font-weight: 400;">{{$orderItem->product->brand}} {{$orderItem->product->title}}</a>
-                                                      <br> <span class="muted" style="text-align: left; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 13px; line-height: 22px; font-weight: normal; text-transform: none; color: #ef5a30;">{{$orderItem->product->subcategory->title}}</span>
-                                                   
-                                                      <br>
-                                                    </p>
-                                                  </th>
-                                                  <th style="mso-line-height-rule: exactly;" bgcolor="#ffffff" valign="top"></th>
-                                                  <th class="right line-item-qty" width="1" style="mso-line-height-rule: exactly; white-space: nowrap; padding: 11px 0 11px 11px;" align="right" bgcolor="#ffffff" valign="top">
-                                                    <p style="mso-line-height-rule: exactly; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 15px; line-height: 22px; font-weight: 400; text-transform: none; color: #000000; margin: 0;" align="right">× {{$orderItem->quantity}}</p>
-                                                  </th>
-                                                  <th class="right line-item-line-price" width="1" style="mso-line-height-rule: exactly; white-space: nowrap; padding: 11px 0 11px 22px;" align="right" bgcolor="#ffffff" valign="top">
-                                                    <p style="mso-line-height-rule: exactly; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 15px; line-height: 22px; font-weight: 400; text-transform: none; color: #000000; margin: 0;" align="right">₱{{number_format($orderItem->price * $orderItem->quantity,2)}}</p>
-                                                  </th>
-                                                </tr>
-                                              </table>
-                                            </th>
-                                          </tr>
+                                       
+                                        
                                           <tr>
                                             <th colspan="2" class="product-empty-row" style="mso-line-height-rule: exactly;" bgcolor="#ffffff" valign="top"></th>
                                           </tr>
-                                           @endforeach
+                                   
                                           <!-- Bold 2 -->
 
                                        
@@ -533,16 +506,16 @@
                                       <th class="pricing-table" style="mso-line-height-rule: exactly; padding: 11px 0;" bgcolor="#ffffff" valign="top">
                                         <table cellspacing="0" cellpadding="0" border="0" width="100%" style="min-width: 100%;" role="presentation">
                                           <tr>
-                                            <th class="table-title" data-key="3499741_subtotal" style="mso-line-height-rule: exactly; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 15px; line-height: 22px; font-weight: 400; text-transform: none; color: #000000; width: 65%; padding: 5px 0;" align="left" bgcolor="#ffffff" valign="top">Subtotal</th>
-                                            <th class="table-text" style="mso-line-height-rule: exactly; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 15px; line-height: 22px; font-weight: 400; text-transform: none; color: #000000; width: 35%; padding: 5px 0;" align="right" bgcolor="#ffffff" valign="middle">₱{{number_format($order->sub_total,2)}}</th>
+                                            <th class="table-title" data-key="3499741_subtotal" style="mso-line-height-rule: exactly; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 15px; line-height: 22px; font-weight: 400; text-transform: none; color: #000000; width: 65%; padding: 5px 0;" align="left" bgcolor="#ffffff" valign="top">Repair Fee ({{$booking->repair_type}})</th>
+                                            <th class="table-text" style="mso-line-height-rule: exactly; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 15px; line-height: 22px; font-weight: 400; text-transform: none; color: #000000; width: 35%; padding: 5px 0;" align="right" bgcolor="#ffffff" valign="middle">₱{{number_format($booking->repair_fee,2)}}</th>
                                           </tr>
                                           <tr>
-                                            <th class="table-title" style="mso-line-height-rule: exactly; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 15px; line-height: 22px; font-weight: 400; text-transform: none; color: #000000; width: 65%; padding: 5px 0;" align="left" bgcolor="#ffffff" valign="top">Shipping fee</th>
-                                            <th class="table-text" style="mso-line-height-rule: exactly; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 15px; line-height: 22px; font-weight: 400; text-transform: none; color: #000000; width: 35%; padding: 5px 0;" align="right" bgcolor="#ffffff" valign="middle">₱{{number_format($order->shipping,2)}}</th>
+                                            <th class="table-title" style="mso-line-height-rule: exactly; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 15px; line-height: 22px; font-weight: 400; text-transform: none; color: #000000; width: 65%; padding: 5px 0;" align="left" bgcolor="#ffffff" valign="top">Transportation Fee</th>
+                                            <th class="table-text" style="mso-line-height-rule: exactly; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 15px; line-height: 22px; font-weight: 400; text-transform: none; color: #000000; width: 35%; padding: 5px 0;" align="right" bgcolor="#ffffff" valign="middle">₱{{number_format($booking->transportation_fee,2)}}</th>
                                           </tr>
                                           <tr class="pricing-table-total-row">
                                             <th class="table-title" data-key="3499741_total" style="mso-line-height-rule: exactly; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 15px; line-height: 22px; font-weight: 400; text-transform: none; color: #1a1a1a; width: 65%; padding: 5px 0;" align="left" bgcolor="#ffffff" valign="top">Total</th>
-                                            <th class="table-text" style="mso-line-height-rule: exactly; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 15px; line-height: 22px; font-weight: 400; text-transform: none; color: #1a1a1a; width: 35%; padding: 5px 0;" align="right" bgcolor="#ffffff" valign="middle">₱{{number_format($order->grand_total,2)}}</th>
+                                            <th class="table-text" style="mso-line-height-rule: exactly; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 15px; line-height: 22px; font-weight: 400; text-transform: none; color: #1a1a1a; width: 35%; padding: 5px 0;" align="right" bgcolor="#ffffff" valign="middle">₱{{number_format($booking->repair_fee + $booking->transportation_fee,2)}}</th>
                                           </tr>
                                         </table>
                                       </th>
@@ -550,39 +523,88 @@
                                   </table>
                                 </th>
                               </tr>
+
+
+                              <tr id="section-3499740" class="section customer_and_shipping_address">
+
+<!-- BEGIN : 2 COLUMNS : BILL_TO -->
+<th style="mso-line-height-rule: exactly; padding: 11px 44px;" bgcolor="#ffffff">
+  <table border="0" width="100%" cellpadding="0" cellspacing="0" align="center" style="min-width: 100%;" role="presentation">
+    <tr>
+
+      <!-- BEGIN : Column 1 of 2 : BILL_TO -->
+      <th width="50%" class="column_1_of_2 column_bill_to " style="mso-line-height-rule: exactly;" align="left" bgcolor="#ffffff" valign="top">
+        <table align="center" border="0" width="100%" cellpadding="0" cellspacing="0" style="min-width: 100%;" role="presentation">
+          <tr>
+            <th style="mso-line-height-rule: exactly; padding-right: 5%;" align="left" bgcolor="#ffffff" valign="top">
+              <h3 data-key="3499740_ship_to" style="font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; color: #1a1a1a; font-size: 14px; line-height: 22px; font-weight: 400; text-transform: none; margin: 0;" align="left">MEMBER NAME</h3>
+            </th>
+          </tr>
+          <tr>
+            <th class="shipping_address " style="mso-line-height-rule: exactly; padding-right: 5%;" align="left" bgcolor="#ffffff" valign="top">
+              <p style="mso-line-height-rule: exactly; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 15px; line-height: 22px; font-weight: 400; text-transform: none; color: #000000; margin: 0;" align="left">
+              {{$booking->first_name}} {{$booking->last_name}}
+              </p>
+            </th>
+          </tr>
+        </table>
+      </th>
+
+      <!-- END : Column 1 of 2 : BILL_TO -->
+
+      <!-- BEGIN : Column 2 of 2 : SHIP_TO -->
+     
+
+      <!-- END : Column 2 of 2 : SHIP_TO -->
+    </tr>
+  </table>
+</th>
+
+<!-- END : 2 COLUMNS : SHIP_TO -->
+</tr>
+
+<tr id="section-3499740" class="section customer_and_shipping_address">
+
+<!-- BEGIN : 2 COLUMNS : BILL_TO -->
+<th style="mso-line-height-rule: exactly; padding: 11px 44px;" bgcolor="#ffffff">
+  <table border="0" width="100%" cellpadding="0" cellspacing="0" align="center" style="min-width: 100%;" role="presentation">
+    <tr>
+
+      <!-- BEGIN : Column 1 of 2 : BILL_TO -->
+      <th width="50%" class="column_1_of_2 column_bill_to " style="mso-line-height-rule: exactly;" align="left" bgcolor="#ffffff" valign="top">
+        <table align="center" border="0" width="100%" cellpadding="0" cellspacing="0" style="min-width: 100%;" role="presentation">
+          <tr>
+            <th style="mso-line-height-rule: exactly; padding-right: 5%;" align="left" bgcolor="#ffffff" valign="top">
+              <h3 data-key="3499740_ship_to" style="font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; color: #1a1a1a; font-size: 14px; line-height: 22px; font-weight: 400; text-transform: none; margin: 0;" align="left">SCHEDULE</h3>
+            </th>
+          </tr>
+          <tr>
+            <th class="shipping_address " style="mso-line-height-rule: exactly; padding-right: 5%;" align="left" bgcolor="#ffffff" valign="top">
+              <p style="mso-line-height-rule: exactly; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 15px; line-height: 22px; font-weight: 400; text-transform: none; color: #000000; margin: 0;" align="left">
+               {{$booking->booking_time}}
+              </p>
+            </th>
+          </tr>
+        </table>
+      </th>
+
+      <!-- END : Column 1 of 2 : BILL_TO -->
+
+      <!-- BEGIN : Column 2 of 2 : SHIP_TO -->
+     
+
+      <!-- END : Column 2 of 2 : SHIP_TO -->
+    </tr>
+  </table>
+</th>
+
+<!-- END : 2 COLUMNS : SHIP_TO -->
+</tr>
 
                               <!-- END SECTION: Products With Pricing -->
 
                               <!-- BEGIN SECTION: Payment Info -->
-                              <tr id="section-3499742" class="section payment_info">
-                                <th style="mso-line-height-rule: exactly; padding: 11px 44px;" bgcolor="#ffffff">
-                                  <table class="table-inner" cellspacing="0" cellpadding="0" border="0" width="100%" style="min-width: 100%;" role="presentation">
-
-                                    <!-- PAYMENT INFO -->
-                                    <tr>
-                                      <th colspan="2" style="mso-line-height-rule: exactly;" bgcolor="#ffffff" valign="top">
-                                        <h3 data-key="3499742_payment_info" style="font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; color: #1a1a1a; font-size: 14px; line-height: 22px; font-weight: 400; text-transform: none; border-bottom-width: 1px; border-bottom-color: #eeeeee; border-bottom-style: solid; margin: 0;" align="left">Payment Info</h3>
-                                      </th>
-                                    </tr>
-
-                                    <!-- PAYMENT METHOD IMAGE -->
-                                    <tr>
-                                      <th class="table-title" style="mso-line-height-rule: exactly; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 15px; line-height: 22px; font-weight: 400; text-transform: none; color: #000000; width: 65%; padding: 5px 0;" align="left" bgcolor="#ffffff" valign="top">
-                                        <table cellspacing="0" cellpadding="0" border="0" width="100%" style="min-width: 100%;" role="presentation">
-                                          <tr>
-                                            <th valign="middle" width="40" style="line-height: 38px; mso-line-height-rule: exactly; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 15px; font-weight: 400; text-transform: none; color: #000000; padding: 7px 10px 7px 0;" align="left" bgcolor="#ffffff">
-                                              <img width="40" style="width: 40px; vertical-align: middle; height: auto !important;" alt="Visa Icon" src="https://cdn.pixabay.com/photo/2015/05/26/09/37/paypal-784404_1280.png">
-                                            </th>
-                                            <th style="mso-line-height-rule: exactly; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 15px; line-height: 22px; font-weight: 400; text-transform: none; color: #000000; padding: 7px 0;" align="left" bgcolor="#ffffff" valign="middle">
-                                            </th>
-                                          </tr>
-                                        </table>
-                                      </th>
-                                      <th class="table-text" style="mso-line-height-rule: exactly; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 15px; line-height: 22px; font-weight: 400; text-transform: none; color: #000000; width: 35%; padding: 11px 0;" align="right" bgcolor="#ffffff" valign="middle">₱{{number_format($order->grand_total,2)}}</th>
-                                    </tr>
-                                  </table>
-                                </th>
-                              </tr>
+                              
 
                               <!-- END SECTION: Payment Info -->
 
@@ -599,19 +621,16 @@
                                         <table align="center" border="0" width="100%" cellpadding="0" cellspacing="0" style="min-width: 100%;" role="presentation">
                                           <tr>
                                             <th style="mso-line-height-rule: exactly; padding-right: 5%;" align="left" bgcolor="#ffffff" valign="top">
-                                              <h3 data-key="3499740_ship_to" style="font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; color: #1a1a1a; font-size: 14px; line-height: 22px; font-weight: 400; text-transform: none; margin: 0;" align="left">Shipping Address</h3>
+                                              <h3 data-key="3499740_ship_to" style="font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; color: #1a1a1a; font-size: 14px; line-height: 22px; font-weight: 400; text-transform: none; margin: 0;" align="left">BOOKING ADDRESS</h3>
                                             </th>
                                           </tr>
                                           <tr>
                                             <th class="shipping_address " style="mso-line-height-rule: exactly; padding-right: 5%;" align="left" bgcolor="#ffffff" valign="top">
-                                              <p style="mso-line-height-rule: exactly; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 15px; line-height: 22px; font-weight: 400; text-transform: none; color: #000000; margin: 0;" align="left">{{$order->first_name}} {{$order->last_name}}
-                                                <br>{{$order->address1}}
-                                                <br>{{$order->address2}}
-                                                <br>{{$order->city}} {{$order->postal_code}}
-                                                <br>{{$order->province}}
+                                              <p style="mso-line-height-rule: exactly; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 15px; line-height: 22px; font-weight: 400; text-transform: none; color: #000000; margin: 0;" align="left">
+                                               {{$booking->location}}
                                                 <br> 
                                                 <span
-                                                style="color: inherit !important; text-decoration: none !important; text-align: left; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 15px; line-height: 22px; font-weight: 400; text-transform: none;">{{$order->phone_number}}</span>
+                                                style="color: inherit !important; text-decoration: none !important; text-align: left; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 15px; line-height: 22px; font-weight: 400; text-transform: none;">{{$booking->phone_number}}</span>
                                                 <br>
                                               </p>
                                             </th>
@@ -622,29 +641,7 @@
                                       <!-- END : Column 1 of 2 : BILL_TO -->
 
                                       <!-- BEGIN : Column 2 of 2 : SHIP_TO -->
-                                      <th width="50%" class="column_2_of_2 column_ship_to " style="mso-line-height-rule: exactly;" align="right" bgcolor="#ffffff" valign="top">
-                                        <table align="center" border="0" width="100%" cellpadding="0" cellspacing="0" style="min-width: 100%;" role="presentation">
-                                          <tr>
-                                            <th style="mso-line-height-rule: exactly; padding-left: 5%;" align="right" bgcolor="#ffffff" valign="top">
-                                              <h3 data-key="3499740_bill_to" style="font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; color: #1a1a1a; font-size: 14px; line-height: 22px; font-weight: 400; text-transform: none; margin: 0;" align="right">Billing Information</h3>
-                                            </th>
-                                          </tr>
-                                          <tr>
-                                            <th class="billing_address " style="mso-line-height-rule: exactly; padding-left: 5%;" align="right" bgcolor="#ffffff" valign="top">
-                                              <p style="mso-line-height-rule: exactly; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 15px; line-height: 22px; font-weight: 400; text-transform: none; color: #000000; margin: 0;" align="right">{{$order->first_name}} {{$order->last_name}}
-                                              <br>{{$order->address1}}
-                                                <br>{{$order->address2}}
-                                                <br>{{$order->city}} {{$order->postal_code}}
-                                                <br>{{$order->province}}
-                                                <br> 
-                                                <span
-                                                style="color: inherit !important; text-decoration: none !important; text-align: left; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 15px; line-height: 22px; font-weight: 400; text-transform: none;">{{$order->phone_number}}</span>
-                                              
-                                              </p>
-                                            </th>
-                                          </tr>
-                                        </table>
-                                      </th>
+                                     
 
                                       <!-- END : Column 2 of 2 : SHIP_TO -->
                                     </tr>
@@ -675,7 +672,7 @@
                                   <table cellspacing="0" cellpadding="0" border="0" width="100%">
                                     <tr>
                                       <th class="sides column_text_before_button" data-key="3499736_text_before_button" style="mso-line-height-rule: exactly; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 15px; line-height: 22px; font-weight: 400; text-transform: none; color: #000000; padding-bottom: 11px;" align="left" bgcolor="#ffffff" valign="top">
-                                        <p style="mso-line-height-rule: exactly; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 15px; line-height: 22px; font-weight: 400; text-transform: none; color: #000000; margin: 0;" align="left">You can follow the status of your order by clicking the button below:
+                                        <p style="mso-line-height-rule: exactly; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 15px; line-height: 22px; font-weight: 400; text-transform: none; color: #000000; margin: 0;" align="left">You can update the status or assign a mechanic by clicking the button below:
                                           <br style="text-align: left;">
                                         </p>
                                       </th>
@@ -687,9 +684,9 @@
                                         <table cellspacing="0" cellpadding="0" border="0" class="button" role="presentation" style="text-align: left; margin: 0 auto;" bgcolor="transparent">
                                           <tr>
                                             <th class="button-inner" style="mso-line-height-rule: exactly; border-radius: 1px;" align="center" bgcolor="#1a1a1a" valign="top">
-                                              <a class="button-link" href="{{route('orderView',$order->id)}}" target="_blank" style="color: #ffffff !important; text-decoration: none !important; text-underline: none; word-wrap: break-word; line-height: 15px; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 15px; font-weight: 400; text-transform: none; text-align: center; display: block; background-color: #1a1a1a; border-radius: 1px; padding: 1px 20px; border: 15px solid #1a1a1a;"><span style="line-height: 15px; color: #ffffff; font-weight: 400; text-decoration: none; text-underline: none; letter-spacing: 0.5px;">
+                                              <a class="button-link" href="{{route('adminBookings')}}" target="_blank" style="color: #ffffff !important; text-decoration: none !important; text-underline: none; word-wrap: break-word; line-height: 15px; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 15px; font-weight: 400; text-transform: none; text-align: center; display: block; background-color: #1a1a1a; border-radius: 1px; padding: 1px 20px; border: 15px solid #1a1a1a;"><span style="line-height: 15px; color: #ffffff; font-weight: 400; text-decoration: none; text-underline: none; letter-spacing: 0.5px;">
 
-<!--[if mso]>&nbsp;&nbsp;&nbsp;&nbsp;<![endif]--><span data-key="3499736_text_on_button" style="line-height: 15px; color: #ffffff; font-weight: 400; text-decoration: none; text-underline: none; letter-spacing: 0.5px;">VIEW ORDER STATUS</span>
+<!--[if mso]>&nbsp;&nbsp;&nbsp;&nbsp;<![endif]--><span data-key="3499736_text_on_button" style="line-height: 15px; color: #ffffff; font-weight: 400; text-decoration: none; text-underline: none; letter-spacing: 0.5px;">UPDATE BOOKING STATUS</span>
 
                                                 <!--[if
                                                 mso]>&nbsp;&nbsp;&nbsp;&nbsp;<![endif]-->
@@ -702,17 +699,7 @@
                                     </tr>
 
                                     <!-- Button : END -->
-                                    <tr>
-                                      <th class="sides column_text_after_button muted" data-key="3499736_text_after_button" style="mso-line-height-rule: exactly; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 13px; line-height: 22px; font-weight: normal; text-transform: none; color: #ef5a30; padding: 0 44px;" align="center" bgcolor="#ffffff" valign="top">
-                                        <p style="mso-line-height-rule: exactly; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 13px; line-height: 22px; font-weight: normal; text-transform: none; color: #ef5a30; margin: 0;" align="center"><i style="text-align: center;">If you have any questions, please contact us at</i>
-                                        </p>
-                                        <p style="mso-line-height-rule: exactly; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 13px; line-height: 22px; font-weight: normal; text-transform: none; color: #ef5a30; margin: 11px 0 0;" align="center"><i style="text-align: center;">padyak.co@gmail.com.</i>
-                                        </p>
-                                      </th>
-                                    </tr>
-                                  </table>
-                                </th>
-                              </tr>
+                                  
 
                               <!-- END SECTION: Order Status Button -->
 

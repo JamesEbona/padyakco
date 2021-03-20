@@ -188,6 +188,15 @@ function editOrder(arg) {
     $("#editPhoneNumber").val(phone_number);
 }
 
+function updateAdditionalFee(arg) {
+    $('#editModal').modal('show');
+    var id = $(arg).attr('data-id');
+    var additional_fee = $(arg).attr('data-additionalfee');
+
+    $("#editId").val(id);
+    $("#editAdditionalFee").val(additional_fee);
+}
+
 function editBooking(arg) {
     $('#editModal').modal('show');
     var id = $(arg).attr('data-id');
@@ -208,6 +217,44 @@ function editBooking(arg) {
     $("#editNotes").val(notes);
     document.getElementById('editRepairType').value = repair_type; 
     $("#editBookingTime").val(booking_time);
+
+    $('#editStatus').empty();
+
+    if(status == "pending"){
+        var op1 = new Option("pending", "pending");
+        $(op1).html("pending");
+        var op3 = new Option("confirmed", "confirmed");
+        $(op3).html("confirmed");
+        var op2 = new Option("cancelled", "cancelled");
+        $(op2).html("cancelled");
+        $("#editStatus").append(op1);
+        $("#editStatus").append(op2);
+        $("#editStatus").append(op3);
+    }
+    else if(status == "confirmed"){
+        var op1 = new Option("confirmed", "confirmed");
+        $(op1).html("confirmed");
+        var op2 = new Option("en route", "en route");
+        $(op2).html("en route");
+        var op3 = new Option("cancelled", "cancelled");
+        $(op3).html("cancelled");
+        $("#editStatus").append(op1);
+        $("#editStatus").append(op2);
+        $("#editStatus").append(op3);
+    }
+
+    else if(status == "en route"){
+        var op1 = new Option("en route", "en route");
+        $(op1).html("en route");
+        var op2 = new Option("done", "done");
+        $(op2).html("done");
+        var op3 = new Option("cancelled", "cancelled");
+        $(op3).html("cancelled");
+        $("#editStatus").append(op1);
+        $("#editStatus").append(op2);
+        $("#editStatus").append(op3);
+    }
+
     document.getElementById('editStatus').value = status; 
 }
 
@@ -219,6 +266,40 @@ function updateStatus(arg) {
 
     $("#editStatusId").val(id);
     $("#viewId").val(id);
+
+    $('#editStatus').empty();
+
+    if(status == "in-transit"){
+        var op1 = new Option("in-transit", "in-transit");
+        $(op1).html("in-transit");
+        var op3 = new Option("delivered", "delivered");
+        $(op3).html("delivered");
+        var op2 = new Option("cancelled", "cancelled");
+        $(op2).html("cancelled");
+        $("#editStatus").append(op1);
+        $("#editStatus").append(op2);
+        $("#editStatus").append(op3);
+    }
+    else if(status == "paid"){
+        var op1 = new Option("paid", "paid");
+        $(op1).html("paid");
+        var op2 = new Option("in-transit", "in-transit");
+        $(op2).html("in-transit");
+        var op3 = new Option("cancelled", "cancelled");
+        $(op3).html("cancelled");
+        $("#editStatus").append(op1);
+        $("#editStatus").append(op2);
+        $("#editStatus").append(op3);
+    }
+
+    // if(status == "in-transit"){
+    //     $("#editStatus option[value='paid']").remove();
+    // }
+
+    // else if(status == "paid"){
+    //     $("#editStatus option[value='delivered']").remove();
+    // }
+
     document.getElementById('editStatus').value = status; 
 }
 
@@ -245,7 +326,45 @@ function updateBookingStatus(arg) {
    
     $("#viewStatusId").val(id);
     $("#editStatusId").val(id);
-    $("#editStatus").val(status);
+    
+    $('#editStatus').empty();
+
+    if(status == "pending"){
+        var op1 = new Option("pending", "pending");
+        $(op1).html("pending");
+        var op2 = new Option("en route", "en route");
+        $(op2).html("en route");
+        var op3 = new Option("cancelled", "cancelled");
+        $(op3).html("cancelled");
+        $("#editStatus").append(op1);
+        $("#editStatus").append(op2);
+        $("#editStatus").append(op3);
+    }
+    else if(status == "confirmed"){
+        var op1 = new Option("confirmed", "confirmed");
+        $(op1).html("confirmed");
+        var op2 = new Option("en route", "en route");
+        $(op2).html("en route");
+        var op3 = new Option("cancelled", "cancelled");
+        $(op3).html("cancelled");
+        $("#editStatus").append(op1);
+        $("#editStatus").append(op2);
+        $("#editStatus").append(op3);
+    }
+
+    else if(status == "en route"){
+        var op1 = new Option("en route", "en route");
+        $(op1).html("en route");
+        var op2 = new Option("done", "done");
+        $(op2).html("done");
+        var op3 = new Option("cancelled", "cancelled");
+        $(op3).html("cancelled");
+        $("#editStatus").append(op1);
+        $("#editStatus").append(op2);
+        $("#editStatus").append(op3);
+    }
+
+    document.getElementById('editStatus').value = status; 
     
 }
 

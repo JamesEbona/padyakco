@@ -29,7 +29,7 @@ My Booking
 					</div>
 					<div class="row mb-3">
 					<div class="col-md-12">
-                    <p>Schedule: {{date('F j, Y h:i A', strtotime($booking->created_at))}}</p>
+                    <p>Schedule: {{date('F j, Y h:i A', strtotime($booking->booking_time))}}</p>
 				    <p>Repair Type: {{$booking->repair_type}}</p>
                     <p>Location: {{$booking->location}}</p>
 					</div>

@@ -380,7 +380,7 @@ success: function(result){
                 }
                 else
                 {
-                    $('..modal-errors').hide();
+                    $('.modal-errors').hide();
                     $('#editModal').modal('hide');
                     window.location = "{{ url('/admin/memberusers/') }}";
                     // $('.alert-success').html('');

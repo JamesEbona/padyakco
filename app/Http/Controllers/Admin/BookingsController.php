@@ -15,6 +15,7 @@ use App\Events\BookingCancelledEvent;
 use App\Events\MechanicAssignEvent;
 use App\Events\MechanicUnassignEvent;
 use App\Rules\verify_booking_region;
+use App\Models\BookingDaySales;
 use App\Models\BookingMonthSales;
 use App\Models\BookingYearSales;
 // use Illuminate\Support\Facades\Notification;
@@ -135,8 +136,8 @@ class BookingsController extends Controller
 
       $validator = \Validator::make($request->all(), [
         'status' => 'required|string|max:100',
-        'first_name' => ['required','string','max:30','min:2','alpha'],
-        'last_name' => ['required','string','max:30','min:2','alpha'],
+        'first_name' => ['required','string','max:30','min:2','regex:/^[\pL\s\-\.]+$/u'],
+        'last_name' => ['required','string','max:30','min:2','regex:/^[\pL\s\-\.]+$/u'],
         'booking_time' => ['required','date_format:Y-m-d\TH:i'],
         'repair_type' => ['required','string','regex:/^[a-zA-Z ]*$/','max:20'],
         'phone_number' => array('required','regex:/^(09|\+639)\d{9}$/'),
@@ -191,8 +192,18 @@ class BookingsController extends Controller
             else if($status == "done"){
                 event(new BookingDoneEvent($booking)); 
                 $nowDate = \Carbon\Carbon::now();
+                $bookingDay = $nowDate->format('d');
                 $bookingMonth = $nowDate->format('F');
                 $bookingYear = $nowDate->format('Y');
+
+                if($bookingDay == 01){
+                    BookingDaySales::query()->update(['after' => 1]);
+                }
+                $bookingDaySales = BookingDaySales::firstOrNew(['day' =>  $bookingDay]);
+                $bookingDaySales->profit += $booking->total_fee;
+                $bookingDaySales->after = 0;
+                $bookingDaySales->save(); 
+
                 if($bookingMonth == "January"){
                     BookingMonthSales::query()->update(['after' => 1]);
                 }

@@ -12,7 +12,7 @@ class InquiriesController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:30|min:2|regex:/^[\pL\s\-]+$/u',
-            'email' => 'required|string|email|max:50|',
+            'email' => 'required|string|email:rfc,dns|max:50|',
             'subject' => 'required|string|max:80|min:2',
             'message' => 'required|string|max:800|min:2',
         ]);

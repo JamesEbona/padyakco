@@ -420,7 +420,7 @@
                                   <table cellspacing="0" cellpadding="0" border="0" width="100%" role="presentation">
                                     <tr>
                                       <th style="mso-line-height-rule: exactly;" bgcolor="#ffffff" valign="top">
-                                        <h1 data-key="3499733_heading" style="font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 24px; line-height: 36px; font-weight: 400; color: #1a1a1a; text-transform: none; margin: 0;">ORDER CONFIRMATION</h1>
+                                        <h1 data-key="3499733_heading" style="font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 24px; line-height: 36px; font-weight: 400; color: #1a1a1a; text-transform: none; margin: 0;">NEW ORDER NOTIFICATION</h1>
                                       </th>
                                     </tr>
                                   </table>
@@ -460,10 +460,10 @@
                                   <p style="mso-line-height-rule: exactly; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 15px; line-height: 22px; font-weight: 400; text-transform: none; color: #000000; margin: 0 0 11px;" align="left"> <span data-key="3499735_greeting_text" style="text-align: left; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 15px; line-height: 22px; font-weight: 400; text-transform: none; color: #000000;">
                                             Hi
                                           </span>
-                                    {{$order->first_name}} {{$order->last_name}},</p> <span data-key="3499735_introduction_text"
+                                    Admin,</p> <span data-key="3499735_introduction_text"
                                   class="text" style="text-align: left; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 15px; line-height: 22px; font-weight: 400; text-transform: none; color: #000000;">
                                         <p style="mso-line-height-rule: exactly; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 15px; line-height: 22px; font-weight: 400; text-transform: none; color: #000000; margin: 11px 0 0;" align="left"></p>
-                                        <p style="mso-line-height-rule: exactly; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 15px; line-height: 22px; font-weight: 400; text-transform: none; color: #000000; margin: 11px 0 0;" align="left">Thank you for your purchase, this email confirms your order. We will send you another email as soon as it ships.</p>
+                                        <p style="mso-line-height-rule: exactly; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 15px; line-height: 22px; font-weight: 400; text-transform: none; color: #000000; margin: 11px 0 0;" align="left">The store has a new pending order.</p>
                                       </span>
                                 </th>
                               </tr>
@@ -655,7 +655,6 @@
                               </tr>
 
                               <!-- END SECTION: Customer And Shipping Address -->
-
                               <!-- BEGIN SECTION: Divider -->
                               <tr id="section-3500216" class="section divider">
                                 <th style="mso-line-height-rule: exactly; padding: 22px 8%;" bgcolor="#ffffff">
@@ -675,7 +674,7 @@
                                   <table cellspacing="0" cellpadding="0" border="0" width="100%">
                                     <tr>
                                       <th class="sides column_text_before_button" data-key="3499736_text_before_button" style="mso-line-height-rule: exactly; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 15px; line-height: 22px; font-weight: 400; text-transform: none; color: #000000; padding-bottom: 11px;" align="left" bgcolor="#ffffff" valign="top">
-                                        <p style="mso-line-height-rule: exactly; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 15px; line-height: 22px; font-weight: 400; text-transform: none; color: #000000; margin: 0;" align="left">You can follow the status of your order by clicking the button below:
+                                        <p style="mso-line-height-rule: exactly; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 15px; line-height: 22px; font-weight: 400; text-transform: none; color: #000000; margin: 0;" align="left">You can update the status of the order by clicking the button below:
                                           <br style="text-align: left;">
                                         </p>
                                       </th>
@@ -687,9 +686,9 @@
                                         <table cellspacing="0" cellpadding="0" border="0" class="button" role="presentation" style="text-align: left; margin: 0 auto;" bgcolor="transparent">
                                           <tr>
                                             <th class="button-inner" style="mso-line-height-rule: exactly; border-radius: 1px;" align="center" bgcolor="#1a1a1a" valign="top">
-                                              <a class="button-link" href="{{route('orderView',$order->id)}}" target="_blank" style="color: #ffffff !important; text-decoration: none !important; text-underline: none; word-wrap: break-word; line-height: 15px; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 15px; font-weight: 400; text-transform: none; text-align: center; display: block; background-color: #1a1a1a; border-radius: 1px; padding: 1px 20px; border: 15px solid #1a1a1a;"><span style="line-height: 15px; color: #ffffff; font-weight: 400; text-decoration: none; text-underline: none; letter-spacing: 0.5px;">
+                                              <a class="button-link" href="{{route('adminOrders')}}" target="_blank" style="color: #ffffff !important; text-decoration: none !important; text-underline: none; word-wrap: break-word; line-height: 15px; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 15px; font-weight: 400; text-transform: none; text-align: center; display: block; background-color: #1a1a1a; border-radius: 1px; padding: 1px 20px; border: 15px solid #1a1a1a;"><span style="line-height: 15px; color: #ffffff; font-weight: 400; text-decoration: none; text-underline: none; letter-spacing: 0.5px;">
 
-<!--[if mso]>&nbsp;&nbsp;&nbsp;&nbsp;<![endif]--><span data-key="3499736_text_on_button" style="line-height: 15px; color: #ffffff; font-weight: 400; text-decoration: none; text-underline: none; letter-spacing: 0.5px;">VIEW ORDER STATUS</span>
+<!--[if mso]>&nbsp;&nbsp;&nbsp;&nbsp;<![endif]--><span data-key="3499736_text_on_button" style="line-height: 15px; color: #ffffff; font-weight: 400; text-decoration: none; text-underline: none; letter-spacing: 0.5px;">UPDATE ORDER STATUS</span>
 
                                                 <!--[if
                                                 mso]>&nbsp;&nbsp;&nbsp;&nbsp;<![endif]-->
@@ -702,20 +701,11 @@
                                     </tr>
 
                                     <!-- Button : END -->
-                                    <tr>
-                                      <th class="sides column_text_after_button muted" data-key="3499736_text_after_button" style="mso-line-height-rule: exactly; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 13px; line-height: 22px; font-weight: normal; text-transform: none; color: #ef5a30; padding: 0 44px;" align="center" bgcolor="#ffffff" valign="top">
-                                        <p style="mso-line-height-rule: exactly; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 13px; line-height: 22px; font-weight: normal; text-transform: none; color: #ef5a30; margin: 0;" align="center"><i style="text-align: center;">If you have any questions, please contact us at</i>
-                                        </p>
-                                        <p style="mso-line-height-rule: exactly; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 13px; line-height: 22px; font-weight: normal; text-transform: none; color: #ef5a30; margin: 11px 0 0;" align="center"><i style="text-align: center;">padyak.co@gmail.com.</i>
-                                        </p>
-                                      </th>
-                                    </tr>
-                                  </table>
-                                </th>
-                              </tr>
+                                  
 
                               <!-- END SECTION: Order Status Button -->
 
+                       
                               <!-- BEGIN SECTION: Divider -->
                               <tr id="section-3500364" class="section divider">
                                 <th style="mso-line-height-rule: exactly; padding: 22px 8% 33px;" bgcolor="#ffffff">

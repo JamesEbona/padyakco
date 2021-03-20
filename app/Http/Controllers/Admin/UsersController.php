@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Booking;
 use App\Models\Cart;
 use App\Models\Address;
 use Illuminate\Auth\Events\Registered;
@@ -42,9 +43,9 @@ class UsersController extends Controller
    public function memberstore(Request $request){
 
     $validator = \Validator::make($request->all(), [
-      'first_name' => 'required|string|max:30|min:2|alpha',
-      'last_name' => 'required|string|max:30|min:2|alpha',
-      'email' => 'required|string|email|max:50|unique:users',
+      'first_name' => 'required|string|max:30|min:2|regex:/^[\pL\s\-\.]+$/u',
+      'last_name' => 'required|string|max:30|min:2|regex:/^[\pL\s\-\.]+$/u',
+      'email' => 'required|string|email:rfc,dns|max:50|unique:users',
       'password' => 'required|string|confirmed|min:8|max:15',
       'image' => 'image'
           
@@ -89,9 +90,9 @@ class UsersController extends Controller
     public function adminstore(Request $request){
 
       $validator = \Validator::make($request->all(), [
-        'first_name' => 'required|string|max:30|min:2|alpha',
-        'last_name' => 'required|string|max:30|min:2|alpha',
-        'email' => 'required|string|email|max:50|unique:users',
+        'first_name' => 'required|string|max:30|min:2|regex:/^[\pL\s\-\.]+$/u',
+        'last_name' => 'required|string|max:30|min:2|regex:/^[\pL\s\-\.]+$/u',
+        'email' => 'required|string|email:rfc,dns|max:50|unique:users',
         'password' => 'required|string|confirmed|min:8|max:15',
         'image' => 'image'
             
@@ -126,9 +127,9 @@ class UsersController extends Controller
       public function mechanicstore(Request $request){
 
         $validator = \Validator::make($request->all(), [
-          'first_name' => 'required|string|max:30|min:2|alpha',
-          'last_name' => 'required|string|max:30|min:2|alpha',
-          'email' => 'required|string|email|max:50|unique:users',
+          'first_name' => 'required|string|max:30|min:2|regex:/^[\pL\s\-\.]+$/u',
+          'last_name' => 'required|string|max:30|min:2|regex:/^[\pL\s\-\.]+$/u',
+          'email' => 'required|string|email:rfc,dns|max:50|unique:users',
           'password' => 'required|string|confirmed|min:8|max:15',
           'image' => 'image',
           'phone_number' => array('required','regex:/^(09|\+639)\d{9}$/','unique:users'),
@@ -184,9 +185,9 @@ class UsersController extends Controller
         $UserID = auth()->user()->id;
 
         $request->validate([
-          'first_name' => 'required|string|max:30|min:2|alpha',
-          'last_name' => 'required|string|max:30|min:2|alpha',
-          'email' => 'required|string|email|max:50|unique:users,email,'.$UserID.',id',
+          'first_name' => 'required|string|max:30|min:2|regex:/^[\pL\s\-\.]+$/u',
+          'last_name' => 'required|string|max:30|min:2|regex:/^[\pL\s\-\.]+$/u',
+          'email' => 'required|string|email:rfc,dns|max:50|unique:users,email,'.$UserID.',id',
           'image' => 'image'
           // 'email' => 'required|string|email|max:50|unique:users',
       ]);
@@ -249,9 +250,9 @@ class UsersController extends Controller
       $RequestID = request('editId');
 
       $validator = \Validator::make($request->all(), [
-        'first_name' => 'required|string|max:30|min:2|alpha',
-        'last_name' => 'required|string|max:30|min:2|alpha',
-        'email' => 'required|string|email|max:50|unique:users,email,'.$RequestID.',id',
+        'first_name' => 'required|string|max:30|min:2|regex:/^[\pL\s\-\.]+$/u',
+        'last_name' => 'required|string|max:30|min:2|regex:/^[\pL\s\-\.]+$/u',
+        'email' => 'required|string|email:rfc,dns|max:50|unique:users,email,'.$RequestID.',id',
         'image' => 'image'
         // 'email' => 'required|string|email|max:50|unique:users',        
      ]);
@@ -303,9 +304,9 @@ class UsersController extends Controller
     {
 
       $validator = \Validator::make($request->all(), [
-        'first_name' => 'required|string|max:30|min:2|alpha',
-        'last_name' => 'required|string|max:30|min:2|alpha',
-        'email' => 'required|string|email|max:50|unique:users,email,'.request("editId").',id',
+        'first_name' => 'required|string|max:30|min:2|regex:/^[\pL\s\-\.]+$/u',
+        'last_name' => 'required|string|max:30|min:2|regex:/^[\pL\s\-\.]+$/u',
+        'email' => 'required|string|email:rfc,dns|max:50|unique:users,email,'.request("editId").',id',
         'image' => 'image',
         'phone_number' => array('required','regex:/^(09|\+639)\d{9}$/','unique:users,phone_number,'.request("editId").',id'),
         // 'email' => 'required|string|email|max:50|unique:users',        
@@ -378,15 +379,24 @@ class UsersController extends Controller
     {
        
          $user = User::findOrFail($id);
-         $user->update(['status' => "inactive"]);
+
          $user_name = $user->first_name.' '.$user->last_name;
          if($user->role == '3'){
+         $user->update(['status' => "inactive"]);
          return redirect("/admin/memberusers")->with('message', $user_name."'s account is now deactivated.");
          }
          else if($user->role == '2'){
-          return redirect("/admin/mechanicusers")->with('message', $user_name."'s account is now deactivated.");  
+          $result = Booking::where('mechanic_id',$user->id)->where('status','!=','done')->where('status','!=','cancelled')->get();
+          if(count($result) != 0){
+            return redirect("/admin/mechanicusers")->with('error_message', $user_name." is currently assigned to an active booking and cannot be deactivated."); 
+          }
+          else{
+            $user->update(['status' => "inactive"]);
+            return redirect("/admin/mechanicusers")->with('message', $user_name."'s account is now deactivated."); 
+          } 
          }
          else if($user->role == '1'){
+          $user->update(['status' => "inactive"]);
           return redirect("/admin/adminusers")->with('message', $user_name."'s account is now deactivated.");  
          }
     }

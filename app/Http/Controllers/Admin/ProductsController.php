@@ -52,6 +52,7 @@ class ProductsController extends Controller
            $image1Path = request('image1')->store('avatars','public'); 
                   
             $image1 = Image::make(public_path("storage/{$image1Path}"));
+            $image1->fit(700, 401);
             $image1->save();
            }
            else {
@@ -61,6 +62,7 @@ class ProductsController extends Controller
            if(request('image2') != NULL){
             $image2Path = request('image2')->store('products','public');       
             $image2 = Image::make(public_path("storage/{$image2Path}"));
+            $image2->fit(700, 401);
             $image2->save();
            }
            else {
@@ -70,6 +72,7 @@ class ProductsController extends Controller
            if(request('image3') != NULL){
             $image3Path = request('image3')->store('products','public');       
             $image3 = Image::make(public_path("storage/{$image1Path}"));
+            $image3->fit(700, 401);
             $image3->save();
            }
            else {
@@ -123,18 +126,21 @@ class ProductsController extends Controller
             $image1Path = request('image1')->store('avatars','public'); 
                     
             $image1 = Image::make(public_path("storage/{$image1Path}"));
+            $image1->fit(700, 401);
             $image1->save();
             }
            
             if(request('image2') != NULL){
             $image2Path = request('image2')->store('products','public');       
             $image2 = Image::make(public_path("storage/{$image2Path}"));
+            $image2->fit(700, 401);
             $image2->save();
             }
            
             if(request('image3') != NULL){
             $image3Path = request('image3')->store('products','public');       
             $image3 = Image::make(public_path("storage/{$image1Path}"));
+            $image3->fit(700, 401);
             $image3->save();
             }
           

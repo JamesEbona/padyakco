@@ -493,8 +493,8 @@
                                           @foreach($order->orderitems as $orderItem)
                                           <tr class="row-border-bottom">
                                             <th class="table-stack product-image-wrapper stack-column-center" width="1" style="mso-line-height-rule: exactly; border-bottom-width: 1px; border-bottom-color: #eeeeee; border-bottom-style: solid; padding: 11px 11px 11px 0;" bgcolor="#ffffff" valign="middle">
-                                              <a href="{{route('viewBicycle',$orderItem->product_id)}}" class="product_link" target="_blank" style="color: #0c0c09; text-decoration: none !important; text-underline: none; word-wrap: break-word;">
-                                                <img width="120" class="product-image" src="/storage/{{$orderItem->product->image1}}" alt='Product Image' style="vertical-align: middle; text-align: center; width: 120px; max-width: 120px; height: auto !important; border-radius: 0px; padding: 0px;">
+                                              <a href="{{route('viewProduct',$orderItem->product_id)}}" class="product_link" target="_blank" style="color: #0c0c09; text-decoration: none !important; text-underline: none; word-wrap: break-word;">
+                                                <img width="120" class="product-image" src="{{asset('/storage/'.$orderItem->product->image1.'')}}" alt='Product Image' style="vertical-align: middle; text-align: center; width: 120px; max-width: 120px; height: auto !important; border-radius: 0px; padding: 0px;">
                                               </a>
                                             </th>
                                             <th class="product-details-wrapper table-stack stack-column" style="mso-line-height-rule: exactly; padding-top: 11px; padding-bottom: 11px; border-bottom-width: 1px; border-bottom-color: #eeeeee; border-bottom-style: solid;" bgcolor="#ffffff" valign="middle">
@@ -502,7 +502,7 @@
                                                 <tr>
                                                   <th class="line-item-description" style="mso-line-height-rule: exactly; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 15px; line-height: 22px; font-weight: 400; text-transform: none; color: #000000; padding: 11px 5px 11px 0;" align="left" bgcolor="#ffffff" valign="top">
                                                     <p style="mso-line-height-rule: exactly; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 15px; line-height: 22px; font-weight: 400; text-transform: none; color: #000000; margin: 0;" align="left">
-                                                      <a href="{{route('viewBicycle',$orderItem->product_id)}}" class="product_link" target="_blank" style="color: #000000; text-decoration: none !important; text-underline: none; word-wrap: break-word; text-align: left !important; font-weight: 400;">{{$orderItem->product->brand}} {{$orderItem->product->title}}</a>
+                                                      <a href="{{route('viewProduct',$orderItem->product_id)}}" class="product_link" target="_blank" style="color: #000000; text-decoration: none !important; text-underline: none; word-wrap: break-word; text-align: left !important; font-weight: 400;">{{$orderItem->product->brand}} {{$orderItem->product->title}}</a>
                                                       <br> <span class="muted" style="text-align: left; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 13px; line-height: 22px; font-weight: normal; text-transform: none; color: #ef5a30;">{{$orderItem->product->subcategory->title}}</span>
                                                    
                                                       <br>

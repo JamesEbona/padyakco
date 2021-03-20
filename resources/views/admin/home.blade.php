@@ -128,18 +128,27 @@
             <div class="col-xl-12 col-lg-12">
               <div class="card shadow">
                 <!-- Card Header - Dropdown -->
-                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary">TOTAL SALES</h6>
-                  <div class="col-md-3 col-sm-6">
+                <div class="card-header py-3 flex-row">
+                <div class="col-md-8 float-left">
+                  <h6 class="m-0 font-weight-bold text-primary mt-2">TOTAL SALES</h6>
+                  </div>
+                 
+                  <div class="col-md-2 col-sm-3 float-right">
                   <select class="form-control" id="sales_order">
+                     <option value="daily" selected>Daily</option>
                      <option value="monthly">Monthly</option>
                      <option value="yearly">Yearly</option>
-                    
+                  </select>
+                  </div>
+                  <div class="col-md-2 col-sm-3 float-right">
+                  <select class="form-control" id="sales_type">
+                     <option selected value="store">Store</option>
+                     <option value="repair">Repair Service</option>
                   </select>
                   </div>
                 </div>
                 <!-- Card Body -->
-                <div class="card-body">
+                <div class="card-body" id="sales">
                 <canvas id="salesChart" ></canvas>  
                 </div>
               </div>
@@ -242,9 +251,12 @@ let myChart2 = new Chart(ctx, {
     }
   }
 })
+
 $(document).ready(function () {
-salesMonth();
-function salesMonth(){
+
+storeSalesDay();
+
+function storeSalesMonth(){
   var sales = document.getElementById('salesChart');
     var myTimeChart = new Chart(sales, {
       type: 'line',
@@ -252,92 +264,166 @@ function salesMonth(){
         labels: [@foreach($store_month_sales as $store_month_sale)'{{$store_month_sale->month}}',@endforeach],
         datasets: [{ 
             data: [@foreach($store_month_sales as $store_month_sale){{$store_month_sale->profit}},@endforeach],
-            label: "Store Sales",
+            label: "Monthly Store Sales",
             borderColor: "#f95d6a",
             fill: false
-          }, { 
-            data: [@foreach($booking_month_sales as $booking_month_sale){{$booking_month_sale->profit}},@endforeach],
-            label: "Repair Service Sales",
-            borderColor: "#8e5ea2",
-            fill: false
-          }
+          },
         ]
       },
-      options: {
-        responsive: true,
-        plugins: {
-          datalabels: {
-            color: '#fff',
-            anchor: 'end',
-            align: 'start',
-            offset: -10,
-            borderWidth: 2,
-            borderColor: '#fff',
-            borderRadius: 25,
-            backgroundColor: (context) => {
-              return context.dataset.borderColor;
-            },
-            font: {
-              weight: 'bold',
-              size: '10'
-            },
-            formatter: (value) => {
-              return value + ' %';
-            }
-          }
-        }
-      }
     });
 }
-$('#sales_order').on('change', function() {
-  if(this.value == "monthly"){
-     salesMonth();
-  }
-  else if(this.value == "yearly"){
-    var sales = document.getElementById('salesChart');
+
+function storeSalesYear(){
+  var sales = document.getElementById('salesChart');
+      var myTimeChart = new Chart(sales, {
+        type: 'line',
+        data: {
+          labels: [@foreach($store_year_sales as $store_year_sale)'{{$store_year_sale->year}}',@endforeach],
+          datasets: [{ 
+              data: [@foreach($store_year_sales as $store_year_sale){{$store_year_sale->profit}},@endforeach],
+              label: " Yearly Store Sales",
+              borderColor: "#f95d6a",
+              fill: false
+            }, 
+          ]
+        },
+      });
+}
+
+function storeSalesDay(){
+  var sales = document.getElementById('salesChart');
+      var myTimeChart = new Chart(sales, {
+        type: 'line',
+        data: {
+          labels: [@foreach($store_day_sales as $store_day_sale)'{{$store_day_sale->day}}',@endforeach],
+          datasets: [{ 
+              data: [@foreach($store_day_sales as $store_day_sale){{$store_day_sale->profit}},@endforeach],
+              label: " Daily Store Sales",
+              borderColor: "#f95d6a",
+              fill: false
+            }, 
+          ]
+        },
+      });
+}
+
+function bookingSalesMonth(){
+  var sales = document.getElementById('salesChart');
     var myTimeChart = new Chart(sales, {
       type: 'line',
       data: {
-        labels: [@foreach($store_year_sales as $store_year_sale)'{{$store_year_sale->year}}',@endforeach],
+        labels: [@foreach($booking_month_sales as $booking_month_sale)'{{$booking_month_sale->month}}',@endforeach],
         datasets: [{ 
-            data: [@foreach($store_year_sales as $store_year_sale){{$store_year_sale->profit}},@endforeach],
-            label: "Store Sales",
-            borderColor: "#f95d6a",
-            fill: false
-          }, { 
-            data: [@foreach($booking_year_sales as $booking_year_sale){{$booking_year_sale->profit}},@endforeach],
-            label: "Repair Service Sales",
+            data: [@foreach($booking_month_sales as $booking_month_sale){{$booking_month_sale->profit}},@endforeach],
+            label: "Monthly Repair Sales",
             borderColor: "#8e5ea2",
             fill: false
-          }
+          },
         ]
       },
-      options: {
-        responsive: true,
-        plugins: {
-          datalabels: {
-            color: '#fff',
-            anchor: 'end',
-            align: 'start',
-            offset: -10,
-            borderWidth: 2,
-            borderColor: '#fff',
-            borderRadius: 25,
-            backgroundColor: (context) => {
-              return context.dataset.borderColor;
-            },
-            font: {
-              weight: 'bold',
-              size: '10'
-            },
-            formatter: (value) => {
-              return value + ' %';
-            }
-          }
-        }
-      }
     });
-  }
+}
+
+function bookingSalesYear(){
+  var sales = document.getElementById('salesChart');
+      var myTimeChart = new Chart(sales, {
+        type: 'line',
+        data: {
+          labels: [@foreach($booking_year_sales as $booking_year_sale)'{{$booking_year_sale->year}}',@endforeach],
+          datasets: [{ 
+              data: [@foreach($booking_year_sales as $booking_year_sale){{$booking_year_sale->profit}},@endforeach],
+              label: " Yearly Repair Sales",
+              borderColor: "#8e5ea2",
+              fill: false
+            }, 
+          ]
+        },
+      });
+}
+
+function bookingSalesDay(){
+  var sales = document.getElementById('salesChart');
+      var myTimeChart = new Chart(sales, {
+        type: 'line',
+        data: {
+          labels: [@foreach($booking_day_sales as $booking_day_sale)'{{$booking_day_sale->day}}',@endforeach],
+          datasets: [{ 
+              data: [@foreach($booking_day_sales as $booking_day_sale){{$booking_day_sale->profit}},@endforeach],
+              label: " Daily Repair Sales",
+              borderColor: "#8e5ea2",
+              fill: false
+            }, 
+          ]
+        },
+      });
+}
+
+
+$('#sales_order').on('change', function() {
+  var sales_type = $('#sales_type').find(":selected").text();
+  
+  document.getElementById('sales').innerHTML = "";
+  document.getElementById('sales').innerHTML = "<canvas id='salesChart' ></canvas>";
+
+  if(this.value == "monthly"){
+    if(sales_type == "Store"){
+      storeSalesMonth();
+    }
+    else{
+      bookingSalesMonth();
+    }
+  } 
+
+  else if(this.value == "yearly"){
+    if(sales_type == "Store"){
+      storeSalesYear();
+    }
+    else{
+      bookingSalesYear();
+    }
+  } 
+
+  else if(this.value == "daily"){
+    if(sales_type =="Store"){
+      storeSalesDay();
+    }
+    else{
+      bookingSalesDay();
+    } 
+  } 
+
+});
+
+$('#sales_type').on('change', function() {
+  var sales_order = $('#sales_order').find(":selected").text();
+  
+  document.getElementById('sales').innerHTML = "";
+  document.getElementById('sales').innerHTML = "<canvas id='salesChart' ></canvas>";
+
+  if(this.value == "store"){
+    if(sales_order == "Monthly"){
+      storeSalesMonth();
+    }
+    else if (sales_order == "Yearly"){
+      storeSalesYear();
+    }
+    else if (sales_order == "Daily"){
+      storeSalesDay();
+    }
+  } 
+
+  else if(this.value == "repair"){
+    if(sales_order == "Monthly"){
+      bookingSalesMonth();
+    }
+    else if (sales_order == "Yearly"){
+      bookingSalesYear();
+    }
+    else if (sales_order == "Daily"){
+      bookingSalesDay();
+    }
+  } 
+
 });
 
 });

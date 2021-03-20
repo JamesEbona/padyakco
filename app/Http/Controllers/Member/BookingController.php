@@ -9,6 +9,7 @@ use App\Models\Booking;
 use App\Rules\verify_booking_region;
 use Carbon\Carbon;
 use App\Events\BookingCancelledEvent;
+use App\Events\NewBookingEvent;
 
 
 class BookingController extends Controller
@@ -123,6 +124,8 @@ class BookingController extends Controller
         $booking->total_fee = $total_fee;
         $booking->status = 'pending';
         $booking->save();
+
+        event(new NewBookingEvent($booking));
         
         return redirect("/member/book")->with('message', 'Mechanic booked! Please wait for an email about the booking confirmation.');
     }

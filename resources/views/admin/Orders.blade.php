@@ -74,13 +74,13 @@
         @endif
       <td><div class="row justify-content-center">
       <div class="col-md-4 ">
-      <button class="btn btn-dark" data-id="{{$order->id}}" data-address1="{{$order->address1}}" data-address2="{{$order->address2}}" data-city="{{$order->city}}" data-province="{{$order->province}}" data-postalcode="{{$order->postal_code}}" data-phonenumber="{{$order->phone_number}}" onclick="editOrder(this);" ><i class="fa fa-edit" aria-hidden="true"></i></button>
+      <button @if($order->status == "cancelled" || $order->status == "delivered") disabled @endif class="btn btn-dark" data-id="{{$order->id}}" data-address1="{{$order->address1}}" data-address2="{{$order->address2}}" data-city="{{$order->city}}" data-province="{{$order->province}}" data-postalcode="{{$order->postal_code}}" data-phonenumber="{{$order->phone_number}}" onclick="editOrder(this);" ><i class="fa fa-edit" aria-hidden="true"></i></button>
       </div>
       <div class="col-md-4">
       <a class="btn btn-warning" href="{{route('adminOrderView', ['id' => $order->id])}}"><i class="fas fa-info-circle" aria-hidden="true"></i></a>
       </div>
       <div class="col-md-4 ">
-      <button class="btn btn-info " data-id="{{$order->id}}" data-status="{{$order->status}}" onclick="updateStatus(this);"><i class="fas fa-shipping-fast" aria-hidden="true"></i></button>
+      <button @if($order->status == "cancelled" || $order->status == "delivered") disabled @endif class="btn btn-info " data-id="{{$order->id}}" data-status="{{$order->status}}" onclick="updateStatus(this);"><i class="fas fa-shipping-fast" aria-hidden="true"></i></button>
       </div></div> </td> 
   </tr>
 @endforeach

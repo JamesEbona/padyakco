@@ -7,8 +7,8 @@ use App\Http\Controllers\GuidesController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\InquiriesController;
 
-use App\Mail\InquiryReply;
-use App\Models\Inquiry;
+use App\Mail\OrderAdminNotification;
+use App\Models\Order;
 
 
 /*
@@ -41,11 +41,10 @@ Route::get('/guides/show/{id}', [GuidesController::class, 'show'])->name('viewGu
 Route::post('/inquiries/store', [InquiriesController::class, 'store'])->name('storeInquiry');
 
 Route::get('/email', function(){
-    $subject = "sample subject";
-    $reply = "sample reply";
-    $inquiry = Inquiry::findOrFail(3);
+  
+    $order = Order::findOrFail(12);
 
-    return new InquiryReply($inquiry,$subject,$reply);
+    return new OrderAdminNotification($order);
 });
 
 // Route::get('/dashboard', function () {
@@ -90,6 +89,8 @@ Route::group([
     'middleware' => ['auth','admin','active']
 ], function () {
     Route::get('/', 'DashboardController@index')->name('adminDashboard');
+    Route::get('storeDailySales','DashboardController@storeDailySales');
+    Route::get('bookingDailySales','DashboardController@bookingDailySales');
     Route::get('memberusers', 'UsersController@membersindex')->name('memberUsers');
     Route::get('adminusers', 'UsersController@adminsindex')->name('adminUsers');
     Route::get('mechanicusers', 'UsersController@mechanicsindex')->name('mechanicUsers');
@@ -165,6 +166,7 @@ Route::group([
     Route::patch('/submitchangepassword', 'AccountController@updatepassword');
     Route::get('bookings', 'BookingsController@index')->name('mechanicBookings');
     Route::post('bookings/updateStatus', 'BookingsController@updateStatus');
+    Route::post('bookings/modify', 'BookingsController@modify');
     Route::get('bookings/showAddress/{id}', 'BookingsController@showAddress')->name('mechanicBookingsShowAddress');
     Route::get('bookings/calendar', 'BookingsController@calendar')->name('mechanicBookingsCalendar');
     

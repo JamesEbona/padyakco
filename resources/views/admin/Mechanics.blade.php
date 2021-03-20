@@ -28,7 +28,15 @@
          <span aria-hidden="true">&times;</span>
          </button>
         </div>
-      
+      @endif
+
+      @if(session()->has('error_message'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        {{ session()->get('error_message') }}
+         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+         <span aria-hidden="true">&times;</span>
+         </button>
+        </div>
       @endif
          <!-- <div class="alert alert-success" style="display:none"> </div> -->
   
@@ -73,7 +81,6 @@
       @else
       <a class="btn btn-success ml-2" href="/admin/users/activate/{{ $user->id }}"><i class="fa fa-check-circle" aria-hidden="true"></i></a>
       @endif
-      <button class="btn btn-danger ml-2" data-id="{{$user->id}}" onclick="deleteUser(this);"><i class="fa fa-trash" aria-hidden="true"></i></button>
       </div> </td> 
   </tr>
 @endforeach

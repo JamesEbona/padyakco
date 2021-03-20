@@ -40,7 +40,7 @@ class AuthenticatedSessionController extends Controller
             $cartTotal = Cart::where('user_id', Auth::id())->first()->total_quantity;
             session()->put('cartTotal',$cartTotal);
         }
-        return redirect(RouteServiceProvider::HOME);
+        return redirect()->intended(RouteServiceProvider::HOME);
        
     }
 

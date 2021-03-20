@@ -136,11 +136,6 @@
                     <div class="form-group">
                         <label>Status</label>
                         <select class="form-control" name="status" id="editStatus">
-                        <option value="pending">Pending</option>
-                        <option value="confirmed">Confirmed</option>
-                        <option value="en route">En route</option>
-                        <option value="done">Done</option>
-                        <option value="cancelled">Cancelled</option>
                         </select>
                     </div> 
                     <div class="form-group">

@@ -43,9 +43,9 @@ class AccountController extends Controller
         $UserID = auth()->user()->id;
 
         $request->validate([
-            'first_name' => 'required|string|max:30|min:2|alpha',
-            'last_name' => 'required|string|max:30|min:2|alpha',
-            'email' => 'required|string|email|max:50|unique:users,email,'.$UserID.',id',
+            'first_name' => 'required|string|max:30|min:2|regex:/^[\pL\s\-\.]+$/u',
+            'last_name' => 'required|string|max:30|min:2|regex:/^[\pL\s\-\.]+$/u',
+            'email' => 'required|string|email:rfc,dns|max:50|unique:users,email,'.$UserID.',id',
             'phone_number' => array('required','regex:/^(09|\+639)\d{9}$/','unique:users,phone_number,'.$UserID.',id'),
             'image' => 'image'
             // 'email' => 'required|string|email|max:50|unique:users',

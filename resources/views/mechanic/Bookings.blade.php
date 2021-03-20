@@ -76,7 +76,7 @@ Padyak.Co Mechanic - My Bookings
         @endif
       <td><div class="row justify-content-center">
       <div class="col-md-3">
-      <button class="btn btn-dark" @if($booking->status == "cancelled" || $booking->status == "done") disabled @endif data-id="{{$booking->id}}" data-additionalfee="{{$booking->additional_fee}}" onclick="editBooking(this);"><i class="fa fa-edit" aria-hidden="true"></i></button>
+      <button class="btn btn-dark" @if($booking->status == "cancelled" || $booking->status == "done") disabled @endif data-id="{{$booking->id}}" data-additionalfee="{{$booking->additional_fee}}" onclick="updateAdditionalFee(this);"><i class="fa fa-edit" aria-hidden="true"></i></button>
       </div>
       <div class="col-md-3">
       <button class="btn btn-warning" data-firstname="{{$booking->first_name}}" data-lastname="{{$booking->last_name}}" data-phonenumber="{{$booking->phone_number}}" 
@@ -172,10 +172,6 @@ Padyak.Co Mechanic - My Bookings
                     <div class="form-group">
                         <label>Status</label>
                         <select class="form-control" name="status" id="editStatus">
-                        <option value="confirmed">Confirmed</option>
-                        <option value="en route">En route</option>
-                        <option value="done">Done</option>
-                        <option value="cancelled">Cancelled</option>
                         </select>
                     </div>                    
                       <div class="pt-2">

@@ -19,7 +19,7 @@ Padyak.Co - Order placed
          <h2>Order Number: {{$order->id}}</h2>
          <p>Hello {{auth()->user()->first_name}},</p>
          <p>We have received your order and will send you an e-receipt to your email shortly.</p>
-         <p>You can track your order <a href="{{route('orders')}}">here.</a></p>
+         <p>You can track your order <a class="account-links" href="{{route('orders')}}">here.</a></p>
 			 </div>
              <div class="col-md-5 mt-5" style="border-left: 1px solid; padding-left: 16px; ">
 		   <h2>Check out these products:</h2>

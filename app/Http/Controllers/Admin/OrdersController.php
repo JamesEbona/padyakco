@@ -11,6 +11,7 @@ use App\Events\OrderShippedEvent;
 use App\Events\OrderDeliveredEvent;
 use App\Events\OrderCancelledEvent;
 use App\Models\ProductCategoryReport;
+use App\Models\StoreDaySales;
 use App\Models\StoreMonthSales;
 use App\Models\StoreYearSales;
 class OrdersController extends Controller
@@ -91,6 +92,11 @@ class OrdersController extends Controller
                 $productCategoryReport->number -= $orderItem->quantity;
                 $productCategoryReport->save();
         }
+
+        $storeDaySale = StoreDaySales::where('day',date_format($order->created_at, 'd'))->first();
+        $storeDaySale->profit -= $order->grand_total;
+        $storeDaySale->save();
+
         $storeMonthSale = StoreMonthSales::where('month',date_format($order->created_at, 'F'))->first();
         $storeMonthSale->profit -= $order->grand_total;
         $storeMonthSale->save();

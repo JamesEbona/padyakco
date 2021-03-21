@@ -81,6 +81,7 @@ Route::group([
     Route::get('book/mybookings', 'BookingController@view')->name('bookView');
     Route::get('book/{id}', 'BookingController@show')->name('bookShow');
     Route::get('book/cancel/{id}', 'BookingController@cancel');
+    Route::post('book/pay', 'BookingController@pay')->name('bookPay');
     Route::get('contact', 'InquiriesController@index')->name('memberContact');
     Route::post('contact/send', 'InquiriesController@store');
 });

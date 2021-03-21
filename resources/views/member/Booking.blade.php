@@ -124,20 +124,74 @@ My Booking
 			 </div>
 			 </div>
 			 </div>
+			 </div>
 			 @endif
-			 <div class="row">&nbsp;</div>
+			 @if($booking->status == 'en route')
+			 <div class="row">
+			 <div class="col-md-12">
+			 <div class="cart-header">
+		     <div class="cart-sec">
+			 <h2>Payment Options:</h2>
+			 <div id="paypalButtons" class="mt-5" style="max-width: 250px;"></div>
+			 </div>
+			 </div>
+			 </div>
+			 </div>
+
+			 @endif
+			 <div class="row ">&nbsp;</div>
 		
 
 		
 			
 		 </div>
-	
-		
-		 
-	
 	 </div>
 				</div>
 
 
+<script src="https://www.paypal.com/sdk/js?client-id=AdxXimYRlwtcfMiPD8Y13isalZqY6IO847zNO43qvfPzSlnBtMNzKahvjaQTtukF-eRCPlRKpcBeXliy&currency=PHP"></script>
+<script>
+
+    paypal.Buttons({
+    createOrder: function(data, actions) {
+      // This function sets up the details of the transaction, including the amount and line item details.
+
+		return actions.order.create({
+						purchase_units: [{
+						amount: {
+						
+							value: {{$booking->total_fee}},
+						},
+						
+						}],
+						application_context: {
+        shipping_preference: 'NO_SHIPPING'
+      }
+					});	
+		
+    },
+    onApprove: function(data, actions) {
+      // This function captures the funds from the transaction.
+      return actions.order.capture().then(function(details) {
+		$.ajaxSetup({
+			headers: {
+			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			}
+		});
+		$.ajax({  
+			type: 'POST',  
+			url: '{{ route("bookPay") }}', 
+			data: { bookingId:'{{$booking->id}}',
+			},
+			success: function(response) {
+				window.location = "{{ route('bookShow', ['id' => $booking->id]) }}";
+			}
+		});		   
+      });
+    }
+  }).render('#paypalButtons');
+  //This function displays Smart Payment Buttons on your web page.
+
+</script>
 
 @endsection

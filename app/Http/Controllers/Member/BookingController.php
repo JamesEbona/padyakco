@@ -10,6 +10,10 @@ use App\Rules\verify_booking_region;
 use Carbon\Carbon;
 use App\Events\BookingCancelledEvent;
 use App\Events\NewBookingEvent;
+use App\Events\BookingDoneEvent;
+use App\Models\BookingDaySales;
+use App\Models\BookingMonthSales;
+use App\Models\BookingYearSales;
 
 
 class BookingController extends Controller
@@ -151,6 +155,41 @@ class BookingController extends Controller
 
         return redirect("/member/book/mybookings")->with('message', 'Your booking has been cancelled.');
         
+    }
+
+    public function pay(Request $request)
+    {
+        $booking = Booking::where('user_id',auth()->id())->where('id',request('bookingId'))->firstOrFail();
+        $booking->status = "done";
+        $booking->save();
+
+        event(new BookingDoneEvent($booking)); 
+        $nowDate = \Carbon\Carbon::now();
+        $bookingDay = $nowDate->format('d');
+        $bookingMonth = $nowDate->format('F');
+        $bookingYear = $nowDate->format('Y');
+
+        if($bookingDay == 01){
+            BookingDaySales::query()->update(['after' => 1]);
+        }
+        $bookingDaySales = BookingDaySales::firstOrNew(['day' =>  $bookingDay]);
+        $bookingDaySales->profit += $booking->total_fee;
+        $bookingDaySales->after = 0;
+        $bookingDaySales->save(); 
+
+        if($bookingMonth == "January"){
+            BookingMonthSales::query()->update(['after' => 1]);
+        }
+        $bookingMonthSales = BookingMonthSales::firstOrNew(['month' =>  $bookingMonth]);
+        $bookingMonthSales->profit += $booking->total_fee;
+        $bookingMonthSales->after = 0;
+        $bookingMonthSales->save(); 
+
+        $bookingYearSales = BookingYearSales::firstOrNew(['year' =>  $bookingYear]);
+        $bookingYearSales->profit += $booking->total_fee;
+        $bookingYearSales->save(); 
+
+        return view('member.Booking', compact('booking'));
     }
 
 }

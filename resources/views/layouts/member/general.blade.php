@@ -462,7 +462,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			 <ul>
 				 <li class=""><a href="">© 2020 Padyak.Co</a></li>
 				 <li><a href="https://www.facebook.com/"><i class="fab fa-facebook fa-2x"></i></a></li>
-				 <li><a href="mailto: padyak.co@gmail.com"><i class="fas fa-envelope fa-2x"></i></a></li>
+				 <li><a href="@guest mailto: padyak.co@gmail.com @endguest @auth {{route('memberContact')}} @endauth"><i class="fas fa-envelope fa-2x"></i></a></li>
 			 </ul>
 		</div>
 		<div class="clearfix"></div>

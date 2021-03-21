@@ -64,6 +64,12 @@
 							<div class="row row1 scroll-pane">
 								<div class="col col-4">
 								<div class="form-check">
+								<input class="form-check-input common_selector price" type="radio" name="price" id="priceRadio5" value="1000000" checked>
+								<label class="form-check-label" for="priceRadio6">
+								    All prices
+								</label>
+								</div>
+								<div class="form-check">
 								<input class="form-check-input common_selector price" type="radio" name="price" id="priceRadio1" value="10000">
 								<label class="form-check-label" for="priceRadio1">
 								    ₱10,000 and under
@@ -88,7 +94,7 @@
 								</label>
 								</div>
 								<div class="form-check">
-								<input class="form-check-input common_selector price" type="radio" name="price" id="priceRadio5" value="100000" checked>
+								<input class="form-check-input common_selector price" type="radio" name="price" id="priceRadio5" value="100000">
 								<label class="form-check-label" for="priceRadio5">
 								    ₱100,000 and under
 								</label>

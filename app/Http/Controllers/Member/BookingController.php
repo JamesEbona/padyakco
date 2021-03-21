@@ -22,7 +22,7 @@ class BookingController extends Controller
     public function index()
     {
         $nowDate = Carbon::now();
-        $minDate = $nowDate->format('Y-m-d\TH:i');
+        $minDate = $nowDate->addHour()->format('Y-m-d\TH:i');
         $maxDate = $nowDate->addWeeks(1)->format('Y-m-d\TH:i');
         $repair = Repair::where('id',1)->firstOrFail();
         return view('member.Book',compact('minDate','maxDate','repair'));
@@ -31,7 +31,7 @@ class BookingController extends Controller
     public function book(Request $request){
 
         $nowDate = Carbon::now();
-        $minDate = $nowDate->format('Y-m-d\TH:i');
+        $minDate = $nowDate->addHour()->format('Y-m-d\TH:i');
         $maxDate = $nowDate->addWeeks(1)->format('Y-m-d\TH:i');
         
         $request->validate([

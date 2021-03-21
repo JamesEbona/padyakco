@@ -21,7 +21,7 @@ class NewBookingEvent
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($booking)
     {
         $this->booking = $booking;
     }

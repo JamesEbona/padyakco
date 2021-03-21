@@ -77,12 +77,12 @@ Padyak.Co - Book Mechanic
 			 <span id="total_fee" class="total final">₱ {{number_format($repair->basic_fee,2)}}</span>
 			 <div class="clearfix"></div>
 			
-			 <div class="total-item">
+			 <!-- <div class="total-item">
 				 <h3>OPTIONS</h3>
 				 <h4>COUPONS</h4>
 				 <a class="cpns" href="#">Apply Coupons</a>
-			 </div>
-             <div class="total-item mt-0 pt-0">
+			 </div> -->
+             <div class="total-item">
 				 <h3>REMINDERS</h3>
 				 <P>This estimate is an approximation and is not guaranteed. 
                     The estimate is based on information provided from the member regarding 

@@ -24,7 +24,7 @@ class SendMechanicAssignNotification implements ShouldQueue
     {
         $number = $event->mechanic_number;
         $date = date_format($event->booking->booking_time,"d M, Y H:i");
-        $message = "You have a new repair (#".$event->booking->id."):\nTime: ".$date;
+        $message = "Mechanic, you have a new repair (#".$event->booking->id."):\nTime: ".$date;
         $apicode = config('itexmo.code');
         $passwd = config('itexmo.password');
         $url = 'https://www.itexmo.com/php_api/api.php';

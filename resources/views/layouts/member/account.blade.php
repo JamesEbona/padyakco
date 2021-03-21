@@ -135,6 +135,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			<div><a class="account-links {{{ (Route::current()->getName() == "editPassword" ? 'active-link' : '') }}}" href="{{route('editPassword')}}">Change Password</a></div>
 			<div><a class="account-links {{{ (Route::current()->getName() == "bookView" ? 'active-link' : '') }}}" href="{{route('bookView')}}">My Repair Bookings</a></div>
 			<div><a class="account-links {{{ (Route::current()->getName() == "orders" ? 'active-link' : '') }}}" href="{{route('orders')}}">My Orders</a></div>
+			<div><a class="account-links {{{ (Route::current()->getName() == "memberContact" ? 'active-link' : '') }}}" href="{{route('memberContact')}}">Need help?</a></div>
             <div>
             <a class="account-links" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -156,7 +157,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			 <ul>
 				 <li class=""><a href="">© 2020 Padyak.Co</a></li>
 				 <li><a href="https://www.facebook.com/"><i class="fab fa-facebook fa-2x"></i></a></li>
-				 <li><a href="mailto: padyak.co@gmail.com"><i class="fas fa-envelope fa-2x"></i></a></li>
+				 <li><a href="{{route('memberContact')}}"><i class="fas fa-envelope fa-2x"></i></a></li>
 			 </ul>
 		</div>
 		<div class="clearfix"></div>

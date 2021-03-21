@@ -75,9 +75,10 @@ Padyak.Co - Checkout
 			 <div class="clearfix"></div>
              <div id="paypalButtons" class="mt-5"></div>
 			 <div class="total-item">
-				 <h3>OPTIONS</h3>
-				 <h4>COUPONS</h4>
-				 <a class="cpns" href="#">Apply Coupons</a>
+				 <!-- <h3>OPTIONS</h3> -->
+				 <h3>REMINDERS</h3>
+				 <!-- <h4>COUPONS</h4>
+				 <a class="cpns" href="#">Apply Coupons</a> -->
 				 <p><a href="{{route('myAccount')}}">My account</a> to check your orders</p>
 				 <p>An online receipt will be sent to your registered e-mail.</p>
 			 </div>
@@ -136,7 +137,10 @@ Padyak.Co - Checkout
 									}
 						},
 						
-						}]
+						}],
+						application_context: {
+        shipping_preference: 'NO_SHIPPING'
+      }
 					});	
 		
     },

@@ -22,9 +22,6 @@
 					source_image_width: 800,
 					source_image_height: 1000,
 					show_hint: true,
-					click_callback: function(image_anchor, instance_id){
-						alert('Callback example:\nYou clicked on an image with the anchor: "'+image_anchor+'"\n(in Etalage instance: "'+instance_id+'")');
-					}
 				});
 
 			});
@@ -34,10 +31,10 @@
 						 <div class="grid images_3_of_2">
 						  <ul id="etalage">
 							<li>
-								<a href="optionallink.html">
+							
 									<img class="etalage_thumb_image" src="/storage/{{$product->image1}}" class="img-responsive" />
 									<img class="etalage_source_image" src="/storage/{{$product->image1}}" class="img-responsive" title="" />
-								</a>
+								
 							</li>
 							<li>
 								<img class="etalage_thumb_image" src="/storage/{{$product->image2}}" class="img-responsive" />

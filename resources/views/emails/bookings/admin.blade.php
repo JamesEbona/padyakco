@@ -420,7 +420,7 @@
                                   <table cellspacing="0" cellpadding="0" border="0" width="100%" role="presentation">
                                     <tr>
                                       <th style="mso-line-height-rule: exactly;" bgcolor="#ffffff" valign="top">
-                                        <h1 data-key="3499733_heading" style="font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 24px; line-height: 36px; font-weight: 400; color: #1a1a1a; text-transform: none; margin: 0;">REPAIR BOOKING CONFIRMED</h1>
+                                        <h1 data-key="3499733_heading" style="font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 24px; line-height: 36px; font-weight: 400; color: #1a1a1a; text-transform: none; margin: 0;">NEW REPAIR BOOKING</h1>
                                       </th>
                                     </tr>
                                   </table>

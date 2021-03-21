@@ -35,7 +35,7 @@ class GuidesController extends Controller
 
     public function show($id){
         $guide = Guide::findOrFail($id);
-        $popular_guides = Guide::where('status','active')->inRandomOrder()->limit(3)->get();
+        $popular_guides = Guide::where('status','active')->where('id', '!=' , $id)->inRandomOrder()->limit(3)->get();
       
         return view('home.guide', compact('guide','popular_guides'));
 

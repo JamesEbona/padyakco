@@ -71,7 +71,7 @@ class ProductsController extends Controller
 
            if(request('image3') != NULL){
             $image3Path = request('image3')->store('products','public');       
-            $image3 = Image::make(public_path("storage/{$image1Path}"));
+            $image3 = Image::make(public_path("storage/{$image3Path}"));
             $image3->fit(700, 401);
             $image3->save();
            }
@@ -139,7 +139,7 @@ class ProductsController extends Controller
            
             if(request('image3') != NULL){
             $image3Path = request('image3')->store('products','public');       
-            $image3 = Image::make(public_path("storage/{$image1Path}"));
+            $image3 = Image::make(public_path("storage/{$image3Path}"));
             $image3->fit(700, 401);
             $image3->save();
             }

@@ -30,6 +30,6 @@ class OrderAdminNotification extends Mailable
      */
     public function build()
     {
-        return $this->subject('Padyak.Co new order')->view('emails.orders.admin');
+        return $this->subject('Admin, new Padyak.Co order')->view('emails.orders.admin');
     }
 }

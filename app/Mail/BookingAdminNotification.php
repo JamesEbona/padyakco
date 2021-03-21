@@ -30,6 +30,6 @@ class BookingAdminNotification extends Mailable
      */
     public function build()
     {
-        return $this->subject('New pending repair service booking')->view('emails.bookings.admin');
+        return $this->subject('Admin, new pending repair service booking')->view('emails.bookings.admin');
     }
 }

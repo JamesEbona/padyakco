@@ -24,7 +24,7 @@ class SendMechanicUnassignNotification implements ShouldQueue
     {
         $number = $event->mechanic_number;
         $date = date_format($event->booking->booking_time,"d M, Y H:i");
-        $message = "Your repair (#".$event->booking->id.") has been cancelled:\nTime: ".$date;
+        $message = "Mechanic, your repair (#".$event->booking->id.") has been cancelled:\nTime: ".$date;
         $apicode = config('itexmo.code');
         $passwd = config('itexmo.password');
         $url = 'https://www.itexmo.com/php_api/api.php';

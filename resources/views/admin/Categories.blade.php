@@ -27,6 +27,14 @@
                        </button>
                    </div>
                 @endif
+                @if(session()->has('error_message'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        {{ session()->get('error_message') }}
+         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+         <span aria-hidden="true">&times;</span>
+         </button>
+        </div>
+      @endif
                 <button class="btn btn-primary mb-3" onclick="addRow()"><i class="fa fa-plus" aria-hidden="true"></i> Category</button>
                 <div class="table-responsive">
                 <table id="categorytable" class="table text-center">
@@ -35,6 +43,7 @@
             <th>Title</th>
             <th>Description</th>
             <th>Subcategories</th>
+            <th>Status</th>
             <th>Action</th>
         </tr>
     </thead>
@@ -47,8 +56,18 @@
                 <td>{{$category->title}}</td>
                 <td>{{$category->description ?? 'Not Found'}}</td>
                 <td>{{$category->subcategories->count()}}</td> 
+                @if($category->status == "active")
+                <td> <span class="badge badge-success justify-content-center ">{{$category->status}}</span></td>
+                @else
+                <td> <span class="badge badge-danger">{{$category->status}}</span></td>
+                @endif
                 <td><div class="row justify-content-center">
                 <button class="btn btn-dark" data-id="{{$category->id}}" data-title="{{$category->title}}" data-description="{{$category->description}}"  onclick="editCategory(this)"><i class="fa fa-edit" aria-hidden="true"></i></button>
+                @if ($category->status == 'active')        
+                <a class="btn btn-warning ml-2" href="/admin/categories/deactivate/{{ $category->id }}"><i class="fa fa-eye-slash" aria-hidden="true"></i></a> 
+                @else                
+                <a class="btn btn-success ml-2" href="/admin/categories/activate/{{ $category->id }}"><i class="fa fa-eye" aria-hidden="true"></i></a>              
+                @endif
                 <button class="btn btn-danger ml-2" data-id="{{$category->id}}" onclick="deleteCategory(this)"><i class="fa fa-trash" aria-hidden="true"></i></button>
                   </div> </td> 
             </tr>
@@ -81,7 +100,7 @@
             <span aria-hidden="true">×</span>
           </button>
         </div>
-        <div class="modal-body">All of the subcategories and products under this category will also be deleted.</div>
+        <div class="modal-body">All of the subcategories under this category will also be deleted.</div>
         <div class="modal-footer">
           <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
           <a class="btn btn-danger" id="DeleteCategoryButton">Delete

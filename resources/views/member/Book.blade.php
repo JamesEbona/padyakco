@@ -69,8 +69,8 @@ Padyak.Co - Book Mechanic
 				 <span id="initial_fee" class="total">₱ {{number_format($repair->basic_fee,2)}}</span>
 				 <span>Transportation fee</span>
 				 <span id="transportation_fee" class="total">₱ 0.00</span>
-                 <span>Discount</span>
-				 <span class="total">---</span>
+                 <!-- <span>Discount</span>
+				 <span class="total">---</span> -->
 				 <div class="clearfix"></div>				 
 			 </div>	
 			 <h4 class="last-price">TOTAL</h4>

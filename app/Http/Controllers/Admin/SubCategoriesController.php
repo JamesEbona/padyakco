@@ -38,6 +38,8 @@ class SubCategoriesController extends Controller
         $subcategory->title = request('title');
         $subcategory->description = request('description');
         $subcategory->category_id = request('category_id');
+        $subcategory->is_deleted = 0;
+        $subcategory->status = "active";
         $subcategory->save();
 
         return redirect("/admin/subcategories")->with('message', 'Subcategory added.');
@@ -64,9 +66,28 @@ class SubCategoriesController extends Controller
         return redirect("/admin/subcategories")->with('message', 'Subcategory updated.');
     }
 
+    public function activate($id)
+    {
+        $subcategory = SubCategory::findOrFail($id);
+        $subcategory->update(['status' => "active"]);
+        $subcategory_name = $subcategory->title;
+        return redirect("/admin/subcategories")->with('message', $subcategory_name." subcategory is now visible.");
+    }
+
+    public function deactivate($id)
+    {
+        $subcategory = SubCategory::findOrFail($id);
+        $subcategory->update(['status' => "inactive"]);
+        $subcategory_name = $subcategory->title;
+        return redirect("/admin/subcategories")->with('message', $subcategory_name." subcategory is now hidden.");  
+    }
+
     public function destroy($id)
     {
         $subcategory = SubCategory::findOrFail($id);
+        if($subcategory->products->count()){
+            return redirect("/admin/subcategories")->with('error_message', "Cannot delete, the subcategory has products. Deactivate instead.");  
+        }
         SubCategory::destroy($subcategory->id);
         return redirect("/admin/subcategories")->with('message', $subcategory->title." subcategory is now deleted.");  
     }

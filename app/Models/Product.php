@@ -23,7 +23,8 @@ class Product extends Model
         'description',
         'image1',
         'image2',
-        'image3'
+        'image3',
+        'is_deleted'
     ];
 
     public function category()
@@ -34,6 +35,16 @@ class Product extends Model
     public function subcategory()
     {
         return $this->belongsTo(SubCategory::class);
+    }
+
+    public function orderItems()
+    {
+        return $this->hasMany(OrderItem::class);
+    }
+
+    public function cartItems()
+    {
+        return $this->hasMany(CartItem::class);
     }
     
 }

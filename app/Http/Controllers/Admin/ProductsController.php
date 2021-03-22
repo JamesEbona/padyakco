@@ -92,6 +92,7 @@ class ProductsController extends Controller
              $product->rating = 0;
              $product->description = request('description');
              $product->status = 'active';
+             $product->is_deleted = 0;
              $product->image1 = $image1Path;
              $product->image2 = $image2Path;
              $product->image3 = $image3Path;
@@ -187,6 +188,12 @@ class ProductsController extends Controller
     public function destroy($id)
     {
         $product = Product::findOrFail($id);
+        if($product->orderItems->count()){
+            return redirect("/admin/products")->with('error_message', "Cannot delete, the product is included in some orders. Deactivate instead.");  
+        }
+        if($product->cartItems->count()){
+            return redirect("/admin/products")->with('error_message', "Cannot delete, the product is included in some orders. Deactivate instead.");  
+        }
         $product_name = $product->title;
         Product::destroy($id);
         return redirect("/admin/products")->with('message', $product_name." product is now deleted.");  ;

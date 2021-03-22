@@ -462,7 +462,7 @@ $('#mechanicstable').DataTable( {
 
 $('#categorytable').DataTable( {
   columnDefs: [
-    {searchable: false,  orderable: false, targets: 3 }
+    {searchable: false,  orderable: false, targets: 4 }
   ]
   
 } );
@@ -476,7 +476,7 @@ $('#guidecategorytable').DataTable( {
 
 $('#subcategorytable').DataTable( {
   columnDefs: [
-    {searchable: false, orderable: false, targets: 3 }
+    {searchable: false, orderable: false, targets: 4 }
   ]
 } );
 

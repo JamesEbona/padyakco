@@ -16,8 +16,8 @@ class ProductsController extends Controller
     public function index()
     {
         $products = Product::where('status','active')->paginate(12);
-        $categories = Category::all();
-        $subcategories = SubCategory::all();
+        $categories = Category::where('status','active')->get();
+        $subcategories = SubCategory::where('status','active')->get();
         $brands = Product::distinct()->get('brand');
         return view('home.products', compact('products','categories','subcategories','brands'));
     }

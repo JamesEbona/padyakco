@@ -120,10 +120,14 @@ Route::group([
     Route::get('categories', 'CategoriesController@index')->name('categories');
     Route::post('categories/store', 'CategoriesController@store');
     Route::post('categories/edit', 'CategoriesController@edit');
+    Route::get('categories/activate/{id}', 'CategoriesController@activate');
+    Route::get('categories/deactivate/{id}', 'CategoriesController@deactivate');
     Route::get('categories/delete/{id}', 'CategoriesController@destroy');
     Route::get('subcategories', 'SubCategoriesController@index')->name('subCategories');
     Route::post('subcategories/store', 'SubCategoriesController@store');
     Route::post('subcategories/edit', 'SubCategoriesController@edit');
+    Route::get('subcategories/activate/{id}', 'SubCategoriesController@activate');
+    Route::get('subcategories/deactivate/{id}', 'SubCategoriesController@deactivate');
     Route::get('subcategories/delete/{id}', 'SubCategoriesController@destroy');
     Route::get('orders', 'OrdersController@index')->name('adminOrders');
     Route::post('orders/modify', 'OrdersController@modify');

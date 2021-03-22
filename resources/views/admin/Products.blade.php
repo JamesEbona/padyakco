@@ -21,6 +21,15 @@
                      </button>
                      </div>
                 @endif
+
+                @if(session()->has('error_message'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        {{ session()->get('error_message') }}
+         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+         <span aria-hidden="true">&times;</span>
+         </button>
+        </div>
+      @endif
                 <button class="btn btn-primary mb-3" onclick="addRow()"><i class="fa fa-plus" aria-hidden="true"></i> Product</button>
                 <div class="table-responsive">
                 <table id="producttable" class="table text-center">

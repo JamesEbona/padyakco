@@ -110,8 +110,6 @@ Padyak.Co - My Cart
 				 <h3>Price Details</h3>
 				 <span>Prdouct Total</span>
 				 <span class="total">---</span>
-				 <span>Discount</span>
-				 <span class="total">---</span>
 				 <span>Delivery Charges</span>
 				 <span class="total">---</span>
 				 <div class="clearfix"></div>				 

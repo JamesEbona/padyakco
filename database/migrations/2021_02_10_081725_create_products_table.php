@@ -27,6 +27,7 @@ class CreateProductsTable extends Migration
             $table->unsignedDecimal('provincial_delivery_fee', $precision = 8, $scale = 2);
             $table->unsignedInteger('rating');
             $table->string('status');
+            $table->boolean('is_deleted');
             $table->string('description')->nullable();
             $table->string('image1')->nullable();
             $table->string('image2')->nullable();

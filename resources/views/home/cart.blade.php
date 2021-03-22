@@ -80,8 +80,6 @@ Padyak.Co - My Cart
 				 <h3>Price Details</h3>
 				 <span>Item Total</span>
 				 <span class="total">₱ {{number_format($totalPrice,2)}}</span>
-				 <span>Discount</span>
-				 <span class="total">---</span>
 				 <span>Delivery Charges</span>
 				 <span class="total">Calculated on checkout</span>
 				 <div class="clearfix"></div>				 
@@ -105,8 +103,6 @@ Padyak.Co - My Cart
 			 <div class="price-details">
 				 <h3>Price Details</h3>
 				 <span>Prdouct Total</span>
-				 <span class="total">---</span>
-				 <span>Discount</span>
 				 <span class="total">---</span>
 				 <span>Delivery Charges</span>
 				 <span class="total">---</span>

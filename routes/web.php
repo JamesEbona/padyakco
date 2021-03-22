@@ -101,6 +101,7 @@ Route::group([
     Route::post('users/adminstore', 'UsersController@adminstore');
     Route::post('users/mechanicstore', 'UsersController@mechanicstore');
     Route::post('users/modify', 'UsersController@modify');
+    Route::post('users/modifyAdmin', 'UsersController@Admin');
     Route::post('users/modifyMechanic', 'UsersController@modifyMechanic');
     Route::get('users/activate/{id}', 'UsersController@activate');
     Route::get('users/deactivate/{id}', 'UsersController@deactivate');

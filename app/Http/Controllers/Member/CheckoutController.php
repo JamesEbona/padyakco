@@ -96,6 +96,7 @@ class CheckoutController extends Controller
         $cartItemNo = 0;
         $cartItemTotal = 0;
         $cartDeliveryTotal = 0;
+        $product_check = '';
 
         if($cart->total_quantity == 0){
             return redirect()->route('memberCart');
@@ -106,32 +107,51 @@ class CheckoutController extends Controller
         else{
             foreach ($cartItems as $cartItem){
            
-                $product = Product::where('id',$cartItem->product_id)->firstOrFail();
+                $product = Product::where('id',$cartItem->product_id)->where('status','active')->first();
+                //add wher status / where deleted at
                 $oldQty = $cartItem->quantity;
-                if($product->quantity == 0){
-                 
-                    $response = [ 'success' => 'false'];
+                if (isset($product)) {
+                    if($product->quantity == 0){
+                    
+                        $response = [ 'success' => 'false'];
+                        $cartItem->delete();
+                        $cart->total_quantity -= $oldQty;
+                        $cart->save();
+                        session::put('cartTotal',$cart->total_quantity);
+                        $product_check = "out of stock";
+                    }
+                    elseif($product->quantity < $cartItem->quantity){
+                        $cartItem->quantity = $product->quantity;
+                        $cartItem->save();
+                        $cart->total_quantity -= $oldQty - $product->quantity;
+                        $cart->save();
+                        session::put('cartTotal',$cart->total_quantity);
+                        $product_check = "out of stock";
+                    }
+                }
+                else{
                     $cartItem->delete();
                     $cart->total_quantity -= $oldQty;
                     $cart->save();
                     session::put('cartTotal',$cart->total_quantity);
-                    return redirect()->route('memberCart')->with('cart_stock', 'Some items were removed from your cart becuase it is out of stock.');
-                }
-                elseif($product->quantity < $cartItem->quantity){
-                    $cartItem->quantity = $product->quantity;
-                    $cartItem->save();
-                    $cart->total_quantity -= $oldQty - $product->quantity;
-                    $cart->save();
-                    session::put('cartTotal',$cart->total_quantity);
-                    return redirect()->route('memberCart')->with('cart_stock', 'Some items were removed from your cart becuase it is out of stock.');
+                    $product_check = "not found";
                 }
             }
+            
+            if($product_check == "out of stock"){
+                return redirect()->route('memberCart')->with('cart_stock', 'Some items were removed from your cart becuase it is out of stock.');
+            }
+            else if($product_check == "not found"){
+                return redirect()->route('memberCart')->with('cart_stock', 'Some items were removed from your cart because the product is not found.');
+            }
+            else{
             return view('member.CheckoutReview', compact('cart','cartItems','cartItemNo', 'cartItemTotal', 'cartDeliveryTotal'));
+            }
         }
     }
 
     public function check(Request $request){
-        $cart = Cart::where('user_id', Auth::id())->firstOrFail();
+        $cart = Cart::where('user_id', Auth::id())->first();
         $cartItems =  CartItem::where('cart_id',$cart->id)->get();
 
         // $response['success'] = true;
@@ -139,7 +159,7 @@ class CheckoutController extends Controller
         foreach ($cartItems as $cartItem){
             //delete cart item
             //update total quantity of cart
-            $product = Product::where('id',$cartItem->product_id)->firstOrFail();
+            $product = Product::where('id',$cartItem->product_id)->first();
             $oldQty = $cartItem->quantity;
             if($product->quantity == 0){
                 // $response['success'] = false;

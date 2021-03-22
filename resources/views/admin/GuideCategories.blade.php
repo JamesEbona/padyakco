@@ -82,7 +82,7 @@ Padyak.Co Admin - Guide Categories
             <span aria-hidden="true">×</span>
           </button>
         </div>
-        <div class="modal-body">All of the subcategories of the category will also be deleted.</div>
+        <div class="modal-body">All of the guides under the category will also be deleted.</div>
         <div class="modal-footer">
           <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
           <a class="btn btn-danger" id="DeleteCategoryButton">Delete

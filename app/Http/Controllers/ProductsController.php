@@ -41,7 +41,7 @@ class ProductsController extends Controller
     }
 
     public function show($id){
-        $product = Product::findOrFail($id);
+        $product = Product::where('status','active')->findOrFail($id);
         $related_products = Product::where('category_id', $product->category_id)->where('status','active')->where('id', '!=' , $id)->inRandomOrder()->limit(3)->get();
      
         $cart_item_qty = 0;

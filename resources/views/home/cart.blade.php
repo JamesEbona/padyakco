@@ -39,7 +39,9 @@ Padyak.Co - My Cart
 				 <div class="close{{$cartItemNo}} closeCart"> </div>
 				 <div class="cart-sec">
 						<div class="cart-item cyc">
+						     <a href="/store/show/{{$product['item']['id']}}">
 							 <img src="/storage/{{$product['item']['image1']}}"/>
+							 </a>
 						</div>
 					   <div class="cart-item-info">
 							 <h3>{{$product['item']['brand']}} {{$product['item']['title']}}<span>Model No: {{$product['item']['id']}}</span></h3>
@@ -62,7 +64,7 @@ Padyak.Co - My Cart
 					   </div>
 					   <div class="clearfix"></div>
 						<div class="delivery">
-						     <p>Stocks available: {{$product['item']['quantity'] - $product['qty']}}</p>
+						     <p>Stocks available to add: {{$product['item']['quantity'] - $product['qty']}}</p>
 							 <span>Delivered in 1-2 weeks</span>
 							 <div class="clearfix"></div>
 				        </div>						
@@ -73,7 +75,7 @@ Padyak.Co - My Cart
 		 </div>
 		  
 		 <div class="col-md-3 cart-total" style="border-left: 1px solid; padding-left: 16px; ">
-			 <a class="continue" href="/bicycles">Browse more items</a>
+			 <a class="continue" href="/store">Browse more items</a>
 			 <div class="price-details">
 				 <h3>Price Details</h3>
 				 <span>Item Total</span>

@@ -369,8 +369,8 @@
     <!--[if !mso 9]>
 
       <!-->
-    <div style="display: none; overflow: hidden; line-height: 1px; max-height: 0px; max-width: 0px; opacity: 0; mso-hide: all;">Thank you for trusting us with your bicycle repair, this email confirms your booking. We will send you
-      another email as soon as our mechanic is on the way to you.</div>
+    <div style="display: none; overflow: hidden; line-height: 1px; max-height: 0px; max-width: 0px; opacity: 0; mso-hide: all;">
+     </div>
 
     <!--<![endif]-->
 

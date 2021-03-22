@@ -23,7 +23,7 @@ class CreateGuidesTable extends Migration
             $table->string('thumbnail');
             $table->string('description');
             $table->unsignedBigInteger('category_id');
-            $table->foreign('category_id')->references('id')->on('guide_categories');
+            $table->foreign('category_id')->references('id')->on('guide_categories')->onDelete('cascade');
             $table->softDeletes();
         });
     }

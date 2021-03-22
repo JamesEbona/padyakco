@@ -244,8 +244,8 @@ class UsersController extends Controller
      
      
       }
-    
-     public function modify(Request $request)
+
+      public function modify(Request $request)
     {
       $RequestID = request('editId');
 
@@ -297,6 +297,61 @@ class UsersController extends Controller
     }
      
     return redirect("/admin/memberusers");
+    
+    }
+    
+     public function modifyAdmin(Request $request)
+    {
+      $RequestID = request('editId');
+
+      $validator = \Validator::make($request->all(), [
+        'first_name' => 'required|string|max:30|min:2|regex:/^[\pL\s\-\.]+$/u',
+        'last_name' => 'required|string|max:30|min:2|regex:/^[\pL\s\-\.]+$/u',
+        'email' => 'required|string|email:rfc,dns|max:50|unique:users,email,'.$RequestID.',id',
+        'image' => 'image'
+        // 'email' => 'required|string|email|max:50|unique:users',        
+     ]);
+  
+      if ($validator->fails()){
+        return response()->json(['errors'=>$validator->errors()->all()]);
+      }
+
+  
+     $data = array(
+            'first_name' => request('first_name'),
+            'last_name' => request('last_name'),
+            'email' => request('email'),
+        );
+
+
+    if (request('image')){
+     $imagePath = request('image')->store('avatars','public');       
+        //where the image will be uploaded
+
+        $image = Image::make(public_path("storage/{$imagePath}"))->fit(180, 180);
+        //intervention library that fits image to size
+        $image->save();
+
+        $imageArray = ['image' => $imagePath];
+    }
+    //if the user submits an image in the form
+
+   // auth()->user()->profile->update($data);
+
+    //CHECK FOR NEW OR EXISTING ORDER
+    if($RequestID > 0) {
+        //THIS FUNCTION SOMEHOW RETURNS THE FUNCTION CALL AND DOESNT CONTINUE PAST
+        //AND THE RECORD IS NOT UPDATED
+       User::where('id', $RequestID)->update(array_merge(
+    $data,
+    $imageArray ?? []
+    //if no image set
+
+
+    ));
+    }
+     
+    return redirect("/admin/adminusers");
     
     }
 

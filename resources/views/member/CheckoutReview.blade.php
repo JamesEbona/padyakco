@@ -24,7 +24,9 @@ Padyak.Co - Checkout
 			
 				 <div class="cart-sec">
 						<div class="cart-item cyc">
+						      <a href="/store/show/{{$cartItem->product->id}}">
 							 <img src="/storage/{{$cartItem->product->image1}}"/>
+							 </a>
 						</div>
 					   <div class="cart-item-info">
 							 <h3>{{$cartItem->product->brand}} {{$cartItem->product->title}}<span>Model No: {{$cartItem->product->id}}</span></h3>

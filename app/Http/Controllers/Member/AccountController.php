@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Models\Address;
 use Intervention\Image\Facades\Image;
+use Illuminate\Auth\Events\Registered;
 
 class AccountController extends Controller
 {
@@ -89,12 +90,7 @@ class AccountController extends Controller
             // 'email' => 'required|string|email|max:50|unique:users',
         ]);
 
-        $data = array(
-            'first_name' => request('first_name'),
-            'last_name' => request('last_name'),
-            'email' => request('email'),
-        );
-
+       
       
         if(request('image') != NULL){
         $imagePath = request('image')->store('avatars','public');       
@@ -107,14 +103,42 @@ class AccountController extends Controller
         }
 
     // auth()->user()->profile->update($data);
+        $user =  User::find($UserID);
+        if($user->email != request('email')){
+            $data = array(
+                'first_name' => request('first_name'),
+                'last_name' => request('last_name'),
+                'email' => request('email'),
+                'email_verified_at' => NULL
+            );
 
-      
-          User::where('id', $UserID)->update(array_merge(
-        $data,
-        $imageArray ?? []
-        ));
-         
-     
+            $user->update(array_merge(
+                $data,
+                $imageArray ?? []
+                ));
+
+            event(new Registered($user));
+        }
+        else{
+            $ran = "yes";
+            dd($ran);
+            $data = array(
+                'first_name' => request('first_name'),
+                'last_name' => request('last_name'),
+                'email' => request('email'),
+            );
+
+            $user->update(array_merge(
+                $data,
+                $imageArray ?? []
+                ));
+        }
+
+        // User::where('id', $UserID)->update(array_merge(
+        // $data,
+        // $imageArray ?? []
+        // ));
+
         return redirect("/member/editprofile")->with('message', 'Profile Updated.');
     }
     

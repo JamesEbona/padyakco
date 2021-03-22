@@ -48,7 +48,7 @@
                           <td>{{$product->title}}</td>
                           <td>{{$product->brand}}</td>
                           <td>{{$product->category->title}}</td>
-                          <td>{{$product->subcategory->title}}</td>
+                          <td>{{$product->subcategory->title ?? ''}}</td>
                           <td>{{$product->quantity}}</td>
                           <td>{{$product->price}}</td>
                           <!-- <td> <i class="fa fa-star" aria-hidden="true"></i></td> -->

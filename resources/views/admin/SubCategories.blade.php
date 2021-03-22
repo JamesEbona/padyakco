@@ -80,7 +80,7 @@
             <span aria-hidden="true">×</span>
           </button>
         </div>
-        <div class="modal-body">The subcategory cannot be recovered after deleting.</div>
+        <div class="modal-body">All of the products under this subcategory will also be deleted.</div>
         <div class="modal-footer">
           <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
           <a class="btn btn-danger" id="DeleteSubCategoryButton">Delete

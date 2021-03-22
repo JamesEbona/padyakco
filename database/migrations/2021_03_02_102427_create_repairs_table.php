@@ -37,6 +37,30 @@ class CreateRepairsTable extends Migration
             $table->unsignedDecimal('muntinlupa_fee', $precision = 8, $scale = 2);
             $table->softDeletes();
         });
+
+        DB::table('repairs')->insert(
+            array(
+                'basic_fee' => 0,
+                'expert_fee' => 0,
+                'upgrade_fee' => 0,
+                'caloocan_fee' => 0,
+                'malabon_fee' => 0,
+                'navotas_fee' => 0,
+                'valenzuela_fee' => 0,
+                'quezon_fee' => 0,
+                'marikina_fee' => 0,
+                'pasig_fee' => 0,
+                'taguig_fee' => 0,
+                'makati_fee' => 0,
+                'manila_fee' => 0,
+                'mandaluyong_fee' => 0,
+                'sanjuan_fee' => 0,
+                'pasay_fee' => 0,
+                'paranaque_fee' => 0,
+                'laspinas_fee' => 0,
+                'muntinlupa_fee' => 0,
+            )
+        );
     }
 
     /**

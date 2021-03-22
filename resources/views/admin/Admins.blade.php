@@ -303,7 +303,7 @@ e.preventDefault();
 var formData = new FormData(this);
 $.ajax({
 type:'POST',
-url: "{{ url('/admin/users/modify') }}",
+url: "{{ url('/admin/users/modifyAdmin') }}",
 data: formData,
 cache:false,
 contentType: false,

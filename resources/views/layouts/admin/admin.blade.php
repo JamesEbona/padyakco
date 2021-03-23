@@ -182,7 +182,7 @@ div.pac-container {
 
       <!-- Heading -->
       <div class="sidebar-heading">
-        BICYCLE STORE
+        STORE
       </div>
 
   
@@ -204,7 +204,13 @@ div.pac-container {
           <span>Sub Categories</span></a>
       </li>
 
-       <li class="nav-item {{{ (Route::current()->getName() == "adminOrders" ? 'active' : '') }}}">
+      <li class="nav-item {{{ (Route::current()->getName() == "couriers" ? 'active' : '') }}}">
+        <a class="nav-link" href="{{route('couriers')}}">
+          <i class="fas fa-fw fa-shipping-fast"></i>
+          <span>Logistic Partners</span></a>
+      </li>
+
+      <li class="nav-item {{{ (Route::current()->getName() == "adminOrders" ? 'active' : '') }}}">
         <a class="nav-link" href="{{route('adminOrders')}}">
           <i class="fas fa-fw fa-receipt"></i>
           <span>Orders</span></a>
@@ -550,6 +556,13 @@ $('#bookingstable').DataTable( {
            },
          ],
 
+} );
+
+$('#courierstable').DataTable( {
+  columnDefs: [
+    {searchable: false,  orderable: false, targets: 3 }
+  ]
+  
 } );
 
 </script>

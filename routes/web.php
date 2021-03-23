@@ -7,7 +7,7 @@ use App\Http\Controllers\GuidesController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\InquiriesController;
 
-use App\Mail\OrderAdminNotification;
+use App\Mail\OrderShipped;
 use App\Models\Order;
 
 
@@ -44,7 +44,7 @@ Route::get('/email', function(){
   
     $order = Order::findOrFail(12);
 
-    return new OrderAdminNotification($order);
+    return new OrderShipped($order);
 });
 
 // Route::get('/dashboard', function () {
@@ -158,6 +158,10 @@ Route::group([
     Route::get('inquiries', 'InquiriesController@index')->name('inquiries');
     Route::get('inquiries/delete/{id}', 'InquiriesController@destroy');
     Route::post('inquiries/reply', 'InquiriesController@reply');
+    Route::get('couriers', 'CouriersController@index')->name('couriers');
+    Route::post('couriers/store', 'CouriersController@store');
+    Route::post('couriers/edit', 'CouriersController@edit');
+    Route::get('couriers/delete/{id}', 'CouriersController@destroy');
    
 });
 

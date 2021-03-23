@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Repair;
 use App\Models\Booking;
 use App\Rules\verify_booking_region;
+use App\Rules\check_active_booking;
 use Carbon\Carbon;
 use App\Events\BookingCancelledEvent;
 use App\Events\NewBookingEvent;
@@ -33,19 +34,26 @@ class BookingController extends Controller
     }
 
     public function book(Request $request){
-
+      
         $nowDate = Carbon::now();
         $minDate = $nowDate->addHour()->format('Y-m-d\TH:i');
         $maxDate = $nowDate->addWeeks(1)->format('Y-m-d\TH:i');
         
+        
         $request->validate([
-            'location' => ['required','string','max:100'],
+            'location' => ['required','string','max:500'],
             'region' => ['nullable', new verify_booking_region()],
-            'booking_time' => ['required','date_format:Y-m-d\TH:i','before_or_equal:'.$maxDate.',after_or_equal:'.$minDate],
+            'booking_time' => ['required','date_format:Y-m-d\TH:i','before_or_equal:'.$maxDate.'','after_or_equal:'.$minDate],
             'repair_type' => ['required','string','regex:/^[a-zA-Z ]*$/','max:20'],
             'phone_number' => array('required','regex:/^(09|\+639)\d{9}$/'),
-            'notes' => ['nullable','string','max:1000'],    
+            'notes' => ['nullable','string','max:1000'],  
+            'memberId' => ['required', new check_active_booking()],  
         ]);
+
+         // $result = Booking::where('status','!=','cancelled')->where('status','!=','done')->where('user_id', auth()->id())->get();
+        // if (isset($result)) {
+        //    return response()->json(['errors'=>$validator->errors()->all()]); 
+        // }
 
         $repair_fee = 0;
         $transportation_fee = 0;

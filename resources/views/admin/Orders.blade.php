@@ -80,7 +80,7 @@
       <a class="btn btn-warning" href="{{route('adminOrderView', ['id' => $order->id])}}"><i class="fas fa-info-circle" aria-hidden="true"></i></a>
       </div>
       <div class="col-md-4 ">
-      <button @if($order->status == "cancelled" || $order->status == "delivered") disabled @endif class="btn btn-info " data-id="{{$order->id}}" data-status="{{$order->status}}" onclick="updateStatus(this);"><i class="fas fa-shipping-fast" aria-hidden="true"></i></button>
+      <button @if($order->status == "cancelled" || $order->status == "delivered") disabled @endif class="btn btn-info " data-id="{{$order->id}}" data-status="{{$order->status}}" data-track="{{$order->tracking_number}}" data-courier="{{$order->courier_id}}" onclick="updateStatus(this);"><i class="fas fa-shipping-fast" aria-hidden="true"></i></button>
       </div></div> </td> 
   </tr>
 @endforeach
@@ -221,7 +221,19 @@
                         <option value="delivered">Delivered</option>
                         <option value="cancelled">Cancelled</option>
                         </select>
-                    </div>             
+                    </div>  
+                    <div class="form-group">
+                        <label>Logistic Partner</label>
+                        <select class="form-control" name="courier_id" id="editCourier">
+                        @foreach($couriers as $courier)
+                        <option value="{{$courier->id}}">{{$courier->name}}</option>
+                        @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Tracking Number</label>
+                        <input class="form-control" type="text" id="editTrackingNumber" name="tracking_number">
+                    </div>               
                       <div class="pt-2">
               </div>  
                 </div>

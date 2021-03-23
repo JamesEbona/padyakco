@@ -229,15 +229,15 @@
                         <textarea class="form-control" rows="5" id="editDescription" name="description"></textarea>
                     </div>
                     <div class="form-group">
-                        <label>Image 1 (optional)</label>
+                        <label>Optional Image 1 (Minimumn: 700 x 401)</label>
                         <input type="file" class="form-control" name="image1">
                     </div>
                     <div class="form-group">
-                        <label>Image 2 (optional)</label>
+                        <label>Optional Image 2 (Minimumn: 700 x 401)</label>
                         <input type="file" class="form-control" name="image2">
                     </div>
                     <div class="form-group">
-                        <label>Image 3 (optional)</label>
+                        <label>Optional Image 3 (Minimumn: 700 x 401)</label>
                         <input type="file" class="form-control" name="image3">
                     </div>
                    
@@ -316,15 +316,15 @@
                         <textarea class="form-control" rows="5" name="description"></textarea>
                     </div>
                     <div class="form-group @error('image') is-invalid @enderror">
-                        <label>Image 1 (optional)</label>
+                        <label>Image 1 (Minimumn: 700 x 401)</label>
                         <input type="file" class="form-control" name="image1">
                     </div>
                     <div class="form-group @error('image') is-invalid @enderror">
-                        <label>Image 2 (optional)</label>
+                        <label>Image 2 (Minimumn: 700 x 401)</label>
                         <input type="file" class="form-control" name="image2">
                     </div>
                     <div class="form-group @error('image') is-invalid @enderror">
-                        <label>Image 3 (optional)</label>
+                        <label>Image 3 (Minimumn: 700 x 401)</label>
                         <input type="file" class="form-control" name="image3">
                     </div>
                 </div>

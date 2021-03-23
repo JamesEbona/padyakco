@@ -112,6 +112,20 @@ Padyak.Co Admin - View Order
                     </div>
                 </div>
             </div>
+            @isset($order->courier_id)
+            <div class="row">
+                <div class="col-xl-12 col-lg-12">
+                    <div class="card shadow mb-4">
+                        <div class="card-body"> 
+                            <h4 class="mb-2">Tracking Details:</h4>
+                            <p class="m-0 p-0">{{$order->courier->name}}</p>
+                            <p class="m-0 p-0">{{$order->tracking_number}}</p>          
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @endisset
+
             <div class="row">
                 <div class="col-xl-12 col-lg-12">
                     <div class="card shadow mb-4">

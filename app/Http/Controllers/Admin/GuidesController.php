@@ -86,7 +86,7 @@ class GuidesController extends Controller
             'author' => ['required','string'],
             'content' => ['required'],
             'description' => ['required','string','max:800','min:2'],
-            'thumbnail' => ['required','image'],
+            'thumbnail' => ['required','image','dimensions:min_width=750,min_height=300'],
             'category_id' => ['required','numeric']
         ]);
 

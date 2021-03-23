@@ -92,7 +92,7 @@ Padyak.Co Admin - Edit Guide
           <div class="row">
         <div class="col-md-12">
        <div class="form-group">
-              <label>Thumbnail</label>
+              <label>Thumbnail (Minimum: 750 x 300)</label>
               <input class="form-control @error('thumbnail') is-invalid @enderror"  type="file" name="thumbnail">
           </div>
           </div>

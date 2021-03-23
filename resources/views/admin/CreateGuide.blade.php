@@ -48,7 +48,7 @@ Padyak.Co Admin - Create Guide
         <div class="col-md-12">
        <div class="form-group">
               <label>Title</label>
-              <input class="form-control @error('title') is-invalid @enderror"  type="text" name="title" required>
+              <input class="form-control @error('title') is-invalid @enderror"  type="text" name="title" required value="@if($errors->has('title')){{ old('title')}}@endif">
           </div>
           </div>
           </div>
@@ -56,7 +56,7 @@ Padyak.Co Admin - Create Guide
         <div class="col-md-12">
        <div class="form-group">
               <label>Author</label>
-              <input class="form-control @error('author') is-invalid @enderror"  type="text" name="author" required>
+              <input class="form-control @error('author') is-invalid @enderror"  type="text" name="author" required value="@if($errors->has('author')){{ old('author')}}@endif">
           </div>
           </div>
           </div>
@@ -76,14 +76,14 @@ Padyak.Co Admin - Create Guide
         <div class="col-md-12">
        <div class="form-group">
               <label>Short Description</label>
-              <textarea name="description" class="form-control @error('description') is-invalid @enderror" rows="3"></textarea>
+              <textarea name="description" class="form-control @error('description') is-invalid @enderror" rows="3">@if($errors->has('description')){{ old('description')}}@endif</textarea>
           </div>
           </div>
           </div>
           <div class="row">
         <div class="col-md-12">
        <div class="form-group">
-              <label>Thumbnail</label>
+              <label>Thumbnail (Minimum: 750 x 300)</label>
               <input class="form-control @error('thumbnail') is-invalid @enderror"  type="file" name="thumbnail" required>
           </div>
           </div>
@@ -92,7 +92,7 @@ Padyak.Co Admin - Create Guide
         <div class="col-md-12">
        <div class="form-group">
               <label>Content</label>
-              <textarea name="content" id="editor"></textarea>
+              <textarea name="content" id="editor">@if($errors->has('content')){{ old('content')}}@endif</textarea>
           </div>
           </div>
           </div>

@@ -584,7 +584,39 @@
                                 </th>
                               </tr>
 
+                               @isset($order->courier_id)
                               <!-- END SECTION: Payment Info -->
+                                 <!-- BEGIN SECTION: Payment Info -->
+                                 <tr id="section-3499742" class="section payment_info">
+                                <th style="mso-line-height-rule: exactly; padding: 11px 44px;" bgcolor="#ffffff">
+                                  <table class="table-inner" cellspacing="0" cellpadding="0" border="0" width="100%" style="min-width: 100%;" role="presentation">
+
+                                    <!-- PAYMENT INFO -->
+                                    <tr>
+                                      <th colspan="2" style="mso-line-height-rule: exactly;" bgcolor="#ffffff" valign="top">
+                                        <h3 data-key="3499742_payment_info" style="font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; color: #1a1a1a; font-size: 14px; line-height: 22px; font-weight: 400; text-transform: none; border-bottom-width: 1px; border-bottom-color: #eeeeee; border-bottom-style: solid; margin: 0;" align="left">Tracking Info</h3>
+                                      </th>
+                                    </tr>
+
+                                    <!-- PAYMENT METHOD IMAGE -->
+                                    <tr>
+                                      <th class="table-title" style="mso-line-height-rule: exactly; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 15px; line-height: 22px; font-weight: 400; text-transform: none; color: #000000; width: 65%; padding: 5px 0;" align="left" bgcolor="#ffffff" valign="top">
+                                        <table cellspacing="0" cellpadding="0" border="0" width="100%" style="min-width: 100%;" role="presentation">
+                                          <tr>
+                                          <th class="table-text" style="mso-line-height-rule: exactly; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 15px; line-height: 22px; font-weight: 400; text-transform: none; color: #000000; width: 35%; padding: 11px 0;" align="left" bgcolor="#ffffff" valign="middle">{{$order->courier->name}}</th>
+                                            <th style="mso-line-height-rule: exactly; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 15px; line-height: 22px; font-weight: 400; text-transform: none; color: #000000; padding: 7px 0;" align="left" bgcolor="#ffffff" valign="middle">
+                                            </th>
+                                          </tr>
+                                        </table>
+                                      </th>
+                                      <th class="table-text" style="mso-line-height-rule: exactly; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 15px; line-height: 22px; font-weight: 400; text-transform: none; color: #000000; width: 35%; padding: 11px 0;" align="right" bgcolor="#ffffff" valign="middle">{{$order->tracking_number}}</th>
+                                    </tr>
+                                  </table>
+                                </th>
+                              </tr>
+
+                              <!-- END SECTION: Payment Info -->
+                              @endisset
 
                               <!-- BEGIN SECTION: Customer And Shipping Address -->
                               <tr id="section-3499740" class="section customer_and_shipping_address">

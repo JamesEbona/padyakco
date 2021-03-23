@@ -86,7 +86,7 @@ class AccountController extends Controller
             'first_name' => 'required|string|max:30|min:2|regex:/^[\pL\s\-\.]+$/u',
             'last_name' => 'required|string|max:30|min:2|regex:/^[\pL\s\-\.]+$/u',
             'email' => 'required|string|email:rfc,dns|max:50|unique:users,email,'.$UserID.',id',
-            'image' => 'image'
+            'image' => 'image|dimensions:min_width=100,min_height=100'
             // 'email' => 'required|string|email|max:50|unique:users',
         ]);
 
@@ -120,8 +120,6 @@ class AccountController extends Controller
             event(new Registered($user));
         }
         else{
-            $ran = "yes";
-            dd($ran);
             $data = array(
                 'first_name' => request('first_name'),
                 'last_name' => request('last_name'),

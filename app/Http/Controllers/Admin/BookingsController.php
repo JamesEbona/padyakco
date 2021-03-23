@@ -62,7 +62,7 @@ class BookingsController extends Controller
 
         if(request('location') != $booking->location){
               $request->validate([
-                'location' => ['required','string','max:100'],
+                'location' => ['required','string','max:500'],
                 'region' => ['nullable', new verify_booking_region()],
               ]);
 

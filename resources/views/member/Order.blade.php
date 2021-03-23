@@ -107,8 +107,7 @@ My Order
 					<div class="col-md-12">
                     <p>{{$order->phone_number}}</p>
 					</div>
-					</div>
-                    
+					</div> 
 				  </div>
 			 </div>  
              </div>
@@ -149,6 +148,35 @@ My Order
 			 </div>  
              </div>
              </div>
+			 @isset($order->courier_id)
+			 <div class="row">
+             <div class="col-md-6">
+             <div class="cart-header">
+				 <div class="cart-sec">
+				 <div class="row mt-4">
+					<div class="col-md-12">
+				    <h2>Tracking Information:</h2>
+					</div>
+					</div>
+					<div class="row">
+					<div class="col-md-12">
+                    <a class="account-links" target="_new" href="{{$order->courier->website}}">
+					<p>{{$order->courier->name}}</p>
+					@isset($order->courier->website)
+				    </a>
+					@endisset
+					</div>
+					</div>
+					<div class="row">
+					<div class="col-md-12">
+                    <p>{{$order->tracking_number}}</p>
+					</div>
+					</div>
+				 </div>
+				 </div>
+				 </div>
+				 </div>
+				 @endisset
 			 <dic class="row">&nbsp;</div>
 		
 
@@ -165,3 +193,9 @@ My Order
 
 
 @endsection
+
+
+
+
+				
+				

@@ -24,7 +24,9 @@ class Order extends Model
         'province',
         'postal_code',
         'phone_number',
-        'status'
+        'status',
+        'courier_id',
+        'tracking_number'
     ];
 
     public function orderitems()
@@ -35,5 +37,10 @@ class Order extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function courier()
+    {
+        return $this->belongsTo(Courier::class);
     }
 }

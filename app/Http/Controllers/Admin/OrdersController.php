@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Order;
+use App\Models\Courier;
 use App\Models\Product;
 use App\Models\OrderItem;
 use App\Events\OrderShippedEvent;
@@ -25,7 +26,8 @@ class OrdersController extends Controller
     public function index()
     {
         $orders = Order::all();
-        return view('admin.Orders', compact('orders'));
+        $couriers = Courier::all();
+        return view('admin.Orders', compact('orders','couriers'));
     }
 
     public function modify(Request $request)
@@ -65,7 +67,9 @@ class OrdersController extends Controller
     {
 
       $validator = \Validator::make($request->all(), [
-        'status' => 'required|string|max:100'
+        'status' => 'required|string|max:100',
+        'courier_id' => 'nullable|max:100',
+        'tracking_number' => 'nullable|max:100'
      ]);
   
       if ($validator->fails()){
@@ -74,8 +78,17 @@ class OrdersController extends Controller
     
       $status = request('status');
       $order = Order::findOrFail(request('editId'));
+      $current_status = $order->status;
       $order->status = $status;
+      if(request('courier_id') != NULL || request('courier_id') != ''){
+      $order->courier_id = request('courier_id');
+      }
+      if(request('tracking_number') != NULL){
+      $order->tracking_number = request('tracking_number');
+      }
       $order->save();
+
+      if($current_status != $status){
 
       if($status == "in-transit"){
         event(new OrderShippedEvent($order));
@@ -105,6 +118,7 @@ class OrdersController extends Controller
         $storeYearSale->profit -= $order->grand_total;
         $storeYearSale->save();
       }
+    }
     
       return redirect("/admin/orders");
     

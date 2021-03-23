@@ -162,7 +162,7 @@
                         <input class="form-control" type="email" id="editEmail" name="email" required="" >
                     </div>
                       <div class="form-group">
-                        <label>Image</label>
+                        <label>Image (Minimum: 100 x 100)</label>
                         <input type="file" class="form-control" id="image" name="image">
                     </div>
                       <div class="pt-2">
@@ -216,7 +216,7 @@
                         <input class="form-control" id="user_add_confirm_password"  type="password" name="password_confirmation" required="" minlength="8" maxlength="15">
                     </div>
                     <div class="form-group @error('image') is-invalid @enderror">
-                        <label>Image (optional)</label>
+                        <label>Optional Image (Minimum: 100 x 100)</label>
                         <input type="file" id="user_add_image"  class="form-control" name="image">
                     </div>
                 </div>

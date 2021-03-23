@@ -18,6 +18,8 @@ class CreateOrdersTable extends Migration
             $table->timestamps();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
+            $table->unsignedBigInteger('courier_id')->nullable();
+            $table->foreign('courier_id')->references('id')->on('couriers');
             $table->unsignedInteger('quantity_total');
             $table->unsignedDecimal('sub_total', $precision = 8, $scale = 2);
             $table->unsignedDecimal('grand_total', $precision = 8, $scale = 2);
@@ -32,6 +34,7 @@ class CreateOrdersTable extends Migration
             $table->string('postal_code');
             $table->string('phone_number');
             $table->string('status');
+            $table->string('tracking_number')->nullable();
             $table->softDeletes();
         });
     }

@@ -65,6 +65,15 @@ function deleteInquiry(arg) {
      $("#DeleteUserButton").attr('href', href);
 }
 
+function deleteCourier(arg) {
+    $('#deleteModal').modal('show');
+    var id = $(arg).attr('data-id');
+    var href_start = "/admin/couriers/delete/";
+    var href = href_start + id;
+
+     $("#DeleteCourierButton").attr('href', href);
+}
+
 function editUser(arg) {
     $('#editModal').modal('show');
     var id = $(arg).attr('data-id');
@@ -188,6 +197,17 @@ function editOrder(arg) {
     $("#editPhoneNumber").val(phone_number);
 }
 
+function editCourier(arg) {
+    $('#editModal').modal('show');
+    var id = $(arg).attr('data-id');
+    var name = $(arg).attr('data-name');
+    var website = $(arg).attr('data-website');
+   
+    $("#editId").val(id);
+    $("#editName").val(name);
+    $("#editWebsite").val(website);
+}
+
 function updateAdditionalFee(arg) {
     $('#editModal').modal('show');
     var id = $(arg).attr('data-id');
@@ -263,9 +283,13 @@ function updateStatus(arg) {
     $('#editStatusModal').modal('show');
     var id = $(arg).attr('data-id');
     var status = $(arg).attr('data-status');
+    var track = $(arg).attr('data-track');
+    var courier = $(arg).attr('data-courier');
 
     $("#editStatusId").val(id);
     $("#viewId").val(id);
+    $("#editTrackingNumber").val(track);
+    document.getElementById('editCourier').value = courier; 
 
     $('#editStatus').empty();
 

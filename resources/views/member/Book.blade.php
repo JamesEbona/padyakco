@@ -30,6 +30,7 @@ Padyak.Co - Book Mechanic
                             <label>Location</label>
                             <input id="searchInput" class="controls mt-3 form-control" type="text" placeholder="Enter your location">
                             <div id="map" style="height:300px;"></div>
+                            <input type="hidden" name="memberId" value="{{auth()->id()}}">
                             <input type="hidden" id="location" name="location">
                             <input type="hidden" id="city" name="city">
                             <input type="hidden" id="region" name="region">

@@ -38,9 +38,9 @@ class ProductsController extends Controller
           'delivery_fee' => 'required|numeric',
           'provincial_delivery_fee' => 'required|numeric',
           'description' => 'string|max:800|min:2',
-          'image1' => 'image',
-          'image2' => 'image',
-          'image3' => 'image'
+          'image1' => 'image|dimensions:min_width=700,min_height=401',
+          'image2' => 'image|dimensions:min_width=700,min_height=401',
+          'image3' => 'image|dimensions:min_width=700,min_height=401'
               
        ]);
     
@@ -49,14 +49,14 @@ class ProductsController extends Controller
         }
         
             if(request('image1') != NULL){
-           $image1Path = request('image1')->store('avatars','public'); 
+           $image1Path = request('image1')->store('products','public'); 
                   
             $image1 = Image::make(public_path("storage/{$image1Path}"));
             $image1->fit(700, 401);
             $image1->save();
            }
            else {
-            $image1Path = 'products/product_default.png';
+            $image1Path = 'products/product_default.jpg';
            }
 
            if(request('image2') != NULL){
@@ -66,7 +66,7 @@ class ProductsController extends Controller
             $image2->save();
            }
            else {
-            $image2Path = 'products/product_default.png';
+            $image2Path = 'products/product_default.jpg';
            }
 
            if(request('image3') != NULL){
@@ -76,7 +76,7 @@ class ProductsController extends Controller
             $image3->save();
            }
            else {
-            $image3Path = 'products/product_default.png';
+            $image3Path = 'products/product_default.jpg';
            }
 
             //  $user = $user = new User; 
@@ -114,8 +114,8 @@ class ProductsController extends Controller
             'provincial_delivery_fee' => 'required|numeric',
             'description' => 'string|max:800|min:2',
             'image1' => 'image',
-            'image2' => 'image',
-            'image3' => 'image'
+            'image2' => 'image|dimensions:min_width=700,min_height=401',
+            'image3' => 'image|dimensions:min_width=700,min_height=401'
                 
         ]);
     
@@ -124,7 +124,7 @@ class ProductsController extends Controller
         }
         
             if(request('image1') != NULL){
-            $image1Path = request('image1')->store('avatars','public'); 
+            $image1Path = request('image1')->store('products','public'); 
                     
             $image1 = Image::make(public_path("storage/{$image1Path}"));
             $image1->fit(700, 401);

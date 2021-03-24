@@ -60,6 +60,8 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->forget('cartTotal');
 
+        $request->session()->forget('coupon');
+
         return redirect('/');
     }
 }

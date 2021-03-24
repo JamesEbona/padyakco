@@ -118,8 +118,17 @@ Padyak.Co Admin - View Order
                     <div class="card shadow mb-4">
                         <div class="card-body"> 
                             <h4 class="mb-2">Tracking Details:</h4>
+                            <div class="row">
+                            <div class="col-md-6">
                             <p class="m-0 p-0">{{$order->courier->name}}</p>
-                            <p class="m-0 p-0">{{$order->tracking_number}}</p>          
+                            <p class="m-0 p-0">{{$order->tracking_number}}</p> 
+                            </div>
+                            <div class="col-md-6">
+                            <div class="row float-right mr-1">
+                            <img alt="logistics-website" class="mr-1" src="/storage/{{$order->courier->logo}}" >
+                            </div>
+                            </div>
+                            </div>         
                         </div>
                     </div>
                 </div>
@@ -143,7 +152,7 @@ Padyak.Co Admin - View Order
                                      <p>₱{{number_format($order->sub_total,2)}}</p>
                                 </div>
                             </div>
-                            <div class="row" style="border-bottom: 2px solid; padding-bottom: 12px;">
+                            <div class="row">
                                 <div class="col-md-8">
                                      <p>Delivery Total ({{$order->province}})</p>
                                 </div>
@@ -151,7 +160,17 @@ Padyak.Co Admin - View Order
                                      <p>₱{{number_format($order->shipping,2)}}</p>
                                 </div>
                             </div>
-                            <div class="row" style="padding-top: 12px;">
+                            @isset($order->discount)
+                            <div class="row">
+                                <div class="col-md-8">
+                                     <p>Discount ({{$order->discount_code}})</p>
+                                </div>
+                                <div class="col-md-4 text-right">
+                                     <p>- ₱{{number_format($order->discount,2)}}</p>
+                                </div>
+                            </div>
+                            @endisset
+                            <div class="row" style="border-top: 2px solid; padding-top: 12px;">
                                 <div class="col-md-6">
                                     <p>Payment Total</p>
                                 </div>

@@ -17,6 +17,7 @@ use App\Models\StoreMonthSales;
 use App\Models\StoreYearSales;
 use Illuminate\Support\Facades\Auth;
 use App\Events\NewOrderEvent;
+use App\Models\Coupon;
 // use App\Mail\OrderReceipt;
 // use Illuminate\Support\Facades\Mail;
 // use Illuminate\Support\Facades\Notification;
@@ -90,6 +91,7 @@ class CheckoutController extends Controller
     }
 
     public function review(){
+        
         $cartId = Cart::where('user_id', Auth::id())->first()->id;
         $cart =  Cart::where('id',$cartId)->first();
         $cartItems =  CartItem::where('cart_id',$cartId)->get();
@@ -97,13 +99,19 @@ class CheckoutController extends Controller
         $cartItemTotal = 0;
         $cartDeliveryTotal = 0;
         $product_check = '';
+        $discount = 0;
+        $discount_code = '';
+        if(session()->has('coupon')){
+        $discount = session()->get('coupon')['discount']; 
+        $discount_code = session()->get('coupon')['name'];
+        }
 
         if($cart->total_quantity == 0){
             return redirect()->route('memberCart');
         }
-        else if(url()->previous() != 'http://padyakco.test/member/checkout/address'){
-            return redirect()->route('memberCart');
-        }
+        // else if(url()->previous() != 'http://padyakco.test/member/checkout/address'){
+        //     return redirect()->route('memberCart');
+        // }
         else{
             foreach ($cartItems as $cartItem){
            
@@ -145,7 +153,7 @@ class CheckoutController extends Controller
                 return redirect()->route('memberCart')->with('cart_stock', 'Some items were removed from your cart because the product is not found.');
             }
             else{
-            return view('member.CheckoutReview', compact('cart','cartItems','cartItemNo', 'cartItemTotal', 'cartDeliveryTotal'));
+            return view('member.CheckoutReview', compact('cart','cartItems','cartItemNo', 'cartItemTotal', 'cartDeliveryTotal', 'discount', 'discount_code'));
             }
         }
     }
@@ -196,7 +204,7 @@ class CheckoutController extends Controller
     public function order(Request $request){
         //get data from ajax
         //store order
-        
+       
         $cart = Cart::where('user_id', Auth::id())->firstOrFail();
        
         $order = new Order;
@@ -215,6 +223,12 @@ class CheckoutController extends Controller
         $order->postal_code = auth()->user()->address->postal_code;
         $order->phone_number = auth()->user()->address->phone_number;
         $order->status = 'paid';
+        $discount = request('discount');
+        if(isset($discount)){
+            $order->discount =  request('discount');
+            $order->discount_code =  request('discount_code');
+            session()->forget('coupon');
+        }
         $order->save();
 
         $orderDay = date_format($order->created_at, 'd');
@@ -288,6 +302,29 @@ class CheckoutController extends Controller
         $order =  Order::where('user_id', Auth::id())->orderBy('created_at', 'DESC')->firstOrFail();
         $related_products = Product::where('status','active')->inRandomOrder()->limit(4)->get();
         return view('member.orderPlaced', compact('order','related_products'));
+    }
+
+    public function storeCoupon(Request $request)
+    {
+        $coupon = Coupon::where('code', $request->coupon_code)->where('status', 'active')->where('category', 'Store')->first();
+
+        if (!$coupon) {
+            return back()->withErrors('Invalid coupon code. Please try again.');
+        }
+
+        session()->put('coupon', [
+            'name' => $coupon->code,
+            'discount' => $coupon->discount($request->cartTotal)
+        ]);
+
+        return redirect()->route('checkoutReview')->with('message', 'Coupon has been applied!');
+    }
+
+    public function destroyCoupon()
+    {
+        session()->forget('coupon');
+
+        return redirect()->route('checkoutReview')->with('message', 'Coupon has been removed!');
     }
   
 }

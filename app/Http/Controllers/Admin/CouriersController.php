@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Courier;
 use App\Models\Order;
+use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Storage;
 
 class CouriersController extends Controller
 {
@@ -25,16 +27,24 @@ class CouriersController extends Controller
     {
         $validator = \Validator::make($request->all(), [
             'name' => 'required|string|max:30|min:2',
-            'website' => 'nullable|string|max:500|min:2',     
+            'website' => 'nullable|string|max:500|min:2', 
+            'logo' => 'required|image|dimensions:min_height=40'    
          ]);
       
         if ($validator->fails()){
             return response()->json(['errors'=>$validator->errors()->all()]);
         }
+
+        $logoPath = request('logo')->store('courier_logos','public'); 
+                  
+        $logo = Image::make(public_path("storage/{$logoPath}"));
+        $logo->fit(40, null);
+        $logo->save();
           
         $courier = new Courier; 
         $courier->name = request('name');
         $courier->website = request('website');
+        $courier->logo = $logoPath;
         $courier->save();
 
         return redirect("/admin/couriers")->with('message', 'Logistic partner added.');
@@ -44,16 +54,27 @@ class CouriersController extends Controller
     {
         $validator = \Validator::make($request->all(), [
             'name' => 'required|string|max:30|min:2',
-            'website' => 'nullable|string|max:500|min:2',     
+            'website' => 'nullable|string|max:500|min:2',
+            'logo' => 'nullable|image|dimensions:min_height=40'      
          ]);
       
         if ($validator->fails()){
             return response()->json(['errors'=>$validator->errors()->all()]);
         }
+
+        if(request('logo') != NULL){
+            $logoPath = request('logo')->store('courier_logos','public');         
+            $logo = Image::make(public_path("storage/{$logoPath}"));
+            $logo->fit(40);
+            $logo->save();
+        }
         
         $courier = Courier::findOrFail(request('editId'));
         $courier->name = request('name');
         $courier->website = request('website');
+        if(request('logo') != NULL){
+            $courier->logo = $logoPath;
+         }
         $courier->save();
 
         return redirect("/admin/couriers")->with('message', 'Logistic partner updated.');

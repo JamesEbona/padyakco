@@ -24,6 +24,7 @@ class CreateOrdersTable extends Migration
             $table->unsignedDecimal('sub_total', $precision = 8, $scale = 2);
             $table->unsignedDecimal('grand_total', $precision = 8, $scale = 2);
             $table->unsignedDecimal('shipping', $precision = 8, $scale = 2);
+            $table->unsignedDecimal('discount', $precision = 8, $scale = 2)->nullable();
             $table->string('first_name');
             $table->string('last_name');
             $table->string('email');
@@ -34,6 +35,7 @@ class CreateOrdersTable extends Migration
             $table->string('postal_code');
             $table->string('phone_number');
             $table->string('status');
+            $table->string('discount_code')>nullable();
             $table->string('tracking_number')->nullable();
             $table->softDeletes();
         });

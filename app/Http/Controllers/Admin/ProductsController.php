@@ -37,7 +37,7 @@ class ProductsController extends Controller
           'price' => 'required|numeric',
           'delivery_fee' => 'required|numeric',
           'provincial_delivery_fee' => 'required|numeric',
-          'description' => 'string|max:800|min:2',
+          'description' => 'required|string|max:800|min:2',
           'image1' => 'image|dimensions:min_width=700,min_height=401',
           'image2' => 'image|dimensions:min_width=700,min_height=401',
           'image3' => 'image|dimensions:min_width=700,min_height=401'

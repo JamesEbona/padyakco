@@ -35,7 +35,7 @@
   <div class="form-group @error('message') has-error @enderror ">
     <label class="col-sm-2 control-label">Message</label>
     <div class="col-sm-10">
-      <textarea rows="5" class="form-control" name="message">{{ old('message') }}</textarea>
+      <textarea rows="5" class="form-control" required name="message">{{ old('message') }}</textarea>
     </div>
 
   </div>

@@ -15,6 +15,7 @@ use App\Events\BookingDoneEvent;
 use App\Models\BookingDaySales;
 use App\Models\BookingMonthSales;
 use App\Models\BookingYearSales;
+use App\Models\Coupon;
 
 
 class BookingController extends Controller
@@ -198,6 +199,11 @@ class BookingController extends Controller
         $bookingYearSales->save(); 
 
         return view('member.Booking', compact('booking'));
+    }
+
+    public function storeCoupon(Request $request)
+    {
+        $coupon = Coupon::where('code', $request->coupon_code)->first();
     }
 
 }

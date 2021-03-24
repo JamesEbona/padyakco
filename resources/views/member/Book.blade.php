@@ -3,6 +3,7 @@ Padyak.Co - Book Mechanic
 @endsection
 
 @extends('layouts.member.general')
+
 @section('content')
 <div class="cart" >
 	 <div class="container style="min-height:160vh"">
@@ -70,20 +71,23 @@ Padyak.Co - Book Mechanic
 				 <span id="initial_fee" class="total">₱ {{number_format($repair->basic_fee,2)}}</span>
 				 <span>Transportation fee</span>
 				 <span id="transportation_fee" class="total">₱ 0.00</span>
-                 <!-- <span>Discount</span>
-				 <span class="total">---</span> -->
+                 <span>Discount</span>
+				 <span class="total">---</span>
 				 <div class="clearfix"></div>				 
 			 </div>	
 			 <h4 class="last-price">TOTAL</h4>
 			 <span id="total_fee" class="total final">₱ {{number_format($repair->basic_fee,2)}}</span>
 			 <div class="clearfix"></div>
 			
-			 <!-- <div class="total-item">
-				 <h3>OPTIONS</h3>
-				 <h4>COUPONS</h4>
-				 <a class="cpns" href="#">Apply Coupons</a>
-			 </div> -->
-             <div class="total-item">
+			 <div class="total-item mt-5">
+				 <h3>COUPONS</h3>
+                 <form action="{{route('repair.storeCoupon')}}" method="post">
+                 @csrf
+				 <input type="text" class="form-control" name="coupon_code" id="coupon_code"> 
+				 <button type="submit" class="btn cpns">Apply Coupon</a>
+                 </form>
+			 </div>
+             <div class="total-item mt-0">
 				 <h3>REMINDERS</h3>
 				 <P>This estimate is an approximation and is not guaranteed. 
                     The estimate is based on information provided from the member regarding 
@@ -99,6 +103,7 @@ Padyak.Co - Book Mechanic
 var repair_fee = {{$repair->basic_fee}};
 var transportation_fee = 0;
 var total_fee = 0;
+var discount = 0;
 
  function initMap() {
     var latlng = new google.maps.LatLng(14.6091,121.0223);

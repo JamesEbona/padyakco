@@ -165,10 +165,10 @@
               </ul>
               </div>
             @endif
-			<input type="text" name="name" placeholder="NAME" required="">
-			 <input type="text"  name="email" placeholder="E-MAIL" required="">			 
-			 <input class="user"  type="text" name="subject" placeholder="SUBJECT" required=""><br>
-			 <textarea name="message" placeholder="MESSAGE"></textarea>
+			<input type="text" name="name" placeholder="NAME" required>
+			 <input type="text"  name="email" placeholder="E-MAIL" required>			 
+			 <input class="user"  type="text" name="subject" placeholder="SUBJECT" required><br>
+			 <textarea name="message" placeholder="MESSAGE" required></textarea>
 			 <input type="submit" value="SEND">
 		</form>
 	</div>

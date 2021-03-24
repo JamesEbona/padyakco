@@ -59,7 +59,7 @@
                           <td>{{$product->category->title}}</td>
                           <td>{{$product->subcategory->title ?? ''}}</td>
                           <td>{{$product->quantity}}</td>
-                          <td>{{$product->price}}</td>
+                          <td>₱{{$product->price}}</td>
                           <!-- <td> <i class="fa fa-star" aria-hidden="true"></i></td> -->
                           <td>{{$product->created_at ?? 'Not Found'}}</td>
                           @if($product->status == "active")
@@ -214,30 +214,30 @@
                     </div>
                     <div class="form-group">
                         <label>Price</label>
-                        <input class="form-control" type="number" id="editPrice" name="price" required="" min="0" step="0.01">
+                        <input class="form-control" type="number" id="editPrice" name="price" required="" min="1" step="0.50">
                     </div>
                     <div class="form-group">
                         <label>Delivery Fee</label>
-                        <input class="form-control" type="number" id="editDelivery" name="delivery_fee" required="" min="0" step="0.01">
+                        <input class="form-control" type="number" id="editDelivery" name="delivery_fee" required="" min="0"  step="0.50">
                     </div>
                     <div class="form-group">
                         <label>Provincial Delivery Fee</label>
-                        <input class="form-control" type="number" id="editProvincial" name="provincial_delivery_fee" required="" min="0" step="0.01">
+                        <input class="form-control" type="number" id="editProvincial" name="provincial_delivery_fee" required="" min="0" step="0.50">
                     </div>
                     <div class="form-group">
                         <label>Description</label>
                         <textarea class="form-control" rows="5" id="editDescription" name="description"></textarea>
                     </div>
                     <div class="form-group">
-                        <label>Optional Image 1 (Minimumn: 700 x 401)</label>
+                        <label>Optional Image 1 (Minimum: 700 x 401)</label>
                         <input type="file" class="form-control" name="image1">
                     </div>
                     <div class="form-group">
-                        <label>Optional Image 2 (Minimumn: 700 x 401)</label>
+                        <label>Optional Image 2 (Minimum: 700 x 401)</label>
                         <input type="file" class="form-control" name="image2">
                     </div>
                     <div class="form-group">
-                        <label>Optional Image 3 (Minimumn: 700 x 401)</label>
+                        <label>Optional Image 3 (Minimum: 700 x 401)</label>
                         <input type="file" class="form-control" name="image3">
                     </div>
                    
@@ -301,30 +301,30 @@
                     </div>
                     <div class="form-group">
                         <label>Price</label>
-                        <input class="form-control" type="number" name="price" required="" min="0" step="0.01">
+                        <input class="form-control" type="number" name="price" required="" min="1.00" step="0.50">
                     </div>
                     <div class="form-group">
                         <label>Delivery Fee</label>
-                        <input class="form-control" type="number" name="delivery_fee" required="" min="0" step="0.01">
+                        <input class="form-control" type="number" name="delivery_fee" required="" min="0"  step="0.50">
                     </div>
                     <div class="form-group">
                         <label>Provincial Delivery Fee</label>
-                        <input class="form-control" type="number" name="provincial_delivery_fee" required="" min="0" step="0.01">
+                        <input class="form-control" type="number" name="provincial_delivery_fee" required="" min="0"  step="0.50">
                     </div>
                     <div class="form-group">
                         <label>Description</label>
-                        <textarea class="form-control" rows="5" name="description"></textarea>
+                        <textarea class="form-control" rows="5" name="description" required=""></textarea>
                     </div>
                     <div class="form-group @error('image') is-invalid @enderror">
-                        <label>Image 1 (Minimumn: 700 x 401)</label>
+                        <label>Image 1 (Minimum: 700 x 401)</label>
                         <input type="file" class="form-control" name="image1">
                     </div>
-                    <div class="form-group @error('image') is-invalid @enderror">
-                        <label>Image 2 (Minimumn: 700 x 401)</label>
+                    <div class="form-group @error('image2') is-invalid @enderror">
+                        <label>Image 2 (Minimum: 700 x 401)</label>
                         <input type="file" class="form-control" name="image2">
                     </div>
-                    <div class="form-group @error('image') is-invalid @enderror">
-                        <label>Image 3 (Minimumn: 700 x 401)</label>
+                    <div class="form-group @error('image3') is-invalid @enderror">
+                        <label>Image 3 (Minimum: 700 x 401)</label>
                         <input type="file" class="form-control" name="image3">
                     </div>
                 </div>

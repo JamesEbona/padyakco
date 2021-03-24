@@ -74,6 +74,15 @@ function deleteCourier(arg) {
      $("#DeleteCourierButton").attr('href', href);
 }
 
+function deleteCoupon(arg) {
+    $('#deleteModal').modal('show');
+    var id = $(arg).attr('data-id');
+    var href_start = "/admin/coupons/delete/";
+    var href = href_start + id;
+
+     $("#DeleteCouponButton").attr('href', href);
+}
+
 function editUser(arg) {
     $('#editModal').modal('show');
     var id = $(arg).attr('data-id');
@@ -202,10 +211,37 @@ function editCourier(arg) {
     var id = $(arg).attr('data-id');
     var name = $(arg).attr('data-name');
     var website = $(arg).attr('data-website');
+
+    var image = $(arg).attr('data-image');
+    var image_start = "/storage/";
+    var image_src = image_start + image;
+
+    $("#viewEditImage").attr('src', image_src);
+    $("#viewEditImageLink").attr('href', image_src);
+
    
     $("#editId").val(id);
     $("#editName").val(name);
     $("#editWebsite").val(website);
+}
+
+function editCoupon(arg) {
+    $('#editModal').modal('show');
+    var id = $(arg).attr('data-id');
+    var title = $(arg).attr('data-title');
+    var type = $(arg).attr('data-type');
+    var code = $(arg).attr('data-code');
+    var category = $(arg).attr('data-category');
+    var value = $(arg).attr('data-value');
+    var percent = $(arg).attr('data-percent');
+    
+    $("#editId").val(id);
+    $("#editTitle").val(title);
+    $("#editCode").val(code);
+    document.getElementById('editType').value = type; 
+    document.getElementById('editCategory').value = category; 
+    $("#editValue").val(value);
+    $("#editPercent").val(percent);
 }
 
 function updateAdditionalFee(arg) {

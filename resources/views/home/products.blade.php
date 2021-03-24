@@ -59,12 +59,24 @@
 								 @endforeach
 							</div>
 				   </section>	
-				   <section  class="sky-form">
+
+				   <section  class="sky-form mb-5">
+						<h4>Brand</h4>
+							<div class="row row-type">
+							      @foreach ($brands as $brand)
+								 <div class="col col-4">
+								<label><input type="checkbox" name="checkbox" class="common_selector brand" value="{{$brand->brand}}" checked >&nbsp;&nbsp;&nbsp;&nbsp;{{$brand->brand}}</label>
+                                 </div>	
+								 @endforeach
+							</div>
+				   </section>	
+
+				   <section  class="sky-form mb-5">
 						<h4>Price</h4>
 							<div class="row row1 scroll-pane">
 								<div class="col col-4">
 								<div class="form-check">
-								<input class="form-check-input common_selector price" type="radio" name="price" id="priceRadio5" value="1000000" checked>
+								<input class="form-check-input common_selector price" type="radio" name="price" id="priceRadio6" value="1000000" checked>
 								<label class="form-check-label" for="priceRadio6">
 								    All prices
 								</label>
@@ -72,46 +84,37 @@
 								<div class="form-check">
 								<input class="form-check-input common_selector price" type="radio" name="price" id="priceRadio1" value="10000">
 								<label class="form-check-label" for="priceRadio1">
-								    ₱10,000 and under
+								    Below ₱10,000 
 								</label>
 								</div>
 								<div class="form-check">
 								<input class="form-check-input common_selector price" type="radio" name="price" id="priceRadio2" value="20000">
 								<label class="form-check-label" for="priceRadio2">
-								    ₱20,000 and under
+								    Below ₱20,000 
 								</label>
 								</div>
 								<div class="form-check">
 								<input class="form-check-input common_selector price" type="radio" name="price" id="priceRadio3" value="30000">
 								<label class="form-check-label" for="priceRadio3">
-							    	₱30,000 and under
+							    	Below ₱30,000 
 								</label>
 								</div>
 								<div class="form-check">
 								<input class="form-check-input common_selector price" type="radio" name="price" id="priceRadio4" value="50000">
 								<label class="form-check-label" for="priceRadio4">
-							        ₱50,000 and under
+							        Below ₱50,000 
 								</label>
 								</div>
 								<div class="form-check">
 								<input class="form-check-input common_selector price" type="radio" name="price" id="priceRadio5" value="100000">
 								<label class="form-check-label" for="priceRadio5">
-								    ₱100,000 and under
+								    Below ₱100,000 
 								</label>
 								</div>
 								</div>
 							</div>
 				   </section>		 	
-				 <section  class="sky-form">
-						<h4>Brand</h4>
-							<div class="row row1 scroll-pane">
-							      @foreach ($brands as $brand)
-								 <div class="col col-4">
-								<label><input type="checkbox" name="checkbox" class="common_selector brand" value="{{$brand->brand}}" checked >&nbsp;&nbsp;&nbsp;&nbsp;{{$brand->brand}}</label>
-                                 </div>	
-								 @endforeach
-							</div>
-				   </section>		      
+				 	      
 				        
 			 </div>			 
 			 <div class="clearfix"></div>

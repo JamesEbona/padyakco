@@ -40,12 +40,12 @@ Route::post('/guides/fetch_data', [GuidesController::class, 'fetch_guides_data']
 Route::get('/guides/show/{id}', [GuidesController::class, 'show'])->name('viewGuide');
 Route::post('/inquiries/store', [InquiriesController::class, 'store'])->name('storeInquiry');
 
-Route::get('/email', function(){
+// Route::get('/email', function(){
   
-    $order = Order::findOrFail(12);
+//     $order = Order::findOrFail(33);
 
-    return new OrderShipped($order);
-});
+//     return new OrderShipped($order);
+// });
 
 // Route::get('/dashboard', function () {
 //     return view('dashboard');
@@ -74,6 +74,8 @@ Route::group([
     Route::post('/checkout/check', 'CheckoutController@check')->name('check');
     Route::post('/checkout/order', 'CheckoutController@order')->name('order');
     Route::get('/checkout/orderPlaced', 'CheckoutController@orderPlaced')->name('orderPlaced');
+    Route::post('/checkout/storeCoupon', 'CheckoutController@storeCoupon')->name('store.storeCoupon');
+    Route::post('/checkout/destroyCoupon', 'CheckoutController@destroyCoupon')->name('store.destroyCoupon');
     Route::get('orders', 'OrderController@index')->name('orders');
     Route::get('orders/{id}', 'OrderController@show')->name('orderView');
     Route::get('book', 'BookingController@index')->name('book');
@@ -82,6 +84,7 @@ Route::group([
     Route::get('book/{id}', 'BookingController@show')->name('bookShow');
     Route::get('book/cancel/{id}', 'BookingController@cancel');
     Route::post('book/pay', 'BookingController@pay')->name('bookPay');
+    Route::post('book/storeCoupon', 'BookingController@storeCoupon')->name('repair.storeCoupon');
     Route::get('contact', 'InquiriesController@index')->name('memberContact');
     Route::post('contact/send', 'InquiriesController@store');
 });
@@ -162,6 +165,12 @@ Route::group([
     Route::post('couriers/store', 'CouriersController@store');
     Route::post('couriers/edit', 'CouriersController@edit');
     Route::get('couriers/delete/{id}', 'CouriersController@destroy');
+    Route::get('coupons', 'CouponsController@index')->name('coupons.index');
+    Route::post('coupons/store', 'CouponsController@store');
+    Route::post('coupons/update', 'CouponsController@update');
+    Route::get('coupons/activate/{id}', 'CouponsController@activate');
+    Route::get('coupons/deactivate/{id}', 'CouponsController@deactivate');
+    Route::get('coupons/delete/{id}', 'CouponsController@destroy');
    
 });
 

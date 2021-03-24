@@ -3247,6 +3247,23 @@ a.cpns{
 a.cpns:hover{
 	background: #20759F;
 }
+
+.cpns{
+	background:#59B5E2;
+	color:#fff;
+	border-radius:6px;
+	padding: 10px;
+    font-size: 0.8em;
+	font-weight:600;
+}
+.cpns:hover{
+	
+    background-color: #20759F;
+    
+}
+
+
+
 .total-item p{
 	font-size:0.9em;
 	font-weight:400;

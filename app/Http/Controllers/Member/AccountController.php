@@ -106,8 +106,8 @@ class AccountController extends Controller
         $user =  User::find($UserID);
         if($user->email != request('email')){
             $data = array(
-                'first_name' => request('first_name'),
-                'last_name' => request('last_name'),
+                'first_name' => ucfirst(request('first_name')),
+                'last_name' => ucfirst(request('last_name')),
                 'email' => request('email'),
                 'email_verified_at' => NULL
             );
@@ -121,8 +121,8 @@ class AccountController extends Controller
         }
         else{
             $data = array(
-                'first_name' => request('first_name'),
-                'last_name' => request('last_name'),
+                'first_name' => ucfirst(request('first_name')),
+                'last_name' => ucfirst(request('last_name')),
                 'email' => request('email'),
             );
 

@@ -1,11 +1,14 @@
 @extends('layouts.admin.admin')
+@section('title')
+Padyak.Co Admin - Coupons
+@endsection
 @section('content')
 <!-- Begin Page Content -->
         <div class="container-fluid">
 
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Logistic Partners List</h1>
+            <h1 class="h3 mb-0 text-gray-800">Coupons List</h1>
           </div>
 
 
@@ -27,23 +30,18 @@
                        </button>
                    </div>
                 @endif
-                @if(session()->has('error_message'))
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-        {{ session()->get('error_message') }}
-         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-         <span aria-hidden="true">&times;</span>
-         </button>
-        </div>
-      @endif
-                <button class="btn btn-primary mb-3" onclick="addRow()"><i class="fa fa-plus" aria-hidden="true"></i> Logistics Partner</button>
+                <button class="btn btn-primary mb-3" onclick="addRow()"><i class="fa fa-plus" aria-hidden="true"></i> Coupon</button>
                 <div class="table-responsive">
-                <table id="courierstable" class="table text-center">
+                <table id="couponstable" class="table text-center">
     <thead>
         <tr>
-            <th>Logo</th>
-            <th>Name</th>
-            <th>Website</th>
-            <th>Added at</th>
+            <th>Title</th>
+            <th>Code</th>
+            <th>Type</th>
+            <th>Category</th>
+            <th>Value</th>
+            <th>Percent</th>
+            <th>Status</th>
             <th>Action</th>
         </tr>
     </thead>
@@ -51,15 +49,27 @@
         <!-- <tr>
             <td>Row 1 Data 1</td>
         </tr> -->
-        @foreach ($couriers as $courier)
+        @foreach ($coupons as $coupon)
             <tr>
-                <td class="py-1"><a data-image="{{$courier->logo}}" onclick="viewUserPicture(this);"><img  class="img-profile rounded-circle table-image" src="/storage/{{$courier->logo}}"></a></td>
-                <td>{{$courier->name}}</td>
-                <td>{{$courier->website ?? 'None'}}</td>
-                <td>{{$courier->created_at}}</td>
+                <td>{{$coupon->title}}</td>
+                <td>{{$coupon->code}}</td>
+                <td>{{$coupon->type}}</td>
+                <td>{{$coupon->category ?? ''}}</td>
+                <td>{{$coupon->value ?? ''}}</td>
+                <td>{{$coupon->percent_off ?? ''}}</td>
+                @if($coupon->status == "active")
+                <td> <span class="badge badge-success justify-content-center ">{{$coupon->status}}</span></td>
+                @else
+                <td> <span class="badge badge-danger">{{$coupon->status}}</span></td>
+                @endif
                 <td><div class="row justify-content-center">
-                <button class="btn btn-dark" data-id="{{$courier->id}}" data-image="{{$courier->logo}}" data-name="{{$courier->name}}" data-website="{{$courier->website}}"  onclick="editCourier(this)"><i class="fa fa-edit" aria-hidden="true"></i></button>
-                <button class="btn btn-danger ml-2" data-id="{{$courier->id}}" onclick="deleteCourier(this)"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                <button class="btn btn-dark" data-id="{{$coupon->id}}" data-title="{{$coupon->title}}" data-code="{{$coupon->code}}" data-type="{{$coupon->type}}" data-category="{{$coupon->category}}" data-value="{{$coupon->value}}" data-percent="{{$coupon->percent_off}}"  onclick="editCoupon(this)"><i class="fa fa-edit" aria-hidden="true"></i></button>
+                @if ($coupon->status == 'active')        
+                <a class="btn btn-warning ml-2" href="/admin/coupons/deactivate/{{ $coupon->id }}"><i class="fa fa-eye-slash" aria-hidden="true"></i></a> 
+                @else                
+                <a class="btn btn-success ml-2" href="/admin/coupons/activate/{{ $coupon->id }}"><i class="fa fa-eye" aria-hidden="true"></i></a>              
+                @endif
+                <button class="btn btn-danger ml-2" data-id="{{$coupon->id}}" onclick="deleteCoupon(this)"><i class="fa fa-trash" aria-hidden="true"></i></button>
                   </div> </td> 
             </tr>
         @endforeach
@@ -91,10 +101,10 @@
             <span aria-hidden="true">×</span>
           </button>
         </div>
-        <div class="modal-body">Logistic partner will be deleted.</div>
+        <div class="modal-body">Coupon will be deleted.</div>
         <div class="modal-footer">
           <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-danger" id="DeleteCourierButton">Delete
+          <a class="btn btn-danger" id="DeleteCouponButton">Delete
           </a>
         </div>
       </div>
@@ -104,11 +114,11 @@
   <div class="modal fade crud" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalTitle" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
-            <form enctype="multipart/form-data"  id="submit_edit_courier" action="javascript:void(0)" >
+            <form enctype="multipart/form-data"  id="submit_edit_coupon" action="javascript:void(0)" >
             @CSRF
            
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editModalTitle">Edit Logistic Partner</h5>
+                    <h5 class="modal-title" id="editModalTitle">Edit Coupon</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -119,26 +129,36 @@
            
             <div class="card-body">
             <div class="alert alert-danger modal-errors" style="display:none"></div>
-            <div class="form-group">
-                <div class="row justify-content-center">
-                  <a id="viewEditImageLink" target="_blank">
-              <img id="viewEditImage"  class="rounded-circle w-100" style="max-width: 200px;">
-            </a>
-            </div>
-            </div>
-                    <div class="form-group">
-                        <label>Name</label>
-                        <input class="form-control" type="text" id="editName" name="name" required="" >
+                     <div class="form-group">
+                        <label>Title</label>
+                        <input class="form-control @error('title') is-invalid @enderror" id="editTitle" type="text" name="title" required="" maxlength="50">
                     </div>
                     <div class="form-group">
-                        <label>Delivery Tracker Website Link</label>
-                        <textarea class="form-control" id="editWebsite" name="website" rows="2"></textarea>
+                        <label>Code</label>
+                        <input class="form-control @error('code') is-invalid @enderror" id="editCode" type="text" name="code" required="" maxlength="15">
                     </div>
-                    <div class="form-group @error('logo') is-invalid @enderror">
-                        <label>Logo</label>
-                        <input type="file" class="form-control" name="logo" >
+                    <div class="form-group">
+                        <label>Discount Type</label>
+                        <select class="form-control" id="editType" name="type">
+                        <option value="Fixed" selected>Fixed</option>
+                        <option value="Percent">Percent</option>
+                        </select>
                     </div>
-                      <div class="pt-2">
+                    <div class="form-group">
+                        <label>Category</label>
+                        <select class="form-control" id="editCategory" name="category">
+                        <option value="Store" selected>Store</option>
+                        <option value="Repair">Repair</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Fixed Discount Value</label>
+                        <input class="form-control" id="editValue" type="number" name="value"  min="0" step="0.50">
+                    </div>
+                    <div class="form-group">
+                        <label>Percent Discount</label>
+                        <input class="form-control" id="editPercent" type="number" name="percent_off" max="100"  min="0" step="1">
+                    </div>
               </div>  
                 </div>
                 <div class="modal-footer">
@@ -155,10 +175,10 @@
   <div class="modal fade crud" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalTitle" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
-            <form method = "POST" enctype="multipart/form-data" id="submit_add_courier" action="javascript:void(0)">
+            <form method = "POST" enctype="multipart/form-data" id="submit_add_coupon" action="javascript:void(0)">
                 @CSRF
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addModalTitle">Add Logistic Partner</h5>
+                    <h5 class="modal-title" id="addModalTitle">Add Coupon</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -169,17 +189,36 @@
             <div class="card-body">
             <div class="alert alert-danger modal-errors" style="display:none"></div>
                     <div class="form-group">
-                        <label>Name</label>
-                        <input class="form-control @error('name') is-invalid @enderror" type="text" name="name" required="" minlength="2" maxlength="50">
+                        <label>Title</label>
+                        <input class="form-control @error('title') is-invalid @enderror" type="text" name="title" required="" maxlength="50">
                     </div>
                     <div class="form-group">
-                        <label>Delivery Tracker Website Link</label>
-                        <textarea class="form-control" rows="2" name="website"></textarea>
+                        <label>Code</label>
+                        <input class="form-control @error('code') is-invalid @enderror" type="text" name="code" required="" maxlength="15">
                     </div>
-                    <div class="form-group @error('logo') is-invalid @enderror">
-                        <label>Logo</label>
-                        <input type="file" class="form-control" name="logo" required>
+                    <div class="form-group">
+                        <label>Discount Type</label>
+                        <select class="form-control" id="type" name="type">
+                        <option value="Fixed" selected>Fixed</option>
+                        <option value="Percent">Percent</option>
+                        </select>
                     </div>
+                    <div class="form-group">
+                        <label>Category</label>
+                        <select class="form-control" id="category" name="category">
+                        <option value="Store" selected>Store</option>
+                        <option value="Repair">Repair</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Fixed Discount Value</label>
+                        <input class="form-control @error('value') is-invalid @enderror" type="number" name="value"  min="0" step="0.50">
+                    </div>
+                    <div class="form-group">
+                        <label>Percent Discount</label>
+                        <input class="form-control @error('percent_off') is-invalid @enderror" type="number" name="percent_off"  min="0" max="100" step="1">
+                    </div>
+                   
                 </div>
                 <div class="modal-footer">
                     <button id="add_submit" type="submit" class="btn btn-primary">Add</button>
@@ -190,39 +229,7 @@
         </div>
         </div>
          </div>
-        </div>    
-
-        <div class="modal fade" id="viewModal" tabindex="-1" role="dialog" aria-labelledby="viewModalTitle" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="viewModalTitle">View Logistics Partner Logo</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                      <div class="card ">
-           
-            <div class="card-body">
-               <div class="form-group">
-                <div class="row justify-content-center">
-                  <a id="viewImageLink" target="_blank">
-              <img id="viewImage" alt=""  style="max-width: 200px;">
-            </a>
-            </div>
-            </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-                </div>
-          </div>
-        </div>
-        </div>
-
-
-    </div>
-</div>  
+        </div>      
 
 @endsection
 
@@ -236,12 +243,12 @@ headers: {
 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 }
 });
-$('#submit_add_courier').submit(function(e) {
+$('#submit_add_coupon').submit(function(e) {
 e.preventDefault();
 var formData = new FormData(this);
 $.ajax({
 type:'POST',
-url: "{{ url('/admin/couriers/store') }}",
+url: "{{ url('/admin/coupons/store') }}",
 data: formData,
 cache:false,
 contentType: false,
@@ -260,7 +267,7 @@ success: function(result){
                 {
                     $('.modal-errors').hide();
                     $('#addModal').modal('hide');
-                    window.location = "{{ url('/admin/couriers/') }}";
+                    window.location = "{{ url('/admin/coupons/') }}";
                     // $('.alert-success').html('');
                     // $('.alert-success').show();
                     // $('.alert-success').append('Member added.');
@@ -270,12 +277,12 @@ success: function(result){
 });
 });
 
-$('#submit_edit_courier').submit(function(e) {
+$('#submit_edit_coupon').submit(function(e) {
 e.preventDefault();
 var formData = new FormData(this);
 $.ajax({
 type:'POST',
-url: "{{ url('/admin/couriers/edit') }}",
+url: "{{ url('/admin/coupons/update') }}",
 data: formData,
 cache:false,
 contentType: false,
@@ -294,7 +301,7 @@ success: function(result){
                 {
                     $('.modal-errors').hide();
                     $('#editModal').modal('hide');
-                    window.location = "{{ url('/admin/couriers/') }}";
+                    window.location = "{{ url('/admin/coupons/') }}";
                     // $('.alert-success').html('');
                     // $('.alert-success').show();
                     // $('.alert-success').append('Member added.');

@@ -61,7 +61,7 @@
       <td>{{$order->phone_number}}</td>
       <td>{{$order->province}}</td>
       <td>{{$order->quantity_total}}</td>
-      <td>{{$order->grand_total}}</td>
+      <td>₱{{$order->grand_total}}</td>
       <td>{{$order->created_at}}</td>
       @if($order->status =="paid")
         <td><span class="badge badge-primary justify-content-center">{{$order->status}}</span></td>

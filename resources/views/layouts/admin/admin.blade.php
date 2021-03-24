@@ -243,6 +243,21 @@ div.pac-container {
           <span>Prices</span></a>
       </li>
 
+       <!-- Divider -->
+     <hr class="sidebar-divider">
+
+<!-- Heading -->
+<div class="sidebar-heading">
+  VOUCHERS
+</div>
+
+
+
+<li class="nav-item {{{ (Route::current()->getName() == "coupons.index" ? 'active' : '') }}}">
+        <a class="nav-link" href="{{route('coupons.index')}}">
+          <i class="fas fa-fw fa-percent"></i>
+          <span>Coupons</span></a>
+      </li>
 
      <!-- Divider -->
      <hr class="sidebar-divider">
@@ -559,8 +574,16 @@ $('#bookingstable').DataTable( {
 } );
 
 $('#courierstable').DataTable( {
+  order: [[1, 'asc']],
   columnDefs: [
-    {searchable: false,  orderable: false, targets: 3 }
+    {searchable: false,  orderable: false, targets: [0,4] }
+  ]
+  
+} );
+
+$('#couponstable').DataTable( {
+  columnDefs: [
+    {searchable: false,  orderable: false, targets: 7}
   ]
   
 } );

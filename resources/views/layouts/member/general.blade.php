@@ -358,6 +358,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
   }
 }
 </style>
+@yield('css')
 <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 
 

@@ -12,8 +12,23 @@ Padyak.Co - Checkout
 			<a style="text-decoration: underline;" href="{{ route('checkoutReview') }}">REVIEW & PAY</a> /
 			<a style="color: grey;">ORDER PLACED</a>
 		 </div>	
-			
+
+		
 		 <div class="col-md-9 cart-items">
+		 @if(session()->has('message'))
+                        <div class="alert alert-success">
+                            {{ session()->get('message') }}
+                        </div>
+                    @endif
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li class="ml-4">{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
 			 <h2>Order Summary ({{ $cart->total_quantity ?? '0' }})</h2>
 			  @foreach($cartItems as $cartItem)
 			  <?php
@@ -66,17 +81,36 @@ Padyak.Co - Checkout
 				 <h3>Price Details</h3>
 				 <span>Item Total</span>
 				 <span class="total">₱ {{number_format($cartItemTotal,2)}}</span>
-				 <!-- <span>Discount</span>
-				 <span class="total">---</span> -->
 				 <span>Delivery Charges</span>
 				 <span class="total">₱ {{number_format($cartDeliveryTotal,2)}}</span>
+				 @if(session()->has('coupon'))
+				 <form action="{{route('store.destroyCoupon')}}" method="post" id="destroy_coupon">
+				 @csrf
+				 <span>Discount<a class="account-links ml-2" href="javascript:$('#destroy_coupon').submit();"><i class="fas fa-trash-alt fa-sm"></i></a></span>
+                 </form>
+				 
+				 <span class="total">- ₱ {{number_format(session()->get('coupon')['discount'],2)}}</span>
+				 <span>({{session()->get('coupon')['name']}})</span>
+				 <span class="total">&nbsp;</span>
+				 @endif
 				 <div class="clearfix"></div>				 
 			 </div>	
 			 <h4 class="last-price">TOTAL</h4>
-			 <span class="total final">₱ {{number_format($cartItemTotal + $cartDeliveryTotal,2)}}</span>
+			 <span class="total final">₱ {{number_format($cartItemTotal + $cartDeliveryTotal - $discount,2)}}</span>
 			 <div class="clearfix"></div>
              <div id="paypalButtons" class="mt-5"></div>
-			 <div class="total-item">
+			 @if(! session()->has('coupon'))
+			 <div class="total-item mt-2">
+				 <h3>COUPONS</h3>
+                 <form action="{{route('store.storeCoupon')}}" method="post">
+                 @csrf
+				 <input type="text" class="form-control" name="coupon_code" id="coupon_code"> 
+				 <input type="hidden" name="cartTotal" value="{{$cartItemTotal + $cartDeliveryTotal}}">
+				 <button type="submit" class="btn cpns">Apply Coupon</a>
+                 </form>
+			 </div>
+			 @endif
+			 <div class="total-item mt-0">
 				 <!-- <h3>OPTIONS</h3> -->
 				 <h3>REMINDERS</h3>
 				 <!-- <h4>COUPONS</h4>
@@ -90,53 +124,34 @@ Padyak.Co - Checkout
 
 <script src="https://www.paypal.com/sdk/js?client-id=AdxXimYRlwtcfMiPD8Y13isalZqY6IO847zNO43qvfPzSlnBtMNzKahvjaQTtukF-eRCPlRKpcBeXliy&currency=PHP"></script>
 <script>
-    var amount = {{$cartItemTotal + $cartDeliveryTotal}};
+    var amount = {{$cartItemTotal + $cartDeliveryTotal - $discount}};
 	var item_total = {{$cartItemTotal}};
+	var discount = {{$discount}};
+	var discount_code = '{{$discount_code}}';
 	var delivery_total = {{$cartDeliveryTotal}};
     paypal.Buttons({
     createOrder: function(data, actions) {
       // This function sets up the details of the transaction, including the amount and line item details.
 
-	// add double brackets to routes 
-	  $.ajaxSetup({
-			headers: {
-			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-			}
-		});
-		   $.ajax({  
-			type: 'POST',  
-			url: '{{route("check")}}', 
-			data: { 
-		            item_total: item_total,
-					item_total: item_total,
-					delivery_total: delivery_total
-			},
-			success: function(response) {
-				// if(response['success'] == 'false'){
-					// window.location = "{{route('checkoutReview')}}";
-					// window.alert('Sorry. Some items in your order are updated due to inventory issues.');
-				// }
-
-			
-			}
-		});	
-	    
+	
+	    //removed check code ajax here
 	  
 		return actions.order.create({
 						purchase_units: [{
+						description: "Padyak.Co store order",
 						amount: {
 						
 							value: amount,
-							breakdown: {
-										item_total: {
-											currency_code:"PHP",
-											value: item_total
-										},
-										shipping: {
-											currency_code:"PHP",
-											value: delivery_total
-										},
-									}
+							// breakdown: {
+							// 			item_total: {
+							// 				currency_code:"PHP",
+							// 				value: item_total
+							// 			},
+							// 			shipping: {
+							// 				currency_code:"PHP",
+							// 				value: delivery_total
+							// 			},
+							// 		}
 						},
 						
 						}],
@@ -159,7 +174,9 @@ Padyak.Co - Checkout
 			url: '{{ route("order") }}', 
 			data: { amount: amount,
 			        item_total: item_total,
-					delivery_total: delivery_total
+					delivery_total: delivery_total,
+					discount_code: discount_code,
+					discount: discount
 			},
 			success: function(response) {
 				window.location = "{{ route('orderPlaced') }}";

@@ -52,8 +52,8 @@ class AccountController extends Controller
         ]);
 
         $data = array(
-                'first_name' => request('first_name'),
-                'last_name' => request('last_name'),
+                'first_name' => ucfirst(request('first_name')),
+                'last_name' => ucfirst(request('last_name')),
                 'email' => request('email'),
                 'phone_number' => request('phone_number')
         );

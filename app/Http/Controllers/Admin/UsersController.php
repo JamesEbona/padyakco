@@ -65,8 +65,8 @@ class UsersController extends Controller
        }
         //  $user = $user = new User; 
          $user = new User;
-         $user->first_name = request('first_name');
-         $user->last_name = request('last_name');
+         $user->first_name = ucfirst(request('first_name'));
+         $user->last_name = ucfirst(request('last_name'));
          $user->email = request('email');
          $user->image = $imagePath;
          $user->status = 'active';
@@ -112,8 +112,8 @@ class UsersController extends Controller
          }
           //  $user = $user = new User; 
            $user = new User;
-           $user->first_name = request('first_name');
-           $user->last_name = request('last_name');
+           $user->first_name = ucfirst(request('first_name'));
+           $user->last_name = ucfirst(request('last_name'));
            $user->email = request('email');
            $user->image = $imagePath;
            $user->status = 'active';
@@ -150,8 +150,8 @@ class UsersController extends Controller
            }
             //  $user = $user = new User; 
              $user = new User;
-             $user->first_name = request('first_name');
-             $user->last_name = request('last_name');
+             $user->first_name = ucfirst(request('first_name'));
+             $user->last_name = ucfirst(request('last_name'));
              $user->email = request('email');
              $user->phone_number = request('phone_number');
              $user->image = $imagePath;
@@ -193,8 +193,8 @@ class UsersController extends Controller
       ]);
   
        $data = array(
-              'first_name' => request('first_name'),
-              'last_name' => request('last_name'),
+              'first_name' => ucfirst(request('first_name')),
+              'last_name' => ucfirst(request('last_name')),
               'email' => request('email'),
           );
   
@@ -263,8 +263,8 @@ class UsersController extends Controller
 
   
      $data = array(
-            'first_name' => request('first_name'),
-            'last_name' => request('last_name'),
+            'first_name' => ucfirst(request('first_name')),
+            'last_name' => ucfirst(request('last_name')),
             'email' => request('email'),
         );
 
@@ -318,8 +318,8 @@ class UsersController extends Controller
 
   
      $data = array(
-            'first_name' => request('first_name'),
-            'last_name' => request('last_name'),
+            'first_name' => ucfirst(request('first_name')),
+            'last_name' => ucfirst(request('last_name')),
             'email' => request('email'),
         );
 
@@ -373,8 +373,8 @@ class UsersController extends Controller
 
   
      $data = array(
-            'first_name' => request('first_name'),
-            'last_name' => request('last_name'),
+            'first_name' => ucfirst(request('first_name')),
+            'last_name' => ucfirst(request('last_name')),
             'email' => request('email'),
             'phone_number' => request('phone_number'),
         );

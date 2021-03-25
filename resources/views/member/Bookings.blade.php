@@ -28,6 +28,8 @@ My Bookings
 					<h2 class="text-right"><span class="label label-default">{{$booking->status}}</span></h2>
 					@elseif($booking->status =="done")
 					<h2 class="text-right"><span class="label label-success">{{$booking->status}}</span></h2>
+					@elseif($booking->status =="payment")
+					<h2 class="text-right"><span class="label label-primary">{{$booking->status}}</span></h2>
 					@elseif($booking->status =="cancelled")
 					<h2 class="text-right"><span class="label label-danger">{{$booking->status}}</span></h2>
 					@endif

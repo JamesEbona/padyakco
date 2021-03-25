@@ -43,12 +43,14 @@ Padyak.Co Admin - View Booking Address
                                 <h4 class="d-inline ml-2"><span class="badge badge-pill badge-info">{{$booking->status}}</span></h4>
                             @elseif($booking->status =="en route")
                                 <h4 class="d-inline ml-2"><span class="badge badge-pill badge-primary">{{$booking->status}}</span></h4>
+                            @elseif($booking->status =="payment")
+                               <h4 class="d-inline ml-2"><span class="badge badge-pill badge-dark">{{$booking->status}}</span></h4>
                             @elseif($booking->status =="done")
                             <h4 class="d-inline ml-2"><span class="badge badge-pill badge-success">{{$booking->status}}</span></h4>
                             @elseif($booking->status =="cancelled")
                                 <h4 class="d-inline ml-2"><span class="badge badge-pill badge-danger">{{$booking->status}}</span></h4>
                             @endif  
-                            @if($booking->status != "cancelled" && $booking->status != "done")  
+                            @if($booking->status != "cancelled" && $booking->status != "done" && $booking->status != "payment")  
                             <a href="javascript:$('#updateAddressForm').submit();" class="account-links"><h4 class="d-inline"><i class="fas fa-fw fa-save float-right"></i></h4></a>
                             @endif     
                         </div>
@@ -64,7 +66,7 @@ Padyak.Co Admin - View Booking Address
                     @method('PATCH')
                     @CSRF
                     <div class="form-group">
-                        @if($booking->status != "cancelled" && $booking->status != "done")  
+                        @if($booking->status != "cancelled" && $booking->status != "done" && $booking->status != "payment")  
                         <input id="searchInput" class="controls mt-3 form-control" type="text" placeholder="Enter new booking location">
                         @endif
                         <div id="map" style="height:500px;"></div>

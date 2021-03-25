@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class BookingDone extends Mailable
+class BookingPayment extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -30,6 +30,6 @@ class BookingDone extends Mailable
      */
     public function build()
     {
-        return $this->subject('Padyak.Co repair receipt')->view('emails.bookings.done');
+        return $this->subject('Your Padyak.Co repair is finished')->view('emails.bookings.payment');
     }
 }

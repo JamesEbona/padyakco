@@ -28,8 +28,8 @@ class CouponsController extends Controller
             'type' => 'required|string|max:10|min:2', 
             'code' => 'required|string|max:15|',
             'category' => 'nullable|string|max:10|min:2', 
-            'value' => [Rule::requiredIf(request('type') == "Fixed"),'nullable','numeric'], 
-            'percent_off' => [Rule::requiredIf(request('type') == "Percent"),'nullable','numeric','max:100'],       
+            'value' => [Rule::requiredIf(request('type') == "Fixed"),'nullable','numeric','min:1'], 
+            'percent_off' => [Rule::requiredIf(request('type') == "Percent"),'nullable','numeric','min:1','max:100'],       
          ]);
       
         if ($validator->fails()){
@@ -63,8 +63,8 @@ class CouponsController extends Controller
             'type' => 'required|string|max:10|min:2', 
             'code' => 'required|string|max:15|',
             'category' => 'nullable|string|max:10|min:2', 
-            'value' => [Rule::requiredIf(request('type') == "Fixed"),'nullable','numeric'], 
-            'percent_off' => [Rule::requiredIf(request('type') == "Percent"),'nullable','numeric','max:100'],       
+            'value' => [Rule::requiredIf(request('type') == "Fixed"),'nullable','numeric','min:1'], 
+            'percent_off' => [Rule::requiredIf(request('type') == "Percent"),'nullable','numeric','max:100','min:1'],       
          ]);
       
         if ($validator->fails()){

@@ -302,6 +302,18 @@ function editBooking(arg) {
     else if(status == "en route"){
         var op1 = new Option("en route", "en route");
         $(op1).html("en route");
+        var op2 = new Option("payment", "payment");
+        $(op2).html("payment");
+        var op3 = new Option("cancelled", "cancelled");
+        $(op3).html("cancelled");
+        $("#editStatus").append(op1);
+        $("#editStatus").append(op2);
+        $("#editStatus").append(op3);
+    }
+
+    else if(status == "payment"){
+        var op1 = new Option("payment", "payment");
+        $(op1).html("payment");
         var op2 = new Option("done", "done");
         $(op2).html("done");
         var op3 = new Option("cancelled", "cancelled");
@@ -424,6 +436,18 @@ function updateBookingStatus(arg) {
         $("#editStatus").append(op3);
     }
 
+    else if(status == "payment"){
+        var op1 = new Option("payment", "payment");
+        $(op1).html("payment");
+        var op2 = new Option("done", "done");
+        $(op2).html("done");
+        var op3 = new Option("cancelled", "cancelled");
+        $(op3).html("cancelled");
+        $("#editStatus").append(op1);
+        $("#editStatus").append(op2);
+        $("#editStatus").append(op3);
+    }
+
     document.getElementById('editStatus').value = status; 
     
 }
@@ -468,6 +492,18 @@ function viewBooking(arg) {
     var mechanic_number = $(arg).attr('data-mechanicnumber');
     var mechanic_status = $(arg).attr('data-mechanicstatus');
     var created_at = $(arg).attr('data-createdat');
+    var payment_method = $(arg).attr('data-method');
+    if(payment_method == ''){
+        payment_method = 'Not yet paid';
+    }
+    var discount = $(arg).attr('data-discount');
+    var discount_code = $(arg).attr('data-code');
+    if(discount != 0){
+        discount_code = '('+discount_code+')';
+    }
+    if(discount == 0){
+        discount = 0.00;
+    }
 
 
     if(status == 'pending'){
@@ -478,6 +514,9 @@ function viewBooking(arg) {
     }
     else if(status == 'en route'){
     $("#viewBookingStatus").attr("class"," badge badge-pill badge-primary");   
+    }
+    else if(status == 'payment'){
+    $("#viewBookingStatus").attr("class"," badge badge-pill badge-dark");   
     }
     else if(status == 'done'){
     $("#viewBookingStatus").attr("class"," badge badge-pill badge-success");   
@@ -525,6 +564,9 @@ function viewBooking(arg) {
     $("#viewMechanicNumber").html(mechanic_number);
     $("#viewMechanicStatus").html(mechanic_status);
     $("#viewCreatedAt").html(created_at);
+    $("#viewPaymentMethod").html(payment_method);
+    $("#viewDiscountFee").html(discount);
+    $("#viewDiscountCode").html(discount_code);
 
     var image_start = "/storage/";
     var user_image_src = image_start + user_image;

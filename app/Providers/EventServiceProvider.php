@@ -6,6 +6,7 @@ use Illuminate\Auth\Events\Registered;
 use App\Events\BookingConfirmedEvent;
 use App\Events\BookingEnRouteEvent;
 use App\Events\BookingDoneEvent;
+use App\Events\BookingPaymentEvent;
 use App\Events\BookingCancelledEvent;
 use App\Events\NewBookingEvent;
 use App\Events\NewOrderEvent;
@@ -18,6 +19,7 @@ use App\Events\MechanicUnassignEvent;
 // use App\Listeners\SendNewOrderNotification;
 use App\Listeners\SendBookingConfirmedNotification;
 use App\Listeners\SendBookingDoneNotification;
+use App\Listeners\SendBookingPaymentNotification;
 use App\Listeners\SendBookingEnRouteNotification;
 use App\Listeners\SendBookingCancelledNotification;
 use App\Listeners\SendNewBookingAdminNotification;
@@ -63,6 +65,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         BookingCancelledEvent::class => [
             SendBookingCancelledNotification::class,
+        ],
+        BookingPaymentEvent::class => [
+            SendBookingPaymentNotification::class,
         ],
         BookingDoneEvent::class => [
             SendBookingDoneNotification::class,

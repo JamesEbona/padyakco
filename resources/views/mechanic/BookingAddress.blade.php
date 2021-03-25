@@ -23,6 +23,8 @@ Padyak.Co Mechanic - View Booking Address
                                 <h4 class="d-inline ml-2"><span class="badge badge-pill badge-info">{{$booking->status}}</span></h4>
                             @elseif($booking->status =="en route")
                                 <h4 class="d-inline ml-2"><span class="badge badge-pill badge-primary">{{$booking->status}}</span></h4>
+                            @elseif($booking->status =="payment")
+                                <h4 class="d-inline ml-2"><span class="badge badge-pill badge-dark">{{$booking->status}}</span></h4>
                             @elseif($booking->status =="done")
                             <h4 class="d-inline ml-2"><span class="badge badge-pill badge-success">{{$booking->status}}</span></h4>
                             @elseif($booking->status =="cancelled")

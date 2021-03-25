@@ -10,6 +10,7 @@ use App\Events\BookingConfirmedEvent;
 use App\Events\BookingEnRouteEvent;
 use App\Events\BookingDoneEvent;
 use App\Events\BookingCancelledEvent;
+use App\Events\BookingPaymentEvent;
 use App\Models\BookingDaySales;
 use App\Models\BookingMonthSales;
 use App\Models\BookingYearSales;
@@ -46,14 +47,35 @@ class BookingsController extends Controller
         return response()->json(['errors'=>$validator->errors()->all()]);
       }
         $booking = Booking::findOrFail(request('editId'));
+        $current_additional = $booking->additional_fee;
       
         $total_fee = $booking->total_fee;
         $total_fee -= $booking->additional_fee;
+        $total_fee += $booking->discount;
         $total_fee += request('additional_fee');
+
+        if($booking->discount != 0){
+          if($booking->discount_type == "Fixed"){
+              $total_fee -= $booking->discount;
+             
+          }
+          else{
+              $discount = round(($booking->discount_percent / 100) * $total_fee);
+              $total_fee -= $discount;
+              // return response()->json(['errors'=>$total_fee]);
+          }
+      }
 
         $booking->additional_fee = request('additional_fee');
         $booking->total_fee = $total_fee;
+        if($booking->discount != 0 && $booking->discount_type =="Percent"){
+          $booking->discount = $discount;
+        }
         $booking->save();
+
+        if($current_additional != request('additional_fee') && $booking->status == "payment"){ 
+        event(new BookingPaymentEvent($booking));  
+        }
     
         return redirect("/mechanic/bookings");
     }
@@ -83,7 +105,12 @@ class BookingsController extends Controller
       if($status == "en route"){
         event(new BookingEnRouteEvent($booking));  
       }
+      else if($status == "payment"){
+        event(new BookingPaymentEvent($booking));  
+      }
       else if($status == "done"){
+        $booking->payment_method = "Cash";
+        $booking->save();
         event(new BookingDoneEvent($booking));  
 
         $nowDate = \Carbon\Carbon::now();

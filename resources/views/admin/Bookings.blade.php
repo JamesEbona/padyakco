@@ -46,7 +46,7 @@
   <th>Schedule</th>
   <!-- <th>Date Booked</th> -->
   <th>Status</th>
-  <th style="column-width:800px;">Action</th>
+  <th style="column-width:1300px;">Action</th>
 </tr>
 </thead>
 <tbody>
@@ -69,6 +69,8 @@
         <td><span class="badge badge-info justify-content-center">{{$booking->status}}</span></td>
         @elseif($booking->status =="en route")
         <td><span class="badge badge-primary justify-content-center">{{$booking->status}}</span></td>
+        @elseif($booking->status =="payment")
+        <td><span class="badge badge-dark justify-content-center">{{$booking->status}}</span></td>
         @elseif($booking->status =="done")
         <td><span class="badge badge-success justify-content-center">{{$booking->status}}</span></td>
         @elseif($booking->status =="cancelled")
@@ -85,7 +87,7 @@
       data-location="{{$booking->location}}" data-repairtype="{{$booking->repair_type}}" data-bookingtime="{{$booking->booking_time}}" data-notes="{{$booking->notes}}"
       data-mechanicname="{{$booking->mechanic->first_name ?? ''}} {{$booking->mechanic->last_name ?? ''}}"  data-mechanicimage="{{$booking->mechanic->image ?? ''}}" data-userimage="{{$booking->user->image ?? ''}}"
       data-additionalfee ="{{$booking->additional_fee ?? 0.00}}" data-repairfee="{{$booking->repair_fee}}" data-transportationfee="{{$booking->transportation_fee}}" data-id="{{$booking->id}}" data-createdat="{{$booking->created_at}}"
-      data-totalfee="{{$booking->total_fee}}" data-status="{{$booking->status}}" data-mechanicstatus="{{$booking->mechanic->status ?? ''}}" data-mechanicnumber="{{$booking->mechanic->phone_number ?? ''}}" data-userstatus="{{$booking->user->status}}" onclick="viewBooking(this);"><i class="fas fa-info-circle" aria-hidden="true"></i></button>
+      data-totalfee="{{$booking->total_fee}}" data-status="{{$booking->status}}" data-mechanicstatus="{{$booking->mechanic->status ?? ''}}" data-mechanicnumber="{{$booking->mechanic->phone_number ?? ''}}" data-userstatus="{{$booking->user->status}}" data-method="{{$booking->payment_method}}" data-discount="{{$booking->discount}}" data-code="{{$booking->discount_code}}" onclick="viewBooking(this);"><i class="fas fa-info-circle" aria-hidden="true"></i></button>
       </div>
       <div class="col-md-3">
       <a class="btn btn-secondary" href="{{route('adminBookingsShowAddress', ['id' => $booking->id])}}"><i class="fas fa-map-marked-alt" aria-hidden="true"></i></a>
@@ -124,7 +126,7 @@
                 <div class="modal-header">
                     <h5 class="modal-title" id="editModalTitle">Edit Booking Details</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
+                    <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <input type="hidden" id="editId" name="editId">
@@ -265,6 +267,11 @@
                <p class="d-inline">Repair Type: </p><p class="d-inline" id="viewRepairType"></p>
                </div>
               </div>
+              <div class="row">
+              <div class="col-md-12">
+               <p class="d-inline">Payment Method: </p><p class="d-inline" id="viewPaymentMethod"></p>
+               </div>
+              </div>
                 </div> 
           </div>
           </div>
@@ -326,12 +333,20 @@
                                      <p class="m-0 p-0 d-inline">₱</p><p id="viewTransportationFee" class="m-0 p-0 d-inline"></p>
                                 </div>
                             </div>
-                            <div class="row" style="border-bottom: 2px solid; padding-bottom: 12px;">
+                            <div class="row">
                                 <div class="col-md-8">
                                      <p class="m-0 p-0">Additional Fee</p>
                                 </div>
                                 <div class="col-md-4 text-right">
                                     <p class="d-inline m-0 p-0">₱</p><p id="viewAdditionalFee" class="m-0 p-0 d-inline"></p>
+                                </div>
+                            </div>
+                            <div class="row" style="border-bottom: 2px solid; padding-bottom: 12px;">
+                                <div class="col-md-8">
+                                     <p class="d-inline m-0 p-0">Discount </p><p id="viewDiscountCode" class="d-inline"></p>
+                                </div>
+                                <div class="col-md-4 text-right">
+                                    <p class="d-inline m-0 p-0">- ₱</p><p id="viewDiscountFee" class="m-0 p-0 d-inline"></p>
                                 </div>
                             </div>
                             <div class="row" style="padding-top: 12px;">

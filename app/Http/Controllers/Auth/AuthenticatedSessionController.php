@@ -62,6 +62,8 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->forget('coupon');
 
+        $request->session()->forget('coupon2');
+
         return redirect('/');
     }
 }

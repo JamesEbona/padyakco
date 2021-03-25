@@ -34,6 +34,11 @@ class CreateBookingsTable extends Migration
             $table->unsignedDecimal('transportation_fee', $precision = 8, $scale = 2);
             $table->unsignedDecimal('additional_fee', $precision = 8, $scale = 2)->nullable();
             $table->unsignedDecimal('total_fee', $precision = 8, $scale = 2);
+            $table->string('discount_code')>nullable();
+            $table->string('discount_type')>nullable();
+            $table->string('payment_method')>nullable();
+            $table->unsignedDecimal('discount', $precision = 8, $scale = 2)->nullable();
+            $table->unsignedInteger('discount_percent')->nullable();
             $table->softDeletes();
         });
     }

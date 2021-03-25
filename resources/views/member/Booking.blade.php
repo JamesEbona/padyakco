@@ -24,6 +24,8 @@ My Booking
 					<h2 class="text-right"><span class="label label-success">{{$booking->status}}</span></h2>
 					@elseif($booking->status =="cancelled")
 					<h2 class="text-right"><span class="label label-danger">{{$booking->status}}</span></h2>
+					@elseif($booking->status =="payment")
+					<h2 class="text-right"><span class="label label-primary">{{$booking->status}}</span></h2>
 					@endif
 					</div>
 					</div>
@@ -32,6 +34,9 @@ My Booking
                     <p>Schedule: {{date('F j, Y h:i A', strtotime($booking->booking_time))}}</p>
 				    <p>Repair Type: {{$booking->repair_type}}</p>
                     <p>Location: {{$booking->location}}</p>
+					@if($booking->status =="done")
+					<p>Payment Method: {{$booking->payment_method}}</p>
+					@endif
 					</div>
 					</div>
                   
@@ -83,7 +88,7 @@ My Booking
 				    <p>₱{{number_format($booking->repair_fee,2)}}</p>
 					</div>
 					</div>
-					<div class="row" style="border-bottom: 2px solid; padding-bottom: 12px;">
+					<div class="row" style="padding-bottom: 12px;">
 					<div class="col-md-8">
                     <p>Transportation Fee</p>
 					</div>
@@ -92,7 +97,7 @@ My Booking
 					</div>
 					</div>
                     @if($booking->additional_fee != NULL)
-                    <div class="row" style="border-bottom: 2px solid; padding-bottom: 12px;">
+                    <div class="row" style="padding-bottom: 12px;">
 					<div class="col-md-8">
                     <p>Additional Fee</p>
 					</div>
@@ -101,9 +106,19 @@ My Booking
 					</div>
 					</div>
                     @endif
-                    <div class="row" style="padding-top: 12px;">
+					@if($booking->discount != 0)
+					<div class="row" style="padding-bottom: 12px;">
+					<div class="col-md-8">
+                    <p>Discount ({{$booking->discount_code}})</p>
+					</div>
+                    <div class="col-md-4 text-right">
+				    <p>- ₱{{number_format($booking->discount,2)}}</p>
+					</div>
+					</div>
+					@endif
+                    <div class="row" style="border-top: 2px solid; padding-top: 12px;">
 					<div class="col-md-6">
-                    <p>Payment Total @if($booking->additional_fee == NULL)Estimate @endif</p>
+                    <p>Payment Total @if($booking->status != "done" && $booking->status != "payment")Estimate @endif</p>
 					</div>
                     <div class="col-md-6 text-right">
 				    <p>₱{{number_format($booking->total_fee,2)}}</p>
@@ -126,7 +141,7 @@ My Booking
 			 </div>
 			 </div>
 			 @endif
-			 @if($booking->status == 'en route')
+			 @if($booking->status == 'payment')
 			 <div class="row">
 			 <div class="col-md-12">
 			 <div class="cart-header">

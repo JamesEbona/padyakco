@@ -540,12 +540,12 @@
                                             <th class="table-title" style="mso-line-height-rule: exactly; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 15px; line-height: 22px; font-weight: 400; text-transform: none; color: #000000; width: 65%; padding: 5px 0;" align="left" bgcolor="#ffffff" valign="top">Shipping fee</th>
                                             <th class="table-text" style="mso-line-height-rule: exactly; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 15px; line-height: 22px; font-weight: 400; text-transform: none; color: #000000; width: 35%; padding: 5px 0;" align="right" bgcolor="#ffffff" valign="middle">₱{{number_format($order->shipping,2)}}</th>
                                           </tr>
-                                          @isset($order->discount)
+                                          @if($order->discount != 0)
                                           <tr>
                                             <th class="table-title" style="mso-line-height-rule: exactly; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 15px; line-height: 22px; font-weight: 400; text-transform: none; color: #000000; width: 65%; padding: 5px 0;" align="left" bgcolor="#ffffff" valign="top">Discount ({{$order->discount_code}})</th>
                                             <th class="table-text" style="mso-line-height-rule: exactly; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 15px; line-height: 22px; font-weight: 400; text-transform: none; color: #000000; width: 35%; padding: 5px 0;" align="right" bgcolor="#ffffff" valign="middle">- ₱{{number_format($order->discount,2)}}</th>
                                           </tr>
-                                          @endisset
+                                          @endif
                                           <tr class="pricing-table-total-row">
                                             <th class="table-title" data-key="3499741_total" style="mso-line-height-rule: exactly; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 15px; line-height: 22px; font-weight: 400; text-transform: none; color: #1a1a1a; width: 65%; padding: 5px 0;" align="left" bgcolor="#ffffff" valign="top">Total</th>
                                             <th class="table-text" style="mso-line-height-rule: exactly; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 15px; line-height: 22px; font-weight: 400; text-transform: none; color: #1a1a1a; width: 35%; padding: 5px 0;" align="right" bgcolor="#ffffff" valign="middle">₱{{number_format($order->grand_total,2)}}</th>

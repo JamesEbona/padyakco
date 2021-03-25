@@ -29,9 +29,11 @@ class BookingController extends Controller
     {
         $nowDate = Carbon::now();
         $minDate = $nowDate->addHour()->format('Y-m-d\TH:i');
+        $inputDateMinutes = $nowDate->addMinutes(5);
+        $inputDate = $inputDateMinutes->format('Y-m-d\TH:i');
         $maxDate = $nowDate->addWeeks(1)->format('Y-m-d\TH:i');
         $repair = Repair::where('id',1)->firstOrFail();
-        return view('member.Book',compact('minDate','maxDate','repair'));
+        return view('member.Book',compact('minDate','maxDate','repair','inputDate'));
     }
 
     public function book(Request $request){
@@ -118,8 +120,21 @@ class BookingController extends Controller
         else if(request('city') == 'Manila'){
             $transportation_fee = $repair->manila_fee;
         }
-
-        $total_fee = $repair_fee + $transportation_fee;
+        $discount = request('discount');
+        if(isset($discount)){
+            if(request('discount_type') == "Fixed"){
+                $total_fee = ($repair_fee + $transportation_fee) - $discount;
+            }
+            else{
+                $percent_discount = $discount;
+                $subtotal = $repair_fee + $transportation_fee;
+                $discount = round(($discount / 100) * $subtotal);
+                $total_fee = $subtotal - $discount;
+            }
+        }
+        else{
+            $total_fee = $repair_fee + $transportation_fee;
+        }
 
         $booking = new Booking;
         $booking->user_id = auth()->id();
@@ -136,6 +151,15 @@ class BookingController extends Controller
         $booking->transportation_fee = $transportation_fee;
         $booking->total_fee = $total_fee;
         $booking->status = 'pending';
+        if(isset($discount)){
+            $booking->discount =  $discount;
+            if(request('discount_type') == "Percent"){
+              $booking->discount_percent = $percent_discount;
+            }
+            $booking->discount_type =  request('discount_type');
+            $booking->discount_code =  request('discount_code');
+            session()->forget('coupon2');
+        }
         $booking->save();
 
         event(new NewBookingEvent($booking));
@@ -170,6 +194,7 @@ class BookingController extends Controller
     {
         $booking = Booking::where('user_id',auth()->id())->where('id',request('bookingId'))->firstOrFail();
         $booking->status = "done";
+        $booking->payment_method = "Online";
         $booking->save();
 
         event(new BookingDoneEvent($booking)); 
@@ -203,7 +228,26 @@ class BookingController extends Controller
 
     public function storeCoupon(Request $request)
     {
-        $coupon = Coupon::where('code', $request->coupon_code)->first();
+        $coupon = Coupon::where('code', $request->coupon_code)->where('status', 'active')->where('category', 'Repair')->first();
+
+        if (!$coupon) {
+            return back()->withErrors('Invalid coupon code. Please try again.');
+        }
+
+        session()->put('coupon2', [
+            'name' => $coupon->code,
+            'discount' => $coupon->repairdiscount(),
+            'type' => $coupon->type
+        ]);
+
+        return back()->with('message', 'Coupon has been applied!');
+    }
+
+    public function destroyCoupon()
+    {
+        session()->forget('coupon2');
+
+        return back()->with('message', 'Coupon has been removed!');
     }
 
 }

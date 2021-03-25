@@ -9,6 +9,7 @@ use App\Models\Repair;
 use App\Models\User;
 use Carbon\Carbon;
 use App\Events\BookingConfirmedEvent;
+use App\Events\BookingPaymentEvent;
 use App\Events\BookingEnRouteEvent;
 use App\Events\BookingDoneEvent;
 use App\Events\BookingCancelledEvent;
@@ -114,13 +115,28 @@ class BookingsController extends Controller
 
               $total_fee = $booking->total_fee;
               $total_fee -= $booking->transportation_fee;
+              $total_fee += $booking->discount;
               $total_fee += $transportation_fee;
+
+              if($booking->discount != 0){
+                if($booking->discount_type == "Fixed"){
+                    $total_fee -= $booking->discount;
+                }
+                else{
+                    $discount = round(($booking->discount_percent / 100) * $total_fee);
+                    $total_fee -= $discount;
+                    // return response()->json(['errors'=>$total_fee]);
+                }
+            }
 
               $booking->location = request('location');
               $booking->longhitude = request('longhitude');
               $booking->latitude = request('latitude');
               $booking->transportation_fee = $transportation_fee;
               $booking->total_fee = $total_fee;
+              if($booking->discount != 0 && $booking->discount_type =="Percent"){
+                $booking->discount = $discount;
+              }
               $booking->save();
 
               return redirect()->route('adminBookingsShowAddress', request('booking_id'))->with('message', 'Booking address updated.');
@@ -150,6 +166,7 @@ class BookingsController extends Controller
       }
         $booking = Booking::findOrFail(request('editId'));
         $current_status = $booking->status;
+        $current_additional = $booking->additional_fee;
         $repair = Repair::where('id',1)->firstOrFail();
 
         if(request('repair_type') == "Basic"){
@@ -163,10 +180,25 @@ class BookingsController extends Controller
         }
 
         $total_fee = $booking->total_fee;
+        
         $total_fee -= $booking->repair_fee;
         $total_fee -= $booking->additional_fee;
+        $total_fee += $booking->discount;
         $total_fee += $repair_fee;
         $total_fee += request('additional_fee');
+        
+        
+        if($booking->discount != 0){
+            if($booking->discount_type == "Fixed"){
+                $total_fee -= $booking->discount;
+               
+            }
+            else{
+                $discount = round(($booking->discount_percent / 100) * $total_fee);
+                $total_fee -= $discount;
+                // return response()->json(['errors'=>$total_fee]);
+            }
+        }
 
         $booking->status = request('status');
         $booking->first_name = request('first_name');
@@ -178,9 +210,15 @@ class BookingsController extends Controller
         $booking->repair_fee = $repair_fee;
         $booking->total_fee = $total_fee;
         $booking->notes= request('notes');
+        if($booking->discount != 0 && $booking->discount_type =="Percent"){
+            $booking->discount = $discount;
+        }
         $booking->save();
 
         $status = request('status');
+        if($current_additional != request('additional_fee') && $current_status == "payment"){ 
+            event(new BookingPaymentEvent($booking));  
+        }
 
         if($current_status != $status){ 
             if($status == "confirmed"){
@@ -189,7 +227,12 @@ class BookingsController extends Controller
             else if($status == "en route"){
                 event(new BookingEnRouteEvent($booking));  
             }
+            else if($status == "payment"){
+                event(new BookingPaymentEvent($booking));  
+            }
             else if($status == "done"){
+                $booking->payment_method = "Cash";
+                $booking->save();
                 event(new BookingDoneEvent($booking)); 
                 $nowDate = \Carbon\Carbon::now();
                 $bookingDay = $nowDate->format('d');

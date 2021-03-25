@@ -7,7 +7,10 @@ use App\Http\Controllers\GuidesController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\InquiriesController;
 
-use App\Mail\OrderShipped;
+use App\Mail\BookingDone;
+use App\Mail\BookingPayment;
+use App\Mail\OrderReceipt;
+use App\Models\Booking;
 use App\Models\Order;
 
 
@@ -40,11 +43,25 @@ Route::post('/guides/fetch_data', [GuidesController::class, 'fetch_guides_data']
 Route::get('/guides/show/{id}', [GuidesController::class, 'show'])->name('viewGuide');
 Route::post('/inquiries/store', [InquiriesController::class, 'store'])->name('storeInquiry');
 
+Route::get('/email', function(){
+  
+    $order = Booking::findOrFail(32);
+
+    return new BookingDone($order);
+});
+
+Route::get('/email/order', function(){
+  
+    $order = Order::findOrFail(34);
+
+    return new OrderReceipt($order);
+});
+
 // Route::get('/email', function(){
   
-//     $order = Order::findOrFail(33);
+//     $order = Booking::findOrFail(32);
 
-//     return new OrderShipped($order);
+//     return new BookingPayment($order);
 // });
 
 // Route::get('/dashboard', function () {
@@ -85,6 +102,7 @@ Route::group([
     Route::get('book/cancel/{id}', 'BookingController@cancel');
     Route::post('book/pay', 'BookingController@pay')->name('bookPay');
     Route::post('book/storeCoupon', 'BookingController@storeCoupon')->name('repair.storeCoupon');
+    Route::post('book/destroyCoupon', 'BookingController@destroyCoupon')->name('repair.destroyCoupon');
     Route::get('contact', 'InquiriesController@index')->name('memberContact');
     Route::post('contact/send', 'InquiriesController@store');
 });

@@ -37,10 +37,13 @@ Padyak.Co - Book Mechanic
                             <input type="hidden" id="region" name="region">
                             <input type="hidden" id="lng" name="longhitude">
                             <input type="hidden" id="lat" name="latitude">
+                            <input type="hidden" name="discount" value="@if(session()->has('coupon2')){{session()->get('coupon2')['discount']}}@endif">
+                            <input type="hidden" name="discount_type" value="@if(session()->has('coupon2')){{session()->get('coupon2')['type']}}@endif">
+                            <input type="hidden" name="discount_code" value="@if(session()->has('coupon2')){{session()->get('coupon2')['name']}}@endif">
                         </div>
                         <div class="form-group @error('booking_time') has-error @enderror">
                             <label>Date and time</label><br>
-                            <input type="datetime-local"  min="{{$minDate}}" max="{{$maxDate}}" value="@if($errors->any()){{old('booking_time')}}@else{{$minDate}}@endif" name="booking_time"  class="form-control" required>
+                            <input type="datetime-local"  min="{{$minDate}}" max="{{$maxDate}}" value="@if($errors->any()){{old('booking_time')}}@else{{$inputDate}}@endif" name="booking_time"  class="form-control" required>
                         </div>
                         <div class="form-group  @error('repair_type') has-error @enderror">
                             <label>Type of repair</label><br>
@@ -71,28 +74,57 @@ Padyak.Co - Book Mechanic
 				 <span id="initial_fee" class="total">₱ {{number_format($repair->basic_fee,2)}}</span>
 				 <span>Transportation fee</span>
 				 <span id="transportation_fee" class="total">₱ 0.00</span>
-                 <span>Discount</span>
-				 <span class="total">---</span>
+                 @if(session()->has('coupon2'))
+				 <form action="{{route('repair.destroyCoupon')}}" method="post" id="destroy_coupon">
+				 @csrf
+				 <span>Discount<a class="account-links ml-2" href="javascript:$('#destroy_coupon').submit();"><i class="fas fa-trash-alt fa-sm"></i></a></span>
+                 </form>
+				 
+				 <span id="discount_percent" class="total">- ₱ 
+                 @if(session()->has('coupon2'))
+                 @if(session()->get('coupon2')['type'] == "Fixed")
+                      {{number_format(session()->get('coupon2')['discount'],2)}}
+                 @else
+                      {{number_format(round((session()->get('coupon2')['discount'] / 100) * $repair->basic_fee,2))}}
+                 @endif
+                @endif
+                 </span>
+				 <span>({{session()->get('coupon2')['name']}})</span>
+				 <span class="total">&nbsp;</span>
+				 @endif
 				 <div class="clearfix"></div>				 
 			 </div>	
 			 <h4 class="last-price">TOTAL</h4>
-			 <span id="total_fee" class="total final">₱ {{number_format($repair->basic_fee,2)}}</span>
+			 <span id="total_fee" class="total final">₱ 
+             @if(session()->has('coupon2'))
+                 @if(session()->get('coupon2')['type'] == "Fixed")
+                      {{number_format($repair->basic_fee - session()->get('coupon2')['discount'],2)}}
+                 @else
+                      {{number_format($repair->basic_fee - round((session()->get('coupon2')['discount'] / 100) * $repair->basic_fee,2))}}
+                 @endif
+             @else
+             {{number_format($repair->basic_fee,2)}}
+             @endif
+             </span>
 			 <div class="clearfix"></div>
 			
+             @if(! session()->has('coupon2'))
 			 <div class="total-item mt-5">
 				 <h3>COUPONS</h3>
                  <form action="{{route('repair.storeCoupon')}}" method="post">
                  @csrf
 				 <input type="text" class="form-control" name="coupon_code" id="coupon_code"> 
+				 <input type="hidden" name="cartTotal" value="">
 				 <button type="submit" class="btn cpns">Apply Coupon</a>
                  </form>
 			 </div>
-             <div class="total-item mt-0">
+			 @endif
+             <div class="total-item mt-5">
 				 <h3>REMINDERS</h3>
 				 <P>This estimate is an approximation and is not guaranteed. 
                     The estimate is based on information provided from the member regarding 
                     the location and type of repair. Actual cost may change once the repair is accomplished
-                    . Prior to any changes of cost, the member will be notified.</p>
+                    . Prior to any changes of cost, the member will be notified. Payment will be done after the repair is finished through COD or online payment.</p>
 			 </div>
 			</div>
 	
@@ -104,6 +136,10 @@ var repair_fee = {{$repair->basic_fee}};
 var transportation_fee = 0;
 var total_fee = 0;
 var discount = 0;
+var discount_percent = 0;
+@if(session()->has('coupon2'))
+discount = {{session()->get('coupon2')['discount']}};
+@endif
 
  function initMap() {
     var latlng = new google.maps.LatLng(14.6091,121.0223);
@@ -187,91 +223,285 @@ function bindDataToForm(address_components,address,lat,lng){
 				if(city == 'Caloocan'){
 					document.getElementById('transportation_fee').innerHTML = '₱ {{$repair->caloocan_fee}}';
                     transportation_fee = {{$repair->caloocan_fee}};
-                    total_fee = transportation_fee + repair_fee;
+                    @if(session()->has('coupon2'))
+                       @if(session()->get('coupon2')['type'] == "Fixed")
+                            total_fee = transportation_fee + repair_fee - discount; 
+                       @else
+                            subtotal = transportation_fee + repair_fee;
+                            discount_percent = Math.round((discount / 100) * subtotal);
+                            total_fee = subtotal - discount_percent;
+                            document.getElementById('discount_percent').innerHTML = '- ₱ '+discount_percent;
+                       @endif
+                    @else
+                        total_fee = transportation_fee + repair_fee;
+                    @endif
+
                     document.getElementById('total_fee').innerHTML = '₱ '+total_fee;
 				}
 				else if(city == 'Malabon'){
 					document.getElementById('transportation_fee').innerHTML = '₱ {{$repair->malabon_fee}}';
                     transportation_fee = {{$repair->malabon_fee}};
-                    total_fee = transportation_fee + repair_fee;
+                 
+                    @if(session()->has('coupon2'))
+                       @if(session()->get('coupon2')['type'] == "Fixed")
+                            total_fee = transportation_fee + repair_fee - discount; 
+                       @else
+                            subtotal = transportation_fee + repair_fee;
+                            discount_percent = Math.round((discount / 100) * subtotal);
+                            total_fee = subtotal - discount_percent;
+                            document.getElementById('discount_percent').innerHTML = '- ₱ '+discount_percent;
+                       @endif
+                    @else
+                        total_fee = transportation_fee + repair_fee;
+                    @endif
+
                     document.getElementById('total_fee').innerHTML = '₱ '+total_fee;
 				}
 				else if(city == 'Navotas'){
 					document.getElementById('transportation_fee').innerHTML = '₱ {{$repair->navotas_fee}}';
                     transportation_fee = {{$repair->navotas_fee}};
-                    total_fee = transportation_fee + repair_fee;
+                   
+                    @if(session()->has('coupon2'))
+                       @if(session()->get('coupon2')['type'] == "Fixed")
+                            total_fee = transportation_fee + repair_fee - discount; 
+                       @else
+                            subtotal = transportation_fee + repair_fee;
+                            discount_percent = Math.round((discount / 100) * subtotal);
+                            total_fee = subtotal - discount_percent;
+                            document.getElementById('discount_percent').innerHTML = '- ₱ '+discount_percent;
+                       @endif
+                    @else
+                        total_fee = transportation_fee + repair_fee;
+                    @endif
+
                     document.getElementById('total_fee').innerHTML = '₱ '+total_fee;
 				}
 				else if(city == 'Valenzuela'){
 					document.getElementById('transportation_fee').innerHTML = '₱ {{$repair->valenzuela_fee}}';
                     transportation_fee = {{$repair->valenzuela_fee}};
-                    total_fee = transportation_fee + repair_fee;
+                   
+                    @if(session()->has('coupon2'))
+                       @if(session()->get('coupon2')['type'] == "Fixed")
+                            total_fee = transportation_fee + repair_fee - discount; 
+                       @else
+                            subtotal = transportation_fee + repair_fee;
+                            discount_percent = Math.round((discount / 100) * subtotal);
+                            total_fee = subtotal - discount_percent;
+                            document.getElementById('discount_percent').innerHTML = '- ₱ '+discount_percent;
+                       @endif
+                    @else
+                        total_fee = transportation_fee + repair_fee;
+                    @endif
+
                     document.getElementById('total_fee').innerHTML = '₱ '+total_fee;
 				}
 				else if(city == 'Quezon City'){
 					document.getElementById('transportation_fee').innerHTML = '₱ {{$repair->quezon_fee}}';
                     transportation_fee = {{$repair->quezon_fee}};
-                    total_fee = transportation_fee + repair_fee;
+                    
+                    @if(session()->has('coupon2'))
+                       @if(session()->get('coupon2')['type'] == "Fixed")
+                            total_fee = transportation_fee + repair_fee - discount; 
+                       @else
+                            subtotal = transportation_fee + repair_fee;
+                            discount_percent = Math.round((discount / 100) * subtotal);
+                            total_fee = subtotal - discount_percent;
+                            document.getElementById('discount_percent').innerHTML = '- ₱ '+discount_percent;
+                       @endif
+                    @else
+                        total_fee = transportation_fee + repair_fee;
+                    @endif
+
                     document.getElementById('total_fee').innerHTML = '₱ '+total_fee;
 				}
 				else if(city == 'Marikina'){
 					document.getElementById('transportation_fee').innerHTML = '₱ {{$repair->marikina_fee}}';
                     transportation_fee = {{$repair->marikina_fee}};
-                    total_fee = transportation_fee + repair_fee;
+                   
+                    @if(session()->has('coupon2'))
+                       @if(session()->get('coupon2')['type'] == "Fixed")
+                            total_fee = transportation_fee + repair_fee - discount; 
+                       @else
+                            subtotal = transportation_fee + repair_fee;
+                            discount_percent = Math.round((discount / 100) * subtotal);
+                            total_fee = subtotal - discount_percent;
+                            document.getElementById('discount_percent').innerHTML = '- ₱ '+discount_percent;
+                       @endif
+                    @else
+                        total_fee = transportation_fee + repair_fee;
+                    @endif
+
                     document.getElementById('total_fee').innerHTML = '₱ '+total_fee;
 				}
 				else if(city == 'Pasig'){
 					document.getElementById('transportation_fee').innerHTML = '₱ {{$repair->pasig_fee}}';
                     transportation_fee = {{$repair->pasig_fee}};
-                    total_fee = transportation_fee + repair_fee;
+                   
+                    @if(session()->has('coupon2'))
+                       @if(session()->get('coupon2')['type'] == "Fixed")
+                            total_fee = transportation_fee + repair_fee - discount; 
+                       @else
+                            subtotal = transportation_fee + repair_fee;
+                            discount_percent = Math.round((discount / 100) * subtotal);
+                            total_fee = subtotal - discount_percent;
+                            document.getElementById('discount_percent').innerHTML = '- ₱ '+discount_percent;
+                       @endif
+                    @else
+                        total_fee = transportation_fee + repair_fee;
+                    @endif
+
                     document.getElementById('total_fee').innerHTML = '₱ '+total_fee;
 				}
 				else if(city == 'Taguig'){
 					document.getElementById('transportation_fee').innerHTML = '₱ {{$repair->taguig_fee}}';
                     transportation_fee = {{$repair->taguig_fee}};
-                    total_fee = transportation_fee + repair_fee;
+                   
+                    @if(session()->has('coupon2'))
+                       @if(session()->get('coupon2')['type'] == "Fixed")
+                            total_fee = transportation_fee + repair_fee - discount; 
+                       @else
+                            subtotal = transportation_fee + repair_fee;
+                            discount_percent = Math.round((discount / 100) * subtotal);
+                            total_fee = subtotal - discount_percent;
+                            document.getElementById('discount_percent').innerHTML = '- ₱ '+discount_percent;
+                       @endif
+                    @else
+                        total_fee = transportation_fee + repair_fee;
+                    @endif
+
                     document.getElementById('total_fee').innerHTML = '₱ '+total_fee;
 				}
 				else if(city == 'Makati'){
 					document.getElementById('transportation_fee').innerHTML = '₱ {{$repair->makati_fee}}';
                     transportation_fee = {{$repair->makati_fee}};
-                    total_fee = transportation_fee + repair_fee;
+                   
+                    @if(session()->has('coupon2'))
+                       @if(session()->get('coupon2')['type'] == "Fixed")
+                            total_fee = transportation_fee + repair_fee - discount; 
+                       @else
+                            subtotal = transportation_fee + repair_fee;
+                            discount_percent = Math.round((discount / 100) * subtotal);
+                            total_fee = subtotal - discount_percent;
+                            document.getElementById('discount_percent').innerHTML = '- ₱ '+discount_percent;
+                       @endif
+                    @else
+                        total_fee = transportation_fee + repair_fee;
+                    @endif
+
                     document.getElementById('total_fee').innerHTML = '₱ '+total_fee;
 				}
 				else if(city == 'Mandaluyong'){
 					document.getElementById('transportation_fee').innerHTML = '₱ {{$repair->mandaluyong_fee}}';
                     transportation_fee = {{$repair->mandaluyong_fee}};
-                    total_fee = transportation_fee + repair_fee;
+                   
+                    @if(session()->has('coupon2'))
+                       @if(session()->get('coupon2')['type'] == "Fixed")
+                            total_fee = transportation_fee + repair_fee - discount; 
+                       @else
+                            subtotal = transportation_fee + repair_fee;
+                            discount_percent = Math.round((discount / 100) * subtotal);
+                            total_fee = subtotal - discount_percent;
+                            document.getElementById('discount_percent').innerHTML = '- ₱ '+discount_percent;
+                       @endif
+                    @else
+                        total_fee = transportation_fee + repair_fee;
+                    @endif
+
                     document.getElementById('total_fee').innerHTML = '₱ '+total_fee;
 				}
 				else if(city == 'San Juan'){
 					document.getElementById('transportation_fee').innerHTML = '₱ {{$repair->sanjuan_fee}}';
                     transportation_fee = {{$repair->sanjuan_fee}};
-                    total_fee = transportation_fee + repair_fee;
+                   
+                    @if(session()->has('coupon2'))
+                       @if(session()->get('coupon2')['type'] == "Fixed")
+                            total_fee = transportation_fee + repair_fee - discount; 
+                       @else
+                            subtotal = transportation_fee + repair_fee;
+                            discount_percent = Math.round((discount / 100) * subtotal);
+                            total_fee = subtotal - discount_percent;
+                            document.getElementById('discount_percent').innerHTML = '- ₱ '+discount_percent;
+                       @endif
+                    @else
+                        total_fee = transportation_fee + repair_fee;
+                    @endif
+
                     document.getElementById('total_fee').innerHTML = '₱ '+total_fee;
 				}
 				else if(city == 'Parañaque'){
 					document.getElementById('transportation_fee').innerHTML = '₱ {{$repair->paranaque_fee}}';
                     transportation_fee = {{$repair->paranaque_fee}};
-                    total_fee = transportation_fee + repair_fee;
+                   
+                    @if(session()->has('coupon2'))
+                       @if(session()->get('coupon2')['type'] == "Fixed")
+                            total_fee = transportation_fee + repair_fee - discount; 
+                       @else
+                            subtotal = transportation_fee + repair_fee;
+                            discount_percent = Math.round((discount / 100) * subtotal);
+                            total_fee = subtotal - discount_percent;
+                            document.getElementById('discount_percent').innerHTML = '- ₱ '+discount_percent;
+                       @endif
+                    @else
+                        total_fee = transportation_fee + repair_fee;
+                    @endif
+
                     document.getElementById('total_fee').innerHTML = '₱ '+total_fee;
 				}
 				else if(city == 'Las Piñas'){
 					document.getElementById('transportation_fee').innerHTML = '₱ {{$repair->laspinas_fee}}';
                     transportation_fee = {{$repair->laspinas_fee}};
-                    total_fee = transportation_fee + repair_fee;
+                   
+                    @if(session()->has('coupon2'))
+                       @if(session()->get('coupon2')['type'] == "Fixed")
+                            total_fee = transportation_fee + repair_fee - discount; 
+                       @else
+                            subtotal = transportation_fee + repair_fee;
+                            discount_percent = Math.round((discount / 100) * subtotal);
+                            total_fee = subtotal - discount_percent;
+                            document.getElementById('discount_percent').innerHTML = '- ₱ '+discount_percent;
+                       @endif
+                    @else
+                        total_fee = transportation_fee + repair_fee;
+                    @endif
+
                     document.getElementById('total_fee').innerHTML = '₱ '+total_fee;
 				}
 				else if(city == 'Muntinlupa'){
 					document.getElementById('transportation_fee').innerHTML = '₱ {{$repair->muntinlupa_fee}}';
                     transportation_fee = {{$repair->muntinlupa_fee}};
-                    total_fee = transportation_fee + repair_fee;
+                   
+                    @if(session()->has('coupon2'))
+                       @if(session()->get('coupon2')['type'] == "Fixed")
+                            total_fee = transportation_fee + repair_fee - discount; 
+                       @else
+                            subtotal = transportation_fee + repair_fee;
+                            discount_percent = Math.round((discount / 100) * subtotal);
+                            total_fee = subtotal - discount_percent;
+                            document.getElementById('discount_percent').innerHTML = '- ₱ '+discount_percent;
+                       @endif
+                    @else
+                        total_fee = transportation_fee + repair_fee;
+                    @endif
+
                     document.getElementById('total_fee').innerHTML = '₱ '+total_fee;
 				}
 				else if(city == 'Manila'){
 					document.getElementById('transportation_fee').innerHTML = '₱ {{$repair->manila_fee}}';
                     transportation_fee = {{$repair->manila_fee}};
-                    total_fee = transportation_fee + repair_fee;
+                    
+                    @if(session()->has('coupon2'))
+                       @if(session()->get('coupon2')['type'] == "Fixed")
+                            total_fee = transportation_fee + repair_fee - discount; 
+                       @else
+                            subtotal = transportation_fee + repair_fee;
+                            discount_percent = Math.round((discount / 100) * subtotal);
+                            total_fee = subtotal - discount_percent;
+                            document.getElementById('discount_percent').innerHTML = '- ₱ '+discount_percent;
+                       @endif
+                    @else
+                        total_fee = transportation_fee + repair_fee;
+                    @endif
+
                     document.getElementById('total_fee').innerHTML = '₱ '+total_fee;
 				}
 
@@ -296,22 +526,59 @@ $('select[id="repair_type"]').change(function(){
  if ($(this).val() == "Basic"){
       document.getElementById('initial_fee').innerHTML = '₱ {{$repair->basic_fee}}';
       repair_fee = {{$repair->basic_fee}};
-      total_fee = transportation_fee + repair_fee;
+      @if(session()->has('coupon2'))
+                       @if(session()->get('coupon2')['type'] == "Fixed")
+                            total_fee = transportation_fee + repair_fee - discount; 
+                       @else
+                            subtotal = transportation_fee + repair_fee;
+                            discount_percent = Math.round((discount / 100) * subtotal);
+                            total_fee = subtotal - discount_percent;
+                            document.getElementById('discount_percent').innerHTML = '- ₱ '+discount_percent;
+                       @endif
+                    @else
+                        total_fee = transportation_fee + repair_fee;
+                    @endif
+
       document.getElementById('total_fee').innerHTML = '₱ '+total_fee;
  }
  if ($(this).val() == "Expert"){
      document.getElementById('initial_fee').innerHTML = '₱ {{$repair->expert_fee}}';
      repair_fee = {{$repair->expert_fee}};
-     total_fee = transportation_fee + repair_fee;
+     @if(session()->has('coupon2'))
+                       @if(session()->get('coupon2')['type'] == "Fixed")
+                            total_fee = transportation_fee + repair_fee - discount; 
+                       @else
+                            subtotal = transportation_fee + repair_fee;
+                            discount_percent = Math.round((discount / 100) * subtotal);
+                            total_fee = subtotal - discount_percent;
+                            document.getElementById('discount_percent').innerHTML = '- ₱ '+discount_percent;
+                       @endif
+                    @else
+                        total_fee = transportation_fee + repair_fee;
+                    @endif
+
      document.getElementById('total_fee').innerHTML = '₱ '+total_fee;
  }   
  if ($(this).val() == "Upgrade"){
      document.getElementById('initial_fee').innerHTML = '₱ {{$repair->upgrade_fee}}';
      repair_fee = {{$repair->upgrade_fee}};
-     total_fee = transportation_fee + repair_fee;
+     @if(session()->has('coupon2'))
+                       @if(session()->get('coupon2')['type'] == "Fixed")
+                            total_fee = transportation_fee + repair_fee - discount; 
+                       @else
+                            subtotal = transportation_fee + repair_fee;
+                            discount_percent = Math.round((discount / 100) * subtotal);
+                            total_fee = subtotal - discount_percent;
+                            document.getElementById('discount_percent').innerHTML = '- ₱ '+discount_percent;
+                       @endif
+                    @else
+                        total_fee = transportation_fee + repair_fee;
+                    @endif
+
      document.getElementById('total_fee').innerHTML = '₱ '+total_fee;
  }           
 })
+
 </script>
 
 @endsection

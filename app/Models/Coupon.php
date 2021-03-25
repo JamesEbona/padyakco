@@ -33,4 +33,15 @@ class Coupon extends Model
             return 0;
         }
     }
+
+    public function repairDiscount()
+    {
+        if ($this->type == 'Fixed') {
+            return $this->value;
+        } elseif ($this->type == 'Percent') {
+            return $this->percent_off;
+        } else {
+            return 0;
+        }
+    }
 }

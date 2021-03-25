@@ -419,7 +419,7 @@
                                   <table cellspacing="0" cellpadding="0" border="0" width="100%" role="presentation">
                                     <tr>
                                       <th style="mso-line-height-rule: exactly;" bgcolor="#ffffff" valign="top">
-                                        <h1 data-key="3499733_heading" style="font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 24px; line-height: 36px; font-weight: 400; color: #1a1a1a; text-transform: none; margin: 0;">REPAIR BOOKING DONE</h1>
+                                        <h1 data-key="3499733_heading" style="font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 24px; line-height: 36px; font-weight: 400; color: #1a1a1a; text-transform: none; margin: 0;">REPAIR BOOKING RECEIPT</h1>
                                       </th>
                                     </tr>
                                   </table>
@@ -462,7 +462,7 @@
                                     {{$booking->first_name}} {{$booking->last_name}},</p> <span data-key="3499735_introduction_text"
                                   class="text" style="text-align: left; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 15px; line-height: 22px; font-weight: 400; text-transform: none; color: #000000;">
                                         <p style="mso-line-height-rule: exactly; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 15px; line-height: 22px; font-weight: 400; text-transform: none; color: #000000; margin: 11px 0 0;" align="left"></p>
-                                        <p style="mso-line-height-rule: exactly; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 15px; line-height: 22px; font-weight: 400; text-transform: none; color: #000000; margin: 11px 0 0;" align="left">Good news! Your bicycle is now repaired. Thank you for trusting Padyak.Co. Please see the total price of your booking below.</p>
+                                        <p style="mso-line-height-rule: exactly; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 15px; line-height: 22px; font-weight: 400; text-transform: none; color: #000000; margin: 11px 0 0;" align="left">Good news! Your bicycle is now repaired. Thank you for trusting Padyak.Co. This email serves as your repair booking receipt.</p>
                                       </span>
                                 </th>
                               </tr>
@@ -516,6 +516,12 @@
                                             <th class="table-title" style="mso-line-height-rule: exactly; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 15px; line-height: 22px; font-weight: 400; text-transform: none; color: #000000; width: 65%; padding: 5px 0;" align="left" bgcolor="#ffffff" valign="top">Additional Fee</th>
                                             <th class="table-text" style="mso-line-height-rule: exactly; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 15px; line-height: 22px; font-weight: 400; text-transform: none; color: #000000; width: 35%; padding: 5px 0;" align="right" bgcolor="#ffffff" valign="middle">₱{{number_format($booking->additional_fee,2)}}</th>
                                           </tr>
+                                          @if($booking->discount != 0)
+                                          <tr>
+                                            <th class="table-title" style="mso-line-height-rule: exactly; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 15px; line-height: 22px; font-weight: 400; text-transform: none; color: #000000; width: 65%; padding: 5px 0;" align="left" bgcolor="#ffffff" valign="top">Discount ({{$booking->discount_code}})</th>
+                                            <th class="table-text" style="mso-line-height-rule: exactly; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 15px; line-height: 22px; font-weight: 400; text-transform: none; color: #000000; width: 35%; padding: 5px 0;" align="right" bgcolor="#ffffff" valign="middle">- ₱{{number_format($booking->discount,2)}}</th>
+                                          </tr>
+                                          @endif
                                           <tr class="pricing-table-total-row">
                                             <th class="table-title" data-key="3499741_total" style="mso-line-height-rule: exactly; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 15px; line-height: 22px; font-weight: 400; text-transform: none; color: #1a1a1a; width: 65%; padding: 5px 0;" align="left" bgcolor="#ffffff" valign="top">Total</th>
                                             <th class="table-text" style="mso-line-height-rule: exactly; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 15px; line-height: 22px; font-weight: 400; text-transform: none; color: #1a1a1a; width: 35%; padding: 5px 0;" align="right" bgcolor="#ffffff" valign="middle">₱{{number_format($booking->total_fee,2)}}</th>
@@ -526,6 +532,43 @@
                                   </table>
                                 </th>
                               </tr>
+
+                              <!-- BEGIN SECTION: Payment Info -->
+                              <tr id="section-3499742" class="section payment_info">
+                                <th style="mso-line-height-rule: exactly; padding: 11px 44px;" bgcolor="#ffffff">
+                                  <table class="table-inner" cellspacing="0" cellpadding="0" border="0" width="100%" style="min-width: 100%;" role="presentation">
+
+                                    <!-- PAYMENT INFO -->
+                                    <tr>
+                                      <th colspan="2" style="mso-line-height-rule: exactly;" bgcolor="#ffffff" valign="top">
+                                        <h3 data-key="3499742_payment_info" style="font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; color: #1a1a1a; font-size: 14px; line-height: 22px; font-weight: 400; text-transform: none;  margin: 0;" align="left">PAYMENT METHOD</h3>
+                                      </th>
+                                    </tr>
+
+                                    <!-- PAYMENT METHOD IMAGE -->
+                                    <tr>
+                                      <th class="table-title" style="mso-line-height-rule: exactly; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 15px; line-height: 22px; font-weight: 400; text-transform: none; color: #000000; width: 65%; padding: 5px 0;" align="left" bgcolor="#ffffff" valign="top">
+                                        <table cellspacing="0" cellpadding="0" border="0" width="100%" style="min-width: 100%;" role="presentation">
+                                          <tr>
+                                            <th valign="middle" width="40" style="line-height: 38px; mso-line-height-rule: exactly; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 15px; font-weight: 400; text-transform: none; color: #000000; padding: 7px 10px 7px 0;" align="left" bgcolor="#ffffff">
+                                               @if($booking->payment_method == "Online")
+                                              <img width="40" style="width: 40px; vertical-align: middle; height: auto !important;" alt="Visa Icon" src="https://cdn.pixabay.com/photo/2015/05/26/09/37/paypal-784404_1280.png">
+                                               @else
+                                               {{$booking->payment_method}}
+                                               @endif
+                                            </th>
+                                            <th style="mso-line-height-rule: exactly; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 15px; line-height: 22px; font-weight: 400; text-transform: none; color: #000000; padding: 7px 0;" align="left" bgcolor="#ffffff" valign="middle">
+                                            </th>
+                                          </tr>
+                                        </table>
+                                      </th>
+                                      <th class="table-text" style="mso-line-height-rule: exactly; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 15px; line-height: 22px; font-weight: 400; text-transform: none; color: #000000; width: 35%; padding: 11px 0;" align="right" bgcolor="#ffffff" valign="middle">₱{{number_format($booking->total_fee,2)}}</th>
+                                    </tr>
+                                  </table>
+                                </th>
+                              </tr>
+
+                              <!-- END SECTION: Payment Info -->
 
 
                               <tr id="section-3499740" class="section customer_and_shipping_address">

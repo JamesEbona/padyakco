@@ -214,15 +214,15 @@
                     </div>
                     <div class="form-group">
                         <label>Price</label>
-                        <input class="form-control" type="number" id="editPrice" name="price" required="" min="1" step="0.50">
+                        <input class="form-control" type="number" id="editPrice" name="price" required="" min="1" step="0.01">
                     </div>
                     <div class="form-group">
                         <label>Delivery Fee</label>
-                        <input class="form-control" type="number" id="editDelivery" name="delivery_fee" required="" min="0"  step="0.50">
+                        <input class="form-control" type="number" id="editDelivery" name="delivery_fee" required="" min="0"  step="0.01">
                     </div>
                     <div class="form-group">
                         <label>Provincial Delivery Fee</label>
-                        <input class="form-control" type="number" id="editProvincial" name="provincial_delivery_fee" required="" min="0" step="0.50">
+                        <input class="form-control" type="number" id="editProvincial" name="provincial_delivery_fee" required="" min="0" step="0.01">
                     </div>
                     <div class="form-group">
                         <label>Description</label>
@@ -301,15 +301,15 @@
                     </div>
                     <div class="form-group">
                         <label>Price</label>
-                        <input class="form-control" type="number" name="price" required="" min="1.00" step="0.50">
+                        <input class="form-control" type="number" name="price" required="" min="1.00" step="0.01">
                     </div>
                     <div class="form-group">
                         <label>Delivery Fee</label>
-                        <input class="form-control" type="number" name="delivery_fee" required="" min="0"  step="0.50">
+                        <input class="form-control" type="number" name="delivery_fee" required="" min="0"  step="0.01">
                     </div>
                     <div class="form-group">
                         <label>Provincial Delivery Fee</label>
-                        <input class="form-control" type="number" name="provincial_delivery_fee" required="" min="0"  step="0.50">
+                        <input class="form-control" type="number" name="provincial_delivery_fee" required="" min="0"  step="0.01">
                     </div>
                     <div class="form-group">
                         <label>Description</label>

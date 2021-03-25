@@ -153,11 +153,11 @@ Padyak.Co Admin - Coupons
                     </div>
                     <div class="form-group">
                         <label>Fixed Discount Value</label>
-                        <input class="form-control" id="editValue" type="number" name="value"  min="0" step="0.50">
+                        <input class="form-control" id="editValue" type="number" name="value"  min="1" step="0.01">
                     </div>
                     <div class="form-group">
                         <label>Percent Discount</label>
-                        <input class="form-control" id="editPercent" type="number" name="percent_off" max="100"  min="0" step="1">
+                        <input class="form-control" id="editPercent" type="number" name="percent_off" max="100"  min="1" step="1">
                     </div>
               </div>  
                 </div>
@@ -212,11 +212,11 @@ Padyak.Co Admin - Coupons
                     </div>
                     <div class="form-group">
                         <label>Fixed Discount Value</label>
-                        <input class="form-control @error('value') is-invalid @enderror" type="number" name="value"  min="0" step="0.50">
+                        <input class="form-control @error('value') is-invalid @enderror" type="number" name="value"  min="1" step="0.01">
                     </div>
                     <div class="form-group">
                         <label>Percent Discount</label>
-                        <input class="form-control @error('percent_off') is-invalid @enderror" type="number" name="percent_off"  min="0" max="100" step="1">
+                        <input class="form-control @error('percent_off') is-invalid @enderror" type="number" name="percent_off"  min="1" max="100" step="1">
                     </div>
                    
                 </div>

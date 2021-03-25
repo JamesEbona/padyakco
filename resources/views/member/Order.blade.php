@@ -135,7 +135,7 @@ My Order
 				    <p>₱{{number_format($order->shipping,2)}}</p>
 					</div>
 					</div>
-					@isset($order->discount)
+					@if($order->discount != 0)
 					<div class="row" style="padding-bottom: 12px;">
 					<div class="col-md-8">
                     <p>Discount ({{$order->discount_code}})</p>
@@ -144,7 +144,7 @@ My Order
 				    <p>- ₱{{number_format($order->discount,2)}}</p>
 					</div>
 					</div>
-					@endisset
+					@endif
                     <div class="row" style="border-top: 2px solid; padding-top: 12px;">
 					<div class="col-md-6">
                     <p>Payment Total</p>
@@ -172,21 +172,21 @@ My Order
 					<div class="col-md-6">
 					<div class="row">
 					<div class="col-md-12">
-                    <a class="account-links" target="_new" href="{{$order->courier->website}}">
-					<p>{{$order->courier->name}}</p>
-				    </a>
+					<p>Courier Name: <a class="account-links" target="_new" href="{{$order->courier->website}}">{{$order->courier->name}}</a></p>
 					</div>
 					</div>
 					<div class="row">
 					<div class="col-md-12">
-                    <p>{{$order->tracking_number}}</p>
+                    <p>Tracking # {{$order->tracking_number}}</p>
 					</div>
 					</div>
 					</div>
 					<div class="col-md-6">
 					<div class="row pull-right">
 					<div class="col-md-12">
-					<img alt="logistics-website" class="mr-2" src="/storage/{{$order->courier->logo}}" >
+					<a target="_new" href="{{$order->courier->website}}">
+					<img alt="logistics-logo" class="mr-2" src="/storage/{{$order->courier->logo}}" >
+					</a>
 					</div>
 					</div>
 					</div>

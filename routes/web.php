@@ -8,7 +8,9 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\InquiriesController;
 
 use App\Mail\BookingDone;
+use App\Mail\BookingConfirmed;
 use App\Mail\BookingPayment;
+use App\Mail\BookingAdminNotification;
 use App\Mail\OrderReceipt;
 use App\Models\Booking;
 use App\Models\Order;
@@ -45,9 +47,9 @@ Route::post('/inquiries/store', [InquiriesController::class, 'store'])->name('st
 
 Route::get('/email', function(){
   
-    $order = Booking::findOrFail(32);
+    $order = Booking::findOrFail(34);
 
-    return new BookingDone($order);
+    return new BookingAdminNotification($order);
 });
 
 Route::get('/email/order', function(){

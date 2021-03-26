@@ -427,8 +427,8 @@ function updateBookingStatus(arg) {
     else if(status == "en route"){
         var op1 = new Option("en route", "en route");
         $(op1).html("en route");
-        var op2 = new Option("done", "done");
-        $(op2).html("done");
+        var op2 = new Option("payment", "payment");
+        $(op2).html("payment");
         var op3 = new Option("cancelled", "cancelled");
         $(op3).html("cancelled");
         $("#editStatus").append(op1);

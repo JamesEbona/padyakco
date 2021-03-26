@@ -35,7 +35,7 @@ class CreateOrdersTable extends Migration
             $table->string('postal_code');
             $table->string('phone_number');
             $table->string('status');
-            $table->string('discount_code')>nullable();
+            $table->string('discount_code')->nullable();
             $table->string('tracking_number')->nullable();
             $table->softDeletes();
         });

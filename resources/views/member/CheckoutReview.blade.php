@@ -96,7 +96,7 @@ Padyak.Co - Checkout
 				 <div class="clearfix"></div>				 
 			 </div>	
 			 <h4 class="last-price">TOTAL</h4>
-			 <span class="total final">₱ {{number_format($cartItemTotal + $cartDeliveryTotal - $discount,2)}}</span>
+			 <span class="total final">₱ {{max(number_format($cartItemTotal + $cartDeliveryTotal - $discount,2),0.00)}}</span>
 			 <div class="clearfix"></div>
              <div id="paypalButtons" class="mt-5"></div>
 			 @if(! session()->has('coupon'))
@@ -124,7 +124,7 @@ Padyak.Co - Checkout
 
 <script src="https://www.paypal.com/sdk/js?client-id=AdxXimYRlwtcfMiPD8Y13isalZqY6IO847zNO43qvfPzSlnBtMNzKahvjaQTtukF-eRCPlRKpcBeXliy&currency=PHP"></script>
 <script>
-    var amount = {{$cartItemTotal + $cartDeliveryTotal - $discount}};
+    var amount = {{max(($cartItemTotal + $cartDeliveryTotal) - $discount, 0.00)}};
 	var item_total = {{$cartItemTotal}};
 	var discount = {{$discount}};
 	var discount_code = '{{$discount_code}}';

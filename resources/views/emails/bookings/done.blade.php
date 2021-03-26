@@ -512,10 +512,12 @@
                                             <th class="table-title" style="mso-line-height-rule: exactly; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 15px; line-height: 22px; font-weight: 400; text-transform: none; color: #000000; width: 65%; padding: 5px 0;" align="left" bgcolor="#ffffff" valign="top">Transportation Fee</th>
                                             <th class="table-text" style="mso-line-height-rule: exactly; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 15px; line-height: 22px; font-weight: 400; text-transform: none; color: #000000; width: 35%; padding: 5px 0;" align="right" bgcolor="#ffffff" valign="middle">₱{{number_format($booking->transportation_fee,2)}}</th>
                                           </tr>
+                                          @if($booking->additional_fee != 0)
                                           <tr>
                                             <th class="table-title" style="mso-line-height-rule: exactly; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 15px; line-height: 22px; font-weight: 400; text-transform: none; color: #000000; width: 65%; padding: 5px 0;" align="left" bgcolor="#ffffff" valign="top">Additional Fee</th>
                                             <th class="table-text" style="mso-line-height-rule: exactly; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 15px; line-height: 22px; font-weight: 400; text-transform: none; color: #000000; width: 35%; padding: 5px 0;" align="right" bgcolor="#ffffff" valign="middle">₱{{number_format($booking->additional_fee,2)}}</th>
                                           </tr>
+                                          @endif
                                           @if($booking->discount != 0)
                                           <tr>
                                             <th class="table-title" style="mso-line-height-rule: exactly; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 15px; line-height: 22px; font-weight: 400; text-transform: none; color: #000000; width: 65%; padding: 5px 0;" align="left" bgcolor="#ffffff" valign="top">Discount ({{$booking->discount_code}})</th>

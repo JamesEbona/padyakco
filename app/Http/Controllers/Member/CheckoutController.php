@@ -109,9 +109,9 @@ class CheckoutController extends Controller
         if($cart->total_quantity == 0){
             return redirect()->route('memberCart');
         }
-        // else if(url()->previous() != 'http://padyakco.test/member/checkout/address'){
-        //     return redirect()->route('memberCart');
-        // }
+        else if(url()->previous() != 'http://padyakco.test/member/checkout/address' && url()->previous() != 'http://padyakco.test/member/checkout/storeCoupon' && url()->previous() != 'http://padyakco.test/member/checkout/destroyCoupon' && url()->previous() != 'http://padyakco.test/member/checkout/review'){
+            return redirect()->route('memberCart');
+        }
         else{
             foreach ($cartItems as $cartItem){
            

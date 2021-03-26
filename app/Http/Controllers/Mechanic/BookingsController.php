@@ -56,7 +56,7 @@ class BookingsController extends Controller
 
         if($booking->discount != 0){
           if($booking->discount_type == "Fixed"){
-              $total_fee -= $booking->discount;
+              $total_fee = max($total_fee - $booking->discount,0);
              
           }
           else{

@@ -98,7 +98,7 @@ Padyak.Co - Book Mechanic
 			 <span id="total_fee" class="total final">₱ 
              @if(session()->has('coupon2'))
                  @if(session()->get('coupon2')['type'] == "Fixed")
-                      {{number_format($repair->basic_fee - session()->get('coupon2')['discount'],2)}}
+                      {{max(number_format($repair->basic_fee - session()->get('coupon2')['discount'],2),0)}}
                  @else
                       {{number_format($repair->basic_fee - round((session()->get('coupon2')['discount'] / 100) * $repair->basic_fee,2))}}
                  @endif
@@ -225,7 +225,7 @@ function bindDataToForm(address_components,address,lat,lng){
                     transportation_fee = {{$repair->caloocan_fee}};
                     @if(session()->has('coupon2'))
                        @if(session()->get('coupon2')['type'] == "Fixed")
-                            total_fee = transportation_fee + repair_fee - discount; 
+                            total_fee = Math.max((transportation_fee + repair_fee) - discount,0); 
                        @else
                             subtotal = transportation_fee + repair_fee;
                             discount_percent = Math.round((discount / 100) * subtotal);
@@ -244,7 +244,7 @@ function bindDataToForm(address_components,address,lat,lng){
                  
                     @if(session()->has('coupon2'))
                        @if(session()->get('coupon2')['type'] == "Fixed")
-                            total_fee = transportation_fee + repair_fee - discount; 
+                            total_fee = Math.max((transportation_fee + repair_fee) - discount,0); 
                        @else
                             subtotal = transportation_fee + repair_fee;
                             discount_percent = Math.round((discount / 100) * subtotal);
@@ -263,7 +263,7 @@ function bindDataToForm(address_components,address,lat,lng){
                    
                     @if(session()->has('coupon2'))
                        @if(session()->get('coupon2')['type'] == "Fixed")
-                            total_fee = transportation_fee + repair_fee - discount; 
+                       total_fee = Math.max((transportation_fee + repair_fee) - discount,0); 
                        @else
                             subtotal = transportation_fee + repair_fee;
                             discount_percent = Math.round((discount / 100) * subtotal);
@@ -282,7 +282,7 @@ function bindDataToForm(address_components,address,lat,lng){
                    
                     @if(session()->has('coupon2'))
                        @if(session()->get('coupon2')['type'] == "Fixed")
-                            total_fee = transportation_fee + repair_fee - discount; 
+                       total_fee = Math.max((transportation_fee + repair_fee) - discount,0);  
                        @else
                             subtotal = transportation_fee + repair_fee;
                             discount_percent = Math.round((discount / 100) * subtotal);
@@ -301,7 +301,7 @@ function bindDataToForm(address_components,address,lat,lng){
                     
                     @if(session()->has('coupon2'))
                        @if(session()->get('coupon2')['type'] == "Fixed")
-                            total_fee = transportation_fee + repair_fee - discount; 
+                       total_fee = Math.max((transportation_fee + repair_fee) - discount,0); 
                        @else
                             subtotal = transportation_fee + repair_fee;
                             discount_percent = Math.round((discount / 100) * subtotal);
@@ -320,7 +320,7 @@ function bindDataToForm(address_components,address,lat,lng){
                    
                     @if(session()->has('coupon2'))
                        @if(session()->get('coupon2')['type'] == "Fixed")
-                            total_fee = transportation_fee + repair_fee - discount; 
+                       total_fee = Math.max((transportation_fee + repair_fee) - discount,0); 
                        @else
                             subtotal = transportation_fee + repair_fee;
                             discount_percent = Math.round((discount / 100) * subtotal);
@@ -339,7 +339,7 @@ function bindDataToForm(address_components,address,lat,lng){
                    
                     @if(session()->has('coupon2'))
                        @if(session()->get('coupon2')['type'] == "Fixed")
-                            total_fee = transportation_fee + repair_fee - discount; 
+                       total_fee = Math.max((transportation_fee + repair_fee) - discount,0); 
                        @else
                             subtotal = transportation_fee + repair_fee;
                             discount_percent = Math.round((discount / 100) * subtotal);
@@ -358,7 +358,7 @@ function bindDataToForm(address_components,address,lat,lng){
                    
                     @if(session()->has('coupon2'))
                        @if(session()->get('coupon2')['type'] == "Fixed")
-                            total_fee = transportation_fee + repair_fee - discount; 
+                       total_fee = Math.max((transportation_fee + repair_fee) - discount,0);  
                        @else
                             subtotal = transportation_fee + repair_fee;
                             discount_percent = Math.round((discount / 100) * subtotal);
@@ -377,7 +377,7 @@ function bindDataToForm(address_components,address,lat,lng){
                    
                     @if(session()->has('coupon2'))
                        @if(session()->get('coupon2')['type'] == "Fixed")
-                            total_fee = transportation_fee + repair_fee - discount; 
+                       total_fee = Math.max((transportation_fee + repair_fee) - discount,0); 
                        @else
                             subtotal = transportation_fee + repair_fee;
                             discount_percent = Math.round((discount / 100) * subtotal);
@@ -396,7 +396,7 @@ function bindDataToForm(address_components,address,lat,lng){
                    
                     @if(session()->has('coupon2'))
                        @if(session()->get('coupon2')['type'] == "Fixed")
-                            total_fee = transportation_fee + repair_fee - discount; 
+                       total_fee = Math.max((transportation_fee + repair_fee) - discount,0); 
                        @else
                             subtotal = transportation_fee + repair_fee;
                             discount_percent = Math.round((discount / 100) * subtotal);
@@ -415,7 +415,7 @@ function bindDataToForm(address_components,address,lat,lng){
                    
                     @if(session()->has('coupon2'))
                        @if(session()->get('coupon2')['type'] == "Fixed")
-                            total_fee = transportation_fee + repair_fee - discount; 
+                       total_fee = Math.max((transportation_fee + repair_fee) - discount,0); 
                        @else
                             subtotal = transportation_fee + repair_fee;
                             discount_percent = Math.round((discount / 100) * subtotal);
@@ -434,7 +434,7 @@ function bindDataToForm(address_components,address,lat,lng){
                    
                     @if(session()->has('coupon2'))
                        @if(session()->get('coupon2')['type'] == "Fixed")
-                            total_fee = transportation_fee + repair_fee - discount; 
+                       total_fee = Math.max((transportation_fee + repair_fee) - discount,0); 
                        @else
                             subtotal = transportation_fee + repair_fee;
                             discount_percent = Math.round((discount / 100) * subtotal);
@@ -453,7 +453,7 @@ function bindDataToForm(address_components,address,lat,lng){
                    
                     @if(session()->has('coupon2'))
                        @if(session()->get('coupon2')['type'] == "Fixed")
-                            total_fee = transportation_fee + repair_fee - discount; 
+                       total_fee = Math.max((transportation_fee + repair_fee) - discount,0); 
                        @else
                             subtotal = transportation_fee + repair_fee;
                             discount_percent = Math.round((discount / 100) * subtotal);
@@ -472,7 +472,7 @@ function bindDataToForm(address_components,address,lat,lng){
                    
                     @if(session()->has('coupon2'))
                        @if(session()->get('coupon2')['type'] == "Fixed")
-                            total_fee = transportation_fee + repair_fee - discount; 
+                       total_fee = Math.max((transportation_fee + repair_fee) - discount,0); 
                        @else
                             subtotal = transportation_fee + repair_fee;
                             discount_percent = Math.round((discount / 100) * subtotal);
@@ -491,7 +491,7 @@ function bindDataToForm(address_components,address,lat,lng){
                     
                     @if(session()->has('coupon2'))
                        @if(session()->get('coupon2')['type'] == "Fixed")
-                            total_fee = transportation_fee + repair_fee - discount; 
+                       total_fee = Math.max((transportation_fee + repair_fee) - discount,0); 
                        @else
                             subtotal = transportation_fee + repair_fee;
                             discount_percent = Math.round((discount / 100) * subtotal);
@@ -528,7 +528,7 @@ $('select[id="repair_type"]').change(function(){
       repair_fee = {{$repair->basic_fee}};
       @if(session()->has('coupon2'))
                        @if(session()->get('coupon2')['type'] == "Fixed")
-                            total_fee = transportation_fee + repair_fee - discount; 
+                       total_fee = Math.max((transportation_fee + repair_fee) - discount,0); 
                        @else
                             subtotal = transportation_fee + repair_fee;
                             discount_percent = Math.round((discount / 100) * subtotal);
@@ -546,7 +546,7 @@ $('select[id="repair_type"]').change(function(){
      repair_fee = {{$repair->expert_fee}};
      @if(session()->has('coupon2'))
                        @if(session()->get('coupon2')['type'] == "Fixed")
-                            total_fee = transportation_fee + repair_fee - discount; 
+                       total_fee = Math.max((transportation_fee + repair_fee) - discount,0); 
                        @else
                             subtotal = transportation_fee + repair_fee;
                             discount_percent = Math.round((discount / 100) * subtotal);
@@ -564,7 +564,7 @@ $('select[id="repair_type"]').change(function(){
      repair_fee = {{$repair->upgrade_fee}};
      @if(session()->has('coupon2'))
                        @if(session()->get('coupon2')['type'] == "Fixed")
-                            total_fee = transportation_fee + repair_fee - discount; 
+                       total_fee = Math.max((transportation_fee + repair_fee) - discount,0); 
                        @else
                             subtotal = transportation_fee + repair_fee;
                             discount_percent = Math.round((discount / 100) * subtotal);

@@ -512,9 +512,21 @@
                                             <th class="table-title" style="mso-line-height-rule: exactly; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 15px; line-height: 22px; font-weight: 400; text-transform: none; color: #000000; width: 65%; padding: 5px 0;" align="left" bgcolor="#ffffff" valign="top">Transportation Fee</th>
                                             <th class="table-text" style="mso-line-height-rule: exactly; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 15px; line-height: 22px; font-weight: 400; text-transform: none; color: #000000; width: 35%; padding: 5px 0;" align="right" bgcolor="#ffffff" valign="middle">₱{{number_format($booking->transportation_fee,2)}}</th>
                                           </tr>
+                                          @if($booking->additional_fee != 0)
+                                          <tr>
+                                            <th class="table-title" style="mso-line-height-rule: exactly; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 15px; line-height: 22px; font-weight: 400; text-transform: none; color: #000000; width: 65%; padding: 5px 0;" align="left" bgcolor="#ffffff" valign="top">Additional Fee</th>
+                                            <th class="table-text" style="mso-line-height-rule: exactly; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 15px; line-height: 22px; font-weight: 400; text-transform: none; color: #000000; width: 35%; padding: 5px 0;" align="right" bgcolor="#ffffff" valign="middle">₱{{number_format($booking->additional_fee,2)}}</th>
+                                          </tr>
+                                          @endif
+                                          @if($booking->discount != 0)
+                                          <tr>
+                                            <th class="table-title" style="mso-line-height-rule: exactly; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 15px; line-height: 22px; font-weight: 400; text-transform: none; color: #000000; width: 65%; padding: 5px 0;" align="left" bgcolor="#ffffff" valign="top">Discount ({{$booking->discount_code}})</th>
+                                            <th class="table-text" style="mso-line-height-rule: exactly; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 15px; line-height: 22px; font-weight: 400; text-transform: none; color: #000000; width: 35%; padding: 5px 0;" align="right" bgcolor="#ffffff" valign="middle">- ₱{{number_format($booking->discount,2)}}</th>
+                                          </tr>
+                                          @endif
                                           <tr class="pricing-table-total-row">
                                             <th class="table-title" data-key="3499741_total" style="mso-line-height-rule: exactly; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 15px; line-height: 22px; font-weight: 400; text-transform: none; color: #1a1a1a; width: 65%; padding: 5px 0;" align="left" bgcolor="#ffffff" valign="top">Total</th>
-                                            <th class="table-text" style="mso-line-height-rule: exactly; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 15px; line-height: 22px; font-weight: 400; text-transform: none; color: #1a1a1a; width: 35%; padding: 5px 0;" align="right" bgcolor="#ffffff" valign="middle">₱{{number_format($booking->repair_fee + $booking->transportation_fee,2)}}</th>
+                                            <th class="table-text" style="mso-line-height-rule: exactly; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'Roboto'; font-size: 15px; line-height: 22px; font-weight: 400; text-transform: none; color: #1a1a1a; width: 35%; padding: 5px 0;" align="right" bgcolor="#ffffff" valign="middle">₱{{number_format($booking->total_fee,2)}}</th>
                                           </tr>
                                         </table>
                                       </th>

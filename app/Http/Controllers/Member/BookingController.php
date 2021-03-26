@@ -123,7 +123,7 @@ class BookingController extends Controller
         $discount = request('discount');
         if(isset($discount)){
             if(request('discount_type') == "Fixed"){
-                $total_fee = ($repair_fee + $transportation_fee) - $discount;
+                $total_fee = max(($repair_fee + $transportation_fee) - $discount,0);
             }
             else{
                 $percent_discount = $discount;
